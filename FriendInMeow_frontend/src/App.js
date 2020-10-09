@@ -1,6 +1,16 @@
 import React from 'react';
 import './App.css';
 import { connect } from "react-redux";
+import { BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
+
+import NavBar from './Components/NavBar';
+import Login from './Components/Login';
+import Signup from './Components/Signup';
+import Home from './Containers/Home';
+import CatContainer from './Containers/CatContainer';
+import OrgContainer from './Containers/OrgContainer';
+import FaveContainer from './Containers/FaveContainer';
+import Profile from './Containers/Profile';
 
 
 class App extends React.Component {
@@ -8,13 +18,12 @@ class App extends React.Component {
   componentDidMount = () => {
     this.getBreedsKey()
     this.getAdoptableKeys()
-    this.test()
   }
 
-  componentDidUpdate = (previousProps) => {
-    if (previousProps !== this.props) {
-    }
-  }
+  // componentDidUpdate = (previousProps) => {
+  //   if (previousProps !== this.props) {
+  //   }
+  // }
 
   getBreedsKey = () => {
     fetch('http://localhost:3000/breeds')
@@ -156,9 +165,50 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <button onClick={() => this.getPosition()} > Get Location </button>
-      </div>
+      <BrowserRouter>
+        <Switch>
+          
+          <div className="world">
+            <NavBar />
+
+          <div className="body-area">
+          <Route exact path="/">
+            <Home />
+          </Route>
+
+          <Route path="/adoptable">
+            <CatContainer />
+          </Route>
+
+          <Route path="/organizations">
+            <OrgContainer />
+          </Route>
+
+          <Route path="/favorites">
+            <FaveContainer />
+          </Route>
+
+          <Route path="/profile">
+            <Profile />
+          </Route>
+
+          <Route path="/login">
+            <Login />
+          </Route>
+
+          <Route path="/signup">
+            <Signup />
+          </Route>
+
+          <Route>
+              <Redirect to="/" />
+          </Route>
+
+          </div>
+          </div>
+
+        </Switch>
+      </BrowserRouter>
     )
   }
 }
