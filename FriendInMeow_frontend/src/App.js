@@ -7,6 +7,7 @@ import NavBar from './Components/NavBar';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
 import Home from './Containers/Home';
+import BreedContainer from './Containers/BreedContainer';
 import CatContainer from './Containers/CatContainer';
 import OrgContainer from './Containers/OrgContainer';
 import FaveContainer from './Containers/FaveContainer';
@@ -174,6 +175,10 @@ class App extends React.Component {
           <div className="body-area">
           <Route exact path="/">
             <Home />
+          </Route>
+
+          <Route path="/breeds">
+            <BreedContainer />
           </Route>
 
           <Route path="/adoptable">

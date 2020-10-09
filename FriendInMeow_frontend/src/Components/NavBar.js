@@ -57,6 +57,7 @@ const NavBar = (props) => {
     return (
         <div className="nav-bar">
             <div className="nav-item" name="/" onClick={(e) => redirectHelper(e.target.getAttribute('name'))}>Home</div>
+            <div className="nav-item" name="/breeds" onClick={(e) => redirectHelper(e.target.getAttribute('name'))}>Cat Breeds</div>
             <div className="nav-item" name="/adoptable" onClick={(e) => redirectHelper(e.target.getAttribute('name'))}>Adoptable Cats</div>
             <div className="nav-item" name="/organizations" onClick={(e) => redirectHelper(e.target.getAttribute('name'))}>Adoption Organizations</div>
             <div className="nav-item" name="/favorites" onClick={(e) => redirectHelper(e.target.getAttribute('name'))}>Favorite Cats</div>
