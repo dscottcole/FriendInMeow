@@ -8,6 +8,7 @@ class App extends React.Component {
   componentDidMount = () => {
     this.getBreedsKey()
     this.getAdoptableKeys()
+    this.test()
   }
 
   componentDidUpdate = (previousProps) => {
@@ -35,8 +36,8 @@ class App extends React.Component {
       let breedNames = []
       breeds.forEach(cat => breedNames = [...breedNames, cat.name])
 
-      this.props.dispatch({ type: 'GET_BREEDS', breeds: breeds })
-      this.props.dispatch({ type: 'GET_BREED_NAMES', breedNames: breedNames })
+      this.props.get_breeds(breeds)
+      this.props.get_breed_names(breedNames)
     })
   }
 
@@ -87,24 +88,23 @@ class App extends React.Component {
 
       res.breeds.forEach(cat => adoptableBreedNames = [...adoptableBreedNames, cat.name])
 
-      this.props.dispatch({ type: 'GET_ADOPTABLE_BREED_NAMES', adoptableBreedNames: adoptableBreedNames })
-
+      this.props.get_adoptable_breed_names(adoptableBreedNames)
     })
 
   }
 
-  getGoogleKey = () => {
-    fetch('http://localhost:3000/googlemaps')
-    .then(res => res.json())
-    .then(console.log)
-  }
+  // getGoogleKey = () => {
+  //   fetch('http://localhost:3000/googlemaps')
+  //   .then(res => res.json())
+  //   .then(console.log)
+  // }
 
   getPosition = () => {
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.showPosition, this.posError);
     } else {
-      alert("Sorry, but Geolocation is not supported by this browser.");
+      alert("Sorry, Geolocation is not supported by this browser.");
     }
   }
 
@@ -149,6 +149,11 @@ class App extends React.Component {
     localStorage.setItem('userPostalCode', postal)
   }
 
+  test = () => {
+    let string = 'Jazzy'
+    this.props.test_user_reducer(string)
+  }
+
   render() {
     return (
       <div>
@@ -156,13 +161,21 @@ class App extends React.Component {
       </div>
     )
   }
+}
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get_breeds: (breeds) => dispatch({ type: 'GET_BREEDS', breeds: breeds }),
+    get_breed_names: (breedNames) => dispatch({ type: 'GET_BREED_NAMES', breedNames: breedNames }),
+    get_adoptable_breed_names: (adoptableBreedNames) => dispatch({ type: 'GET_ADOPTABLE_BREED_NAMES', adoptableBreedNames: adoptableBreedNames }),
+    test_user_reducer: (arg) => dispatch({ type: 'TEST_USER', testString: arg })
+  }
 }
 
 const mapStateToProps = (state) => {
   return {
-    ...state
+    ...state.catState
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
