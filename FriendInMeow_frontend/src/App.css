@@ -1,0 +1,14 @@
+.world {
+    font-family: "Roboto";
+}
+
+.body-area {
+    padding-top: 25px;
+}
+
+.pagination {
+    padding-top: 25px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}

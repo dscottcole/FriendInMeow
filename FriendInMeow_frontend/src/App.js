@@ -6,6 +6,8 @@ import { BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import NavBar from './Components/NavBar';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
+import CatPagination from './Components/CatPagination';
+import LocationForm from './Components/LocationForm';
 import Home from './Containers/Home';
 import BreedContainer from './Containers/BreedContainer';
 import CatContainer from './Containers/CatContainer';
@@ -20,11 +22,6 @@ class App extends React.Component {
     this.getBreedsKey()
     this.getAdoptableKeys()
   }
-
-  // componentDidUpdate = (previousProps) => {
-  //   if (previousProps !== this.props) {
-  //   }
-  // }
 
   getBreedsKey = () => {
     fetch('http://localhost:3000/breeds')
@@ -80,7 +77,6 @@ class App extends React.Component {
   //   })
   //   .then(res => res.json())
   //   .then(console.log)
-
   // }
 
   getAdoptableCatbreeds = (accessToken) => {
@@ -174,6 +170,7 @@ class App extends React.Component {
 
           <div className="body-area">
           <Route exact path="/">
+            <LocationForm />
             <Home />
           </Route>
 
@@ -182,7 +179,9 @@ class App extends React.Component {
           </Route>
 
           <Route path="/adoptable">
+            <LocationForm />
             <CatContainer />
+            <CatPagination />
           </Route>
 
           <Route path="/organizations">
