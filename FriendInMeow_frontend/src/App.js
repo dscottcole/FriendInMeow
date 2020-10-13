@@ -9,6 +9,9 @@ import Signup from './Components/Signup';
 import CatPagination from './Components/CatPagination';
 import BreedPagination from './Components/BreedPagination';
 import LocationForm from './Components/LocationForm';
+import BreedShow from './Components/BreedShow'
+import CatShow from './Components/CatShow'
+
 import Home from './Containers/Home';
 import BreedContainer from './Containers/BreedContainer';
 import CatContainer from './Containers/CatContainer';
@@ -213,6 +216,15 @@ class App extends React.Component {
           <Route path="/signup">
             <Signup />
           </Route>
+
+          <Route path="/breedinfo">
+            <BreedShow />
+          </Route>
+
+          <Route path="/catinfo">
+            <CatShow />
+          </Route>
+
 
           <Route>
               <Redirect to="/" />

@@ -15,7 +15,8 @@ const useStyles = makeStyles({
     maxWidth: 345,
   },
   media: {
-    height: 250,
+    height: 225,
+    width: 350
   },
 });
 
@@ -117,7 +118,7 @@ const BreedCard = (props) => {
         <Button size="small" color="primary">
           {props.userPostalCode.toString().length === 5? (`Locally Adoptable: ${totalAdoptable}`) : (`Total Adoptable: ${totalAdoptable}`)}
         </Button>
-        <Button onClick={null} size="small" color="primary">
+        <Button onClick={() => {props.set_clicked_breed(breed); props.change_route('/breedinfo')}} size="small" color="primary">
           Learn More
         </Button>
       </CardActions>
@@ -127,7 +128,8 @@ const BreedCard = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-
+      change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName }),
+      set_clicked_breed: (breed) => dispatch({ type: 'SET_CLICKED_BREED', clickedBreed: breed })
     }
 }
   
