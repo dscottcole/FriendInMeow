@@ -6,7 +6,9 @@ const initialState = {
     adoptableCatsPage: 1,
     adoptableCatsPages: 0,
     breedsPage: 0,
-    breedsPages: 0
+    breedsPages: 0,
+    clickedBreed: {},
+    clickedCat: {}
 }
 
 const CatReducer = (state = initialState, action) => {
@@ -59,6 +61,16 @@ const CatReducer = (state = initialState, action) => {
             return {
                 ...state,
                 breedsPages: action.breedsPages
+            }
+        case 'SET_CLICKED_BREED':
+            return {
+                ...state,
+                clickedBreed: action.clickedBreed
+            }
+        case 'SET_CLICKED_CAT':
+            return {
+                ...state,
+                clickedCat: action.clickedCat
             }
 
         default:
