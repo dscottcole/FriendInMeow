@@ -25,17 +25,7 @@ const CatContainer = (props) => {
 
     useEffect(() => {
         getAdoptableKeys()
-    }, [props.adoptableCatsPage])
-
-    useEffect(() => {
-        getAdoptableKeys()
-    }, [props.userPostalCode])
-
-    useEffect(() => {
-        getAdoptableKeys()
-    }, [props.userRadius])
-
-
+    }, [props.adoptableCatsPage, props.userPostalCode, props.userRadius ])
 
   const getAdoptableKeys = () => {
     fetch('http://localhost:3000/adoptable')

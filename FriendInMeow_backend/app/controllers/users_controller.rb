@@ -13,7 +13,7 @@ class UsersController < ApplicationController
             )
         else
             error_array = []
-            @user.errors.messages.map {|k,v| [(k.to_s + " "), v] }.each {|e| error_array.push(e)}
+            @user.errors.messages.map {|k,v| [(k.to_s), (v)] }.each {|e| error_array.push(e)}
             render json: { "message": error_array }
         end
     end

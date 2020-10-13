@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 345,
   },
   media: {
-    height: 250,
+    height: 200,
     paddingTop: '56.25%', // 16:9
   },
   expand: {
@@ -83,7 +83,7 @@ let maleAvatar = (
       <CardMedia
         className={classes.media}
         image={cat.primary_photo_cropped !== null? cat.primary_photo_cropped['small'] : require('../Images/catfallback2.jpg')}
-        title="Paella dish"
+        title={cat.id}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">

@@ -51,6 +51,7 @@ const NavBar = (props) => {
 
     const logOut = () => {
         localStorage.removeItem('auth_key')
+        props.set_isloggedin(false)
         props.change_route("/")
     }
 
@@ -62,9 +63,9 @@ const NavBar = (props) => {
             <div className="nav-item" name="/organizations" onClick={(e) => redirectHelper(e.target.getAttribute('name'))}>Adoption Organizations</div>
             <div className="nav-item" name="/favorites" onClick={(e) => redirectHelper(e.target.getAttribute('name'))}>Favorite Cats</div>
             <div className="nav-item" name="/profile" onClick={(e) => redirectHelper(e.target.getAttribute('name'))}>Profile</div>
-            <div className="nav-item" name="/login" onClick={(e) => redirectHelper(e.target.getAttribute('name'))}>Login</div>
-            <div className="nav-item" name="/signup" onClick={(e) => redirectHelper(e.target.getAttribute('name'))}>Signup</div>
-            <div className="nav-item" name="/logout" onClick={() => logOut()}>Logout</div>
+            {props.isLoggedIn === true? null : <div className="nav-item" name="/login" onClick={(e) => redirectHelper(e.target.getAttribute('name'))}>Login</div>}
+            {props.isLoggedIn === true? null : <div className="nav-item" name="/signup" onClick={(e) => redirectHelper(e.target.getAttribute('name'))}>Signup</div>}
+            {props.isLoggedIn === true? <div className="nav-item" name="/logout" onClick={() => logOut()}>Logout</div> : null}
         </div>
     )
     
@@ -73,12 +74,14 @@ const NavBar = (props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
       change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName }),
+      set_isloggedin: (status) => dispatch({ type: 'SET_STATUS', isLoggedIn: status })
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        currentRoute: state.navState.currentRoute
+        currentRoute: state.navState.currentRoute,
+        isLoggedIn: state.userState.isLoggedIn
     }
 }
 

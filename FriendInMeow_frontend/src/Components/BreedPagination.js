@@ -13,18 +13,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CatPagination = (props) => {
+const BreedPagination = (props) => {
   const classes = useStyles();
   const handleChange = (event, value) => {
-    props.set_cats_page(value)
+    props.set_breeds_page(value - 1)
     document.documentElement.scrollTop = 0
   };
 
   return (
     <div className="pagination">
         <div className={classes.root}>
-        <Typography>Page: {props.adoptableCatsPage}</Typography>
-        <Pagination count={props.adoptableCatsPages} page={props.adoptableCatsPage} onChange={handleChange} />
+        <Typography>Page: {props.breedsPage + 1}</Typography>
+        <Pagination count={props.breedsPages} page={props.breedsPage + 1} onChange={handleChange} />
         </div>
     </div>
   );
@@ -32,7 +32,7 @@ const CatPagination = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        set_cats_page: (number) => dispatch({ type: 'SET_CATS_PAGE', adoptableCatsPage: number })
+        set_breeds_page: (number) => dispatch({ type: 'SET_BREEDS_PAGE', breedsPage: number })
     }
 }
   
@@ -42,4 +42,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
   
-export default connect(mapStateToProps, mapDispatchToProps)(CatPagination);
+export default connect(mapStateToProps, mapDispatchToProps)(BreedPagination);

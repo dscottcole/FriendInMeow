@@ -2,7 +2,8 @@ const initialState = {
     userCity: '',
     userState: '',
     userPostalCode: 0,
-    userRadius: 100
+    userRadius: 100,
+    isLoggedIn: false
 }
 
 const UserReducer = (state = initialState, action) => {
@@ -29,6 +30,12 @@ const UserReducer = (state = initialState, action) => {
                 ...state,
                 userRadius: action.userRadius
             }
+        case 'SET_STATUS':
+            return {
+                ...state,
+                isLoggedIn: action.isLoggedIn
+            }
+    
 
         default:
             return state

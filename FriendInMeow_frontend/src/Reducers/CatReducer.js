@@ -4,7 +4,9 @@ const initialState = {
     adoptableBreedNames: [],
     adoptableCats: [],
     adoptableCatsPage: 1,
-    adoptableCatsPages: 0
+    adoptableCatsPages: 0,
+    breedsPage: 0,
+    breedsPages: 0
 }
 
 const CatReducer = (state = initialState, action) => {
@@ -47,6 +49,16 @@ const CatReducer = (state = initialState, action) => {
             return {
                 ...state,
                 adoptableCatsPages: action.adoptableCatsPages
+            }
+        case 'SET_BREEDS_PAGE':
+            return {
+                ...state,
+                breedsPage: action.breedsPage
+            }
+        case 'SET_BREEDS_PAGES':
+            return {
+                ...state,
+                breedsPages: action.breedsPages
             }
 
         default:
