@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import MyLocationIcon from '@material-ui/icons/MyLocation';
 import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -117,9 +116,9 @@ const LocationForm = (props) => {
     let postal = address.results[5].address_components[0].short_name
     let radius = props.userRadius
 
-    localStorage.setItem('userState', state)
-    localStorage.setItem('userCity', city)
-    localStorage.setItem('userPostalCode', postal)
+    // localStorage.setItem('userState', state)
+    // localStorage.setItem('userCity', city)
+    // localStorage.setItem('userPostalCode', postal)
 
     props.set_city(city)
     props.set_state(state)

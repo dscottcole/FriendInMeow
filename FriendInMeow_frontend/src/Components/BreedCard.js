@@ -22,10 +22,8 @@ const useStyles = makeStyles({
 const BreedCard = (props) => {
   const classes = useStyles();
 
-  const [totalAdoptable, setTotalAdoptable] = useState(0)
-
+  let [totalAdoptable, setTotalAdoptable] = useState(0)
   let [breedImg, setImg] = useState('')
-//   useEffect(getBreedsKey, [props.breed])
 
   const getBreedsKey = () => {
     fetch('http://localhost:3000/breeds')
@@ -70,9 +68,9 @@ const BreedCard = (props) => {
   const getAdoptableCats = (accessToken, breedName) => {
         let slug = ''
 
-        if (localStorage.userPostalCode !== undefined) {
-            slug = `&location=${localStorage.userPostalCode}&breed=${breedName}`
-        } else {
+        if (props.userPostalCode.toString().length === 5) {
+            slug = `&location=${props.userPostalCode}&breed=${breedName}`
+        } else if (props.userPostalCode.toString().length < 5) {
             slug = `&breed=${breedName}`
         }
 
@@ -92,8 +90,8 @@ const BreedCard = (props) => {
 
   useEffect(() => {
     getBreedsKey()
-    getAdoptableKeys(props.breed.name)
-  }, [props.breed])
+    // getAdoptableKeys(props.breed.name)
+  }, [props.breed, props.userPostalCode, props.userRadius])
 
   let breed = props.breed
 
@@ -117,7 +115,7 @@ const BreedCard = (props) => {
       </CardActionArea>
       <CardActions>
         <Button size="small" color="primary">
-          {localStorage.userPostalCode !== undefined? (`Locally Adoptable: ${totalAdoptable}`) : (`Total Adoptable: ${totalAdoptable}`)}
+          {props.userPostalCode.toString().length === 5? (`Locally Adoptable: ${totalAdoptable}`) : (`Total Adoptable: ${totalAdoptable}`)}
         </Button>
         <Button onClick={null} size="small" color="primary">
           Learn More
@@ -135,7 +133,9 @@ const mapDispatchToProps = (dispatch) => {
   
 const mapStateToProps = (state) => {
     return {
-      ...state.catState
+      ...state.catState,
+      userPostalCode: state.userState.userPostalCode,
+      userRadius: state.userState.userRadius
     }
 }
   

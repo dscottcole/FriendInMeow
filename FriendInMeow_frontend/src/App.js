@@ -7,6 +7,7 @@ import NavBar from './Components/NavBar';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
 import CatPagination from './Components/CatPagination';
+import BreedPagination from './Components/BreedPagination';
 import LocationForm from './Components/LocationForm';
 import Home from './Containers/Home';
 import BreedContainer from './Containers/BreedContainer';
@@ -18,35 +19,47 @@ import Profile from './Containers/Profile';
 
 class App extends React.Component {
 
+  handleLogin = () => {
+    if (localStorage.getItem('auth_key')) {
+        this.props.set_isloggedin(true)
+    } else {
+        this.props.set_isloggedin(false)
+    }
+}
+
   componentDidMount = () => {
-    this.getBreedsKey()
     this.getAdoptableKeys()
+    this.handleLogin()
   }
 
-  getBreedsKey = () => {
-    fetch('http://localhost:3000/breeds')
-    .then(res => res.json())
-    .then(obj => this.getBreeds(obj.api_key))
-  }
+  // componentDidUpdate = () => {
+  //   this.handleLogin()
+  // }
 
-  getBreeds = (key) => {
-    fetch('https://api.thecatapi.com/v1/breeds', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': key
-      }
-    })
-    .then(res => res.json())
-    .then(breeds => {
+  // getBreedsKey = () => {
+  //   fetch('http://localhost:3000/breeds')
+  //   .then(res => res.json())
+  //   .then(obj => this.getBreeds(obj.api_key))
+  // }
 
-      let breedNames = []
-      breeds.forEach(cat => breedNames = [...breedNames, cat.name])
+  // getBreeds = (key) => {
+  //   fetch('https://api.thecatapi.com/v1/breeds', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'x-api-key': key
+  //     }
+  //   })
+  //   .then(res => res.json())
+  //   .then(breeds => {
 
-      this.props.get_breeds(breeds)
-      this.props.get_breed_names(breedNames)
-    })
-  }
+  //     let breedNames = []
+  //     breeds.forEach(cat => breedNames = [...breedNames, cat.name])
+
+  //     this.props.get_breeds(breeds)
+  //     this.props.get_breed_names(breedNames)
+  //   })
+  // }
 
   getAdoptableKeys = () => {
     fetch('http://localhost:3000/adoptable')
@@ -155,11 +168,6 @@ class App extends React.Component {
     localStorage.setItem('userPostalCode', postal)
   }
 
-  test = () => {
-    let string = 'Jazzy'
-    this.props.test_user_reducer(string)
-  }
-
   render() {
     return (
       <BrowserRouter>
@@ -175,7 +183,9 @@ class App extends React.Component {
           </Route>
 
           <Route path="/breeds">
+            <LocationForm />
             <BreedContainer />
+            <BreedPagination />
           </Route>
 
           <Route path="/adoptable">
@@ -197,7 +207,7 @@ class App extends React.Component {
           </Route>
 
           <Route path="/login">
-            <Login />
+            <Login handleLogin={this.handleLogin}/>
           </Route>
 
           <Route path="/signup">
@@ -219,16 +229,15 @@ class App extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    get_breeds: (breeds) => dispatch({ type: 'GET_BREEDS', breeds: breeds }),
-    get_breed_names: (breedNames) => dispatch({ type: 'GET_BREED_NAMES', breedNames: breedNames }),
-    get_adoptable_breed_names: (adoptableBreedNames) => dispatch({ type: 'GET_ADOPTABLE_BREED_NAMES', adoptableBreedNames: adoptableBreedNames }),
-    test_user_reducer: (arg) => dispatch({ type: 'TEST_USER', testString: arg })
+    set_isloggedin: (status) => dispatch({ type: 'SET_STATUS', isLoggedIn: status }),
+    get_adoptable_breed_names: (adoptableBreedNames) => dispatch({ type: 'GET_ADOPTABLE_BREED_NAMES', adoptableBreedNames: adoptableBreedNames })
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    ...state.catState
+    ...state.catState,
+    ...state.userState
   }
 }
 
