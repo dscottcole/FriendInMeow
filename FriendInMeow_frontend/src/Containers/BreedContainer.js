@@ -91,6 +91,8 @@ const BreedContainer = (props) => {
 
     useEffect(() => {
         getBreedsKey()
+        props.set_clicked_breed({},'')
+        props.change_route('/breeds')
     }, [ , props.breedsPage])
 
     // useEffect(() => {
@@ -122,7 +124,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         set_breeds: (breeds) => dispatch({ type: 'GET_BREEDS', breeds: breeds }),
         get_breed_names: (breedNames) => dispatch({ type: 'GET_BREED_NAMES', breedNames: breedNames }),
-        set_breeds_pages: (number) => dispatch({ type: 'SET_BREEDS_PAGES', breedsPages: number })
+        set_breeds_pages: (number) => dispatch({ type: 'SET_BREEDS_PAGES', breedsPages: number }),
+        set_clicked_breed: (breed, imgUrl) => dispatch({ type: 'SET_CLICKED_BREED', clickedBreed: breed, clickedBreedImg: imgUrl }),
+        change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName }),
     }
 }
   

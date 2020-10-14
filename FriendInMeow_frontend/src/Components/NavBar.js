@@ -45,6 +45,7 @@ const NavBar = (props) => {
 
     const redirect = () => {
         props.history.push(`${props.currentRoute}`)
+        document.documentElement.scrollTop = 0
     }
 
     useEffect(redirect, [props.currentRoute])
