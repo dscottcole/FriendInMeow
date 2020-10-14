@@ -47,8 +47,6 @@ const radii = [
 const LocationForm = (props) => {
   const classes = useStyles();
 
-//   const [radius, setRadius] = React.useState(100);
-
   const handleSelectChange = (event) => {
     props.set_radius(event.target.value);
   };
@@ -130,7 +128,7 @@ const LocationForm = (props) => {
     <form className={classes.root} noValidate autoComplete="on">
       <Button
         variant="contained"
-        color="default"
+        color="primary"
         className={classes.button}
         startIcon={<MyLocationIcon />}
         onClick={() => getPosition()}

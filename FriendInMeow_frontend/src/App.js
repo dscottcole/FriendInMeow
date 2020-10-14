@@ -11,6 +11,9 @@ import BreedPagination from './Components/BreedPagination';
 import LocationForm from './Components/LocationForm';
 import BreedShow from './Components/BreedShow'
 import CatShow from './Components/CatShow'
+import BreedChart from './Components/BreedChart'
+import TraitTable from './Components/TraitTable'
+import BreedsBackButton from './Components/BreedsBackButton';
 
 import Home from './Containers/Home';
 import BreedContainer from './Containers/BreedContainer';
@@ -219,6 +222,9 @@ class App extends React.Component {
 
           <Route path="/breedinfo">
             <BreedShow />
+            <TraitTable />
+            <BreedChart />
+            <BreedsBackButton />
           </Route>
 
           <Route path="/catinfo">

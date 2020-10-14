@@ -1,11 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { connect } from "react-redux";
+ 
 
-const BreedShow = () => {
+const BreedShow = (props) => {
+
+    const breed = props.clickedBreed
+
     return (
-        <p>
-            BreedShow
-        </p>
+        <div className="breed-show">
+            <h1>{breed.name}</h1>
+        </div>
     )
 }
 
-export default BreedShow
+const mapDispatchToProps = (dispatch) => {
+    return {
+      change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName })
+    }
+}
+  
+const mapStateToProps = (state) => {
+    return {
+        ...state.catState
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BreedShow);

@@ -9,6 +9,8 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@toast-ui/react-chart": "^1.0.2",
+    "@toast-ui/react-editor": "^2.4.0",
     "fontsource-roboto": "^3.0.3",
     "material-ui-pagination-react": "^1.9.0",
     "react": "^16.13.1",
