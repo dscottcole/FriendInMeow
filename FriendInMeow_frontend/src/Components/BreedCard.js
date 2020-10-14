@@ -9,6 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles({
   root: {
@@ -18,6 +19,9 @@ const useStyles = makeStyles({
     height: 225,
     width: 350
   },
+  dividerFullWidth: {
+    margin: `10px`,
+  }
 });
 
 const BreedCard = (props) => {
@@ -109,7 +113,11 @@ const BreedCard = (props) => {
           <Typography gutterBottom variant="h5" component="h2">
             {breed.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body1" color="textPrimary" component="h6">
+            {breed.temperament}
+          </Typography>
+          <Divider className={classes.dividerFullWidth} variant="fullWidth" />
+          <Typography variant="subtitle2" color="textSecondary" component="p">
             {breed.description}
           </Typography>
         </CardContent>

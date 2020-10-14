@@ -12,3 +12,31 @@
     display: flex;
     justify-content: center;
 }
+
+.breed-chart {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+tspan {
+    font-weight: bold;
+    font-size: 110%;
+}
+
+.trait-table {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.breed-show {
+    display: flex;
+    justify-content: center;
+}
+
+.breeds-back-button {
+    display: flex;
+    justify-content: center;
+}
