@@ -8,7 +8,8 @@ const initialState = {
     breedsPage: 0,
     breedsPages: 0,
     clickedBreed: {},
-    clickedCat: {}
+    clickedBreedImg: '',
+    clickedCat: {},
 }
 
 const CatReducer = (state = initialState, action) => {
@@ -65,8 +66,10 @@ const CatReducer = (state = initialState, action) => {
         case 'SET_CLICKED_BREED':
             return {
                 ...state,
-                clickedBreed: action.clickedBreed
+                clickedBreed: action.clickedBreed,
+                clickedBreedImg: action.clickedBreedImg
             }
+        
         case 'SET_CLICKED_CAT':
             return {
                 ...state,

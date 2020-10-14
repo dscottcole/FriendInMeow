@@ -25,9 +25,9 @@ const StyledTableCell = withStyles((theme) => ({
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
+    // '&:nth-of-type(odd)': {
+    //   backgroundColor: theme.palette.action.hover,
+    // },
   },
 }))(TableRow);
 
@@ -45,9 +45,10 @@ const TraitTable = (props) => {
   const [traitArray, setTraitArray] = useState([])
 
   const createTraitArray = () => {
-      let preTrait = [breed.weight.imperial, breed.life_span, breed.experimental, breed.natural, breed.rare, breed.hairless, breed.rex, breed.suppressed_tail, breed.short_legs, breed.hypoallergenic]
-      console.log(preTrait)
-      setTraitArray(preTrait)
+      if (breed.weight !== undefined) {
+        let preTrait = [breed.weight.imperial, breed.life_span, breed.experimental, breed.natural, breed.rare, breed.hairless, breed.rex, breed.suppressed_tail, breed.short_legs, breed.hypoallergenic]
+        setTraitArray(preTrait)
+      }
   }
 
   function createData(weight, life, exp, natural, rare, hairless, rex, suppressed, shortlegs, hypo) {
@@ -63,7 +64,7 @@ const TraitTable = (props) => {
   }, [props.clickedBreed])
 
   let traitTable = (
-    <TableContainer className="trait-table" component={Paper}>
+    <TableContainer className="trait-table" >
     <Table className={classes.table} aria-label="customized table">
       <TableHead>
         <TableRow>

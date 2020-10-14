@@ -23,7 +23,7 @@ const BreedsBackButton = (props) => {
         size="large"
         className={classes.button}
         startIcon={<ArrowBackIosOutlinedIcon />}
-        onClick={() => {props.set_clicked_breed({}); props.change_route('/breeds')}}
+        onClick={() => {props.set_clicked_breed({},''); props.change_route('/breeds')}}
       >
         Return To Breeds
       </Button>
@@ -34,7 +34,7 @@ const BreedsBackButton = (props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
       change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName }),
-      set_clicked_breed: (breed) => dispatch({ type: 'SET_CLICKED_BREED', clickedBreed: breed })
+      set_clicked_breed: (breed, imgUrl) => dispatch({ type: 'SET_CLICKED_BREED', clickedBreed: breed, clickedBreedImg: imgUrl })
     }
 }
   

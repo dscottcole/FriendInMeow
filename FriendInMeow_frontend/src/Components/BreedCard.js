@@ -14,13 +14,15 @@ import Divider from '@material-ui/core/Divider';
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    minHeight: 600,
+    maxHeight: 600
   },
   media: {
     height: 225,
     width: 350
   },
   dividerFullWidth: {
-    margin: `10px`,
+    margin: `5px`,
   }
 });
 
@@ -36,8 +38,28 @@ const BreedCard = (props) => {
     .then(obj => getBreedImage(obj.api_key))
   }
 
+  const getBreedsKey2 = () => {
+    fetch('http://localhost:3000/breeds')
+    .then(res => res.json())
+    .then(obj => getBreedImage2(obj.api_key))
+  }
+
   const getBreedImage = (key) => {
-    fetch(`https://api.thecatapi.com/v1/images/search?limit=1&breed_id=${props.breed.id}`, {
+    if (breedImg === '') {
+      fetch(`https://api.thecatapi.com/v1/images/search?limit=1&breed_id=${props.breed.id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': key
+        }
+      })
+      .then(res => res.json())
+      .then(breed => setImg(breed[0].url))
+    }
+  }
+
+  const getBreedImage2 = (key) => {
+      fetch(`https://api.thecatapi.com/v1/images/search?limit=1&breed_id=${props.breed.id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +129,7 @@ const BreedCard = (props) => {
           className={classes.media}
           image={breedImg}
           title={breed.id}
-          onClick={() => getBreedsKey()}
+          onClick={() => getBreedsKey2()}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
@@ -126,7 +148,7 @@ const BreedCard = (props) => {
         <Button size="small" color="primary">
           {props.userPostalCode.toString().length === 5? (`Locally Adoptable: ${totalAdoptable}`) : (`Total Adoptable: ${totalAdoptable}`)}
         </Button>
-        <Button onClick={() => {props.set_clicked_breed(breed); props.change_route('/breedinfo')}} size="small" color="primary">
+        <Button onClick={() => {props.set_clicked_breed(breed, breedImg); props.change_route('/breedinfo')}} size="small" color="primary">
           Learn More
         </Button>
       </CardActions>
@@ -137,7 +159,7 @@ const BreedCard = (props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
       change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName }),
-      set_clicked_breed: (breed) => dispatch({ type: 'SET_CLICKED_BREED', clickedBreed: breed })
+      set_clicked_breed: (breed, imgUrl) => dispatch({ type: 'SET_CLICKED_BREED', clickedBreed: breed, clickedBreedImg: imgUrl })
     }
 }
   

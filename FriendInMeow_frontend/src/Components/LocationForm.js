@@ -11,8 +11,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
-      margin: theme.spacing(1),
-      width: '25ch',
+      margin: 'theme.spacing(1)',
+      width: '25ch'
     },
   },
   button: {
