@@ -45,17 +45,17 @@ const TraitTable = (props) => {
   const [traitArray, setTraitArray] = useState([])
 
   const createTraitArray = () => {
-      let preTrait = [breed.experimental, breed.natural, breed.rare, breed.hairless, breed.rex, breed.suppressed_tail, breed.short_legs, breed.hypoallergenic]
+      let preTrait = [breed.weight.imperial, breed.life_span, breed.experimental, breed.natural, breed.rare, breed.hairless, breed.rex, breed.suppressed_tail, breed.short_legs, breed.hypoallergenic]
       console.log(preTrait)
       setTraitArray(preTrait)
   }
 
-  function createData(exp, natural, rare, hairless, rex, suppressed, shortlegs, hypo) {
-    return { exp, natural, rare, hairless, rex, suppressed, shortlegs, hypo };
+  function createData(weight, life, exp, natural, rare, hairless, rex, suppressed, shortlegs, hypo) {
+    return { weight, life, exp, natural, rare, hairless, rex, suppressed, shortlegs, hypo };
   }
 
   const rows = [
-    createData(traitArray[0], traitArray[1], traitArray[2], traitArray[3], traitArray[4], traitArray[5], traitArray[6], traitArray[7]),
+    createData(traitArray[0], traitArray[1], traitArray[2], traitArray[3], traitArray[4], traitArray[5], traitArray[6], traitArray[7], traitArray[8], traitArray[9]),
   ];
   
   useEffect(() => {
@@ -67,19 +67,23 @@ const TraitTable = (props) => {
     <Table className={classes.table} aria-label="customized table">
       <TableHead>
         <TableRow>
-          <StyledTableCell align="center">Experimental Breed</StyledTableCell>
-          <StyledTableCell align="center">Natural Breed</StyledTableCell>
-          <StyledTableCell align="center">Rare</StyledTableCell>
-          <StyledTableCell align="center">Hairless</StyledTableCell>
-          <StyledTableCell align="center">Rex Hair</StyledTableCell>
-          <StyledTableCell align="center">Suppressed Tail</StyledTableCell>
-          <StyledTableCell align="center">Short Legs</StyledTableCell>
-          <StyledTableCell align="center">Hypoallergenic</StyledTableCell>
+            <StyledTableCell align="center">Weight</StyledTableCell>
+            <StyledTableCell align="center">Life Expectancy</StyledTableCell>
+            <StyledTableCell align="center">Experimental Breed</StyledTableCell>
+            <StyledTableCell align="center">Natural Breed</StyledTableCell>
+            <StyledTableCell align="center">Rare</StyledTableCell>
+            <StyledTableCell align="center">Hairless</StyledTableCell>
+            <StyledTableCell align="center">Rex Hair</StyledTableCell>
+            <StyledTableCell align="center">Suppressed Tail</StyledTableCell>
+            <StyledTableCell align="center">Short Legs</StyledTableCell>
+            <StyledTableCell align="center">Hypoallergenic</StyledTableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {rows.map((row) => (
           <StyledTableRow>
+            <StyledTableCell align="center">{row.weight !== null? `${row.weight} lbs` : null}</StyledTableCell>
+            <StyledTableCell align="center">{row.life !== null? `${row.life} yrs` : null}</StyledTableCell>
             <StyledTableCell align="center">{row.exp > 0? 'Yes' : 'No'}</StyledTableCell>
             <StyledTableCell align="center">{row.natural > 0? 'Yes' : 'No'}</StyledTableCell>
             <StyledTableCell align="center">{row.rare > 0? 'Yes' : 'No'}</StyledTableCell>

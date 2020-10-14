@@ -43,8 +43,6 @@ const BreedChart = (props) => {
                     align: 'center'
                 },
                 format: '1',
-
-
             },
             yAxis: {
                 title: 'Trait',
@@ -66,9 +64,7 @@ const BreedChart = (props) => {
         };
 
         const breedChart = (
-            // <div className="breed-chart">
-                <BarChart data={data} options={options} />
-            // </div>
+            <BarChart data={data} options={options} />
         )
         
         let container = document.getElementById('chart-area');
