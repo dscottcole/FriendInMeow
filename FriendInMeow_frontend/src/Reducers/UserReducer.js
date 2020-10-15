@@ -1,4 +1,6 @@
 const initialState = {
+    userLat: 0,
+    userLong: 0,
     userCity: '',
     userState: '',
     userPostalCode: 0,
@@ -10,6 +12,16 @@ const UserReducer = (state = initialState, action) => {
 
     switch (action.type) {
 
+        case 'SET_USER_LAT':
+            return {
+                ...state,
+                userLat: action.userLat
+            }
+        case 'SET_USER_LONG':
+            return {
+                ...state,
+                userLong: action.userLong
+            }
         case 'SET_USER_CITY':
             return {
                 ...state,

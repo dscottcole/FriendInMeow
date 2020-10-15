@@ -76,7 +76,7 @@ const BreedShow = (props) => {
             {breed.name}
         </Typography>
         </Grid>
-        <Grid item container justify="center" xs={9}>
+        <Grid item container justify="center" xs={9} >
           <img src={props.clickedBreedImg} height='30%' width='30%'></img>
         </Grid>
         <Grid item xs={9}>

@@ -20,7 +20,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: 350,
+    minWidth: 350,
+    maxHeight: 600,
+    minHeight: 600
   },
   media: {
     height: 200,
@@ -46,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CatCard = (props) => {
   const classes = useStyles();
+
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -58,13 +62,108 @@ const CatCard = (props) => {
     <Avatar aria-label="gender" className={classes.avatarF}>
     {cat.gender[0]}
     </Avatar>
-    )
+  )
 
-let maleAvatar = (
-    <Avatar aria-label="gender" className={classes.avatarM}>
-    {cat.gender[0]}
-    </Avatar>
-    )
+  let maleAvatar = (
+      <Avatar aria-label="gender" className={classes.avatarM}>
+      {cat.gender[0]}
+      </Avatar>
+  )
+
+  const getAdoptableKeys = (catObj, orgUrl) => {
+    props.set_clicked_cat(catObj)
+
+    fetch('http://localhost:3000/adoptable')
+    .then(res => res.json())
+    .then(obj => getAdoptableToken(obj.api_key, obj.secret_key, catObj, orgUrl))
+  }
+
+  const getAdoptableToken = (apiKey, secretKey, catObj, orgUrl) => {
+    fetch("https://api.petfinder.com/v2/oauth2/token", {
+      method: "POST",
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${secretKey}`
+    })
+    .then(res => res.json())
+    .then(token => getOrgInfo(token.access_token, catObj, orgUrl))
+  }
+
+  const getOrgInfo = (accessToken, catObj, orgUrl) => {
+    fetch(`https://api.petfinder.com${orgUrl}`, {
+      method: "GET",
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+      }
+    })
+    .then(res => res.json())
+    .then(res => {
+      
+      getGoogleKey(catObj, res.organization)
+      props.set_clicked_cat_org(res.organization)
+    })
+  }
+
+  const getGoogleKey = (catObj, catOrg) => {
+    fetch('http://localhost:3000/googlemaps')
+    .then(res => res.json())
+    .then(obj => getGoogleAddress(catObj, catOrg, obj.api_key))
+  }
+
+  const getGoogleAddress = (catObj, catOrg, googleKey) => {
+    
+
+    if ( catObj.contact.address.address1 !== null && catObj.contact.address.city !== null && catObj.contact.address.state !== null ) {
+      let address = catObj.contact.address.address1.split(' ').join('+')
+      let city = catObj.contact.address.city.split(' ').join('+')
+      let state = catObj.contact.address.state
+  
+      let url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${address},+${city},+${state}&key=${googleKey}`
+  
+      fetch(url)
+      .then(res => res.json())
+      .then(res => {
+        if (res.status !== "ZERO_RESULTS") {
+          getCatCoords(res.results)
+        } else {
+          props.change_route('/catinfo')
+        }
+      })
+    } else if (catOrg.address.address1 !== null && catOrg.address.city !== null && catOrg.address.state !== null) {
+      let address = catOrg.address.address1.split(' ').join('+')
+      let city = catOrg.address.city.split(' ').join('+')
+      let state = catOrg.address.state
+
+      let url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${address},+${city},+${state}&key=${googleKey}`
+
+      fetch(url)
+      .then(res => res.json())
+      .then(res => {
+        if (res.status !== "ZERO_RESULTS") {
+          getCatCoords(res.results)
+        } else {
+          props.change_route('/catinfo')
+        }
+      })
+    } else {
+      props.change_route('/catinfo')
+    }
+
+  }
+
+  const getCatCoords = (googleRes) => {
+    console.log(googleRes)
+    let location = googleRes[0].geometry.location
+    let placeId = googleRes[0].place_id
+
+    props.set_clicked_cat_located(true)
+    props.set_clicked_cat_loc(location)
+    props.set_clicked_cat_place_id(placeId)
+
+    props.change_route('/catinfo')
+  }
 
   return (
     <Card className={classes.root}>
@@ -87,7 +186,8 @@ let maleAvatar = (
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-            {cat.description !== null? cat.description : `You can request more info from the adoption organization. Click on Learn More.` }
+            {/* {cat.description !== null? cat.description : `You can request more info from the adoption organization. Click on Learn More.` } */}
+            {cat.distance !== null? `Distance: ${Math.floor(cat.distance)} miles` : null}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -95,7 +195,8 @@ let maleAvatar = (
           <FavoriteIcon />
         </IconButton>
         <IconButton aria-label="navigate-to-cat">
-          <NavigateNextOutlinedIcon onClick={() => {props.set_clicked_cat(cat); props.change_route('/catinfo')}} />
+          {/* <NavigateNextOutlinedIcon onClick={() => {props.set_clicked_cat(cat); props.change_route('/catinfo')}} /> */}
+          <NavigateNextOutlinedIcon onClick={() => {getAdoptableKeys(cat, cat._links.organization.href)}} />
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {
@@ -138,7 +239,12 @@ let maleAvatar = (
 const mapDispatchToProps = (dispatch) => {
   return {
     change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName }),
-    set_clicked_cat: (cat) => dispatch({ type: 'SET_CLICKED_CAT', clickedCat: cat })
+    set_clicked_cat: (cat) => dispatch({ type: 'SET_CLICKED_CAT', clickedCat: cat }),
+    set_clicked_cat_loc: (loc) => dispatch({ type: 'SET_CLICKED_CAT_LOC', clickedCatLoc: loc}),
+    set_clicked_cat_place_id: (placeId) => dispatch({ type: 'SET_CLICKED_CAT_PLACE_ID', clickedCatPlaceId: placeId }),
+    set_clicked_cat_org: (org) => dispatch({ type: 'SET_CLICKED_CAT_ORG', clickedCatOrg: org }),
+    set_clicked_cat_located: (status) => dispatch({ type: 'SET_CLICKED_CAT_LOCATED', clickedCatLocated: status }),
+
   }
 }
 

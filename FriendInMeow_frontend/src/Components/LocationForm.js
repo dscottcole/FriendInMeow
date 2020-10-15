@@ -39,9 +39,9 @@ const radii = [
       label: '400mi',
     },
     {
-        value: '500',
-        label: '500mi',
-      },
+      value: '500',
+      label: '500mi',
+    },
   ];
 
 const LocationForm = (props) => {
@@ -92,6 +92,9 @@ const LocationForm = (props) => {
 
     let lat = position.coords.latitude
     let long = position.coords.longitude
+
+    props.set_lat(lat)
+    props.set_long(long)
 
     convertToZip(lat,long)
   }
@@ -159,6 +162,8 @@ const LocationForm = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+      set_lat: (lat) => dispatch({ type: 'SET_USER_LAT', userLat: lat }),
+      set_long: (long) => dispatch({ type: 'SET_USER_LONG', userLong: long }),
       set_city: (city) => dispatch({ type: 'SET_USER_CITY', userCity: city }),
       set_state: (state) => dispatch({ type: 'SET_USER_STATE', userState: state }),
       set_postal_code: (postalCode) => dispatch({ type: 'SET_USER_CODE', userPostalCode: postalCode }),
