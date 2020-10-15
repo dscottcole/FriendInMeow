@@ -20,12 +20,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CatContainer = (props) => {
-    const spacing = 4
-    const classes = useStyles();
+  const spacing = 4
+  const classes = useStyles();
 
-    useEffect(() => {
-        getAdoptableKeys()
-    }, [props.adoptableCatsPage, props.userPostalCode, props.userRadius ])
+  const clearClickedCat = () => {
+    if (props.clickedCat.name !== undefined) {
+      props.set_clicked_cat({})
+      props.set_clicked_cat_loc({})
+      props.set_clicked_cat_located(false)
+      props.set_clicked_cat_org({})
+      props.set_clicked_cat_place_id('')
+    }
+  }
+
+  useEffect(() => {
+      clearClickedCat()
+    props.change_route("/adoptable")
+  }, [])
+
+  useEffect(() => {
+      getAdoptableKeys()
+  }, [props.adoptableCatsPage, props.userPostalCode, props.userRadius ])
 
   const getAdoptableKeys = () => {
     fetch('http://localhost:3000/adoptable')
@@ -51,7 +66,7 @@ const CatContainer = (props) => {
     if (props.userPostalCode.toString().length < 5) {
         catUrl = `https://api.petfinder.com/v2/animals?type=cat&page=${props.adoptableCatsPage}`
     } else if (props.userPostalCode.toString().length === 5) {
-        catUrl = `https://api.petfinder.com/v2/animals?type=cat&location=${props.userPostalCode}&distance=${props.userRadius}&page=${props.adoptableCatsPage}`
+        catUrl = `https://api.petfinder.com/v2/animals?type=cat&sort=distance&location=${props.userPostalCode}&distance=${props.userRadius}&page=${props.adoptableCatsPage}`
     }
     console.log(catUrl)
     fetch( catUrl, {
@@ -89,11 +104,17 @@ const CatContainer = (props) => {
 
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        set_cats: (cats) => dispatch({ type: 'SET_CATS', adoptableCats: cats }),
-        set_cats_total: (total) => dispatch({ type: 'SET_CATS_TOTAL', adoptableCatsTotal: total }),
-        set_cats_pages: (number) => dispatch({ type: 'SET_CATS_PAGES', adoptableCatsPages: number })
-    }
+  return {
+    set_cats: (cats) => dispatch({ type: 'SET_CATS', adoptableCats: cats }),
+    set_cats_total: (total) => dispatch({ type: 'SET_CATS_TOTAL', adoptableCatsTotal: total }),
+    set_cats_pages: (number) => dispatch({ type: 'SET_CATS_PAGES', adoptableCatsPages: number }),
+    set_clicked_cat: (cat) => dispatch({ type: 'SET_CLICKED_CAT', clickedCat: cat }),
+    set_clicked_cat_loc: (loc) => dispatch({ type: 'SET_CLICKED_CAT_LOC', clickedCatLoc: loc}),
+    set_clicked_cat_place_id: (placeId) => dispatch({ type: 'SET_CLICKED_CAT_PLACE_ID', clickedCatPlaceId: placeId }),
+    set_clicked_cat_org: (org) => dispatch({ type: 'SET_CLICKED_CAT_ORG', clickedCatOrg: org }),
+    set_clicked_cat_located: (status) => dispatch({ type: 'SET_CLICKED_CAT_LOCATED', clickedCatLocated: status }),
+    change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName })
+  }
 }
   
 const mapStateToProps = (state) => {

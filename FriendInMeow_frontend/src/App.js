@@ -14,6 +14,7 @@ import CatShow from './Components/CatShow'
 import BreedChart from './Components/BreedChart'
 import TraitTable from './Components/TraitTable'
 import BreedsBackButton from './Components/BreedsBackButton';
+import CatMap from './Components/CatMap'
 
 import Home from './Containers/Home';
 import BreedContainer from './Containers/BreedContainer';
@@ -229,6 +230,7 @@ class App extends React.Component {
 
           <Route path="/catinfo">
             <CatShow />
+            <CatMap />
           </Route>
 
 

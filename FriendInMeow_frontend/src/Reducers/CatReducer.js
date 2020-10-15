@@ -10,6 +10,10 @@ const initialState = {
     clickedBreed: {},
     clickedBreedImg: '',
     clickedCat: {},
+    clickedCatLoc: {},
+    clickedCatLocated: false,
+    clickedCatPlaceId: '',
+    clickedCatOrg: {}
 }
 
 const CatReducer = (state = initialState, action) => {
@@ -75,6 +79,27 @@ const CatReducer = (state = initialState, action) => {
                 ...state,
                 clickedCat: action.clickedCat
             }
+        case 'SET_CLICKED_CAT_LOC':
+            return {
+                ...state,
+                clickedCatLoc: action.clickedCatLoc
+            }
+        case 'SET_CLICKED_CAT_LOCATED':
+            return {
+                ...state,
+                clickedCatLocated: action.clickedCatLocated
+            }
+        case 'SET_CLICKED_CAT_PLACE_ID':
+            return {
+                ...state,
+                clickedCatPlaceId: action.clickedCatPlaceId
+            }
+        case 'SET_CLICKED_CAT_ORG':
+            return {
+                ...state,
+                clickedCatOrg: action.clickedCatOrg
+            }
+    
 
         default:
             return state
