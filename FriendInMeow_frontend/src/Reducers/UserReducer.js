@@ -3,7 +3,7 @@ const initialState = {
     userLong: 0,
     userCity: '',
     userState: '',
-    userPostalCode: 0,
+    userPostalCode: "",
     userRadius: 100,
     isLoggedIn: false
 }

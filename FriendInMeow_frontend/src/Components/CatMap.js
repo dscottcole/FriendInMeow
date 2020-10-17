@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { connect } from "react-redux";
+import Typography from '@material-ui/core/Typography';
 
 import GoogleMapReact from 'google-map-react';
   
@@ -30,21 +31,24 @@ const CatMap = (props) => {
         title: props.clickedCatOrg.name,
         icon: require("../Images/cat-icon.ico")
         });
+
         return marker;
     };
     const renderMarkers2 = (map, maps) => {
-        let marker = new maps.Marker({
-        position: { lat: props.userLat, lng: props.userLong },
-        map,
-        title: "Your Location"
-        });
-        return marker;
+        if ( props.userLat !== 0 && props.userLong !== 0) {
+            let marker = new maps.Marker({
+            position: { lat: props.userLat, lng: props.userLong },
+            map,
+            title: "Your Location"
+            });
+            return marker;
+        }
     };
 
     let catMap = (
-        <div style={{ height: '500px', width: '500px' }}>
+        <div className="cat-map" style={{ height: '600px', width: '600px' }}>
             <GoogleMapReact
-            bootstrapURLKeys={{ key: 'AIzaSyB1e5aavA-IM5STOeAVV1DPqf5tINXDab8' }}
+            bootstrapURLKeys={{ key: process.env.REACT_APP_googleKey }}
             defaultCenter={props.userLat !== 0 && props.userLong !== 0? userInfo.center : props.clickedCatLoc}
             defaultZoom={props.clickedCat.distance !== undefined? zoomRatio : zoomDefault}
             yesIWantToUseGoogleMapApiInternals={true}
@@ -79,7 +83,7 @@ const mapStateToProps = (state) => {
         ...state.catState,
         userLat: state.userState.userLat,
         userLong: state.userState.userLong,
-        userRadius: state.userState.userRadius
+        userRadius: state.userState.userRadius,
     }
 }
 

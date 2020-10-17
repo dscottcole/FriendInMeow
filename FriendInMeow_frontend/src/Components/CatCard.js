@@ -17,12 +17,13 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import NavigateNextOutlinedIcon from '@material-ui/icons/NavigateNextOutlined';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Button from "@material-ui/core/Button";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 350,
     minWidth: 350,
-    maxHeight: 600,
     minHeight: 600
   },
   media: {
@@ -40,11 +41,11 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)',
   },
   avatarF: {
-    backgroundColor: pink[200],
+    backgroundColor: pink[300],
   },
   avatarM: {
-    backgroundColor: blue[200],
-  }
+    backgroundColor: blue[300],
+  },
 }));
 
 const CatCard = (props) => {
@@ -154,7 +155,6 @@ const CatCard = (props) => {
   }
 
   const getCatCoords = (googleRes) => {
-    console.log(googleRes)
     let location = googleRes[0].geometry.location
     let placeId = googleRes[0].place_id
 
@@ -181,23 +181,31 @@ const CatCard = (props) => {
       />
       <CardMedia
         className={classes.media}
-        image={cat.primary_photo_cropped !== null? cat.primary_photo_cropped['small'] : require('../Images/catfallback2.jpg')}
+        image={cat.primary_photo_cropped !== null? cat.primary_photo_cropped['small'] : require('../Images/catfallback3.jpg')}
         title={cat.id}
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-            {/* {cat.description !== null? cat.description : `You can request more info from the adoption organization. Click on Learn More.` } */}
+        <Typography variant="body2" color="textPrimary" component="p">
             {cat.distance !== null? `Distance: ${Math.floor(cat.distance)} miles` : null}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton color="primary" aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="navigate-to-cat">
-          {/* <NavigateNextOutlinedIcon onClick={() => {props.set_clicked_cat(cat); props.change_route('/catinfo')}} /> */}
+        {/* <IconButton aria-label="navigate-to-cat">
           <NavigateNextOutlinedIcon onClick={() => {getAdoptableKeys(cat, cat._links.organization.href)}} />
-        </IconButton>
+        </IconButton> */}
+        <Button
+        variant="contained"
+        color="primary"
+        size="small"
+        className={classes.button}
+        endIcon={<NavigateNextOutlinedIcon />}
+        onClick={() => {getAdoptableKeys(cat, cat._links.organization.href)}}
+        >
+        More Info
+        </Button>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -205,8 +213,9 @@ const CatCard = (props) => {
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
+          color="primary"
         >
-          <ExpandMoreIcon title="More Info!"/>
+          <ExpandMoreIcon />
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
@@ -218,7 +227,7 @@ const CatCard = (props) => {
           {cat.breeds.mixed !== null? <ul>{"Mixed Breed: " + cat.breeds.mixed.toString()}</ul> : null}
           {cat.breeds.unknown !== null? <ul>{"Unknown Breed: " + cat.breeds.unknown.toString()}</ul> : null}
 
-          {cat.colors !== null? <Typography variant="h6" component="h6">Colors:</Typography> : null}
+          {cat.colors.primary !== null? <Typography variant="h6" component="h6">Colors:</Typography> : null}
           {cat.colors.primary !== null? <ul>{"Primary Color: " + cat.colors.primary}</ul> : null}
           {cat.colors.secondary !== null? <ul>{"Secondary Color: " + cat.colors.secondary}</ul> : null}
 

@@ -119,12 +119,6 @@ class App extends React.Component {
 
   }
 
-  // getGoogleKey = () => {
-  //   fetch('http://localhost:3000/googlemaps')
-  //   .then(res => res.json())
-  //   .then(console.log)
-  // }
-
   getPosition = () => {
 
     if (navigator.geolocation) {
@@ -140,7 +134,7 @@ class App extends React.Component {
       if (res.state === 'denied') {
         alert('Enable location permissions for this website in your browser settings.')
       } else {
-        alert('Unable to access your location. You can continue by typing location manually.')
+        alert('Unable to access your location. You can continue by submitting location manually.')
       }
     })
   }
@@ -230,7 +224,7 @@ class App extends React.Component {
 
           <Route path="/catinfo">
             <CatShow />
-            <CatMap />
+            {/* <CatMap /> */}
           </Route>
 
 

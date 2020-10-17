@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import MyLocationIcon from '@material-ui/icons/MyLocation';
@@ -7,6 +7,9 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { FormHelperText } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +55,6 @@ const LocationForm = (props) => {
   };
 
   const handleTextChange = (event) => {
-      console.log(event.target.name)
       switch (event.target.name) {
         case 'userCity':
             props.set_city(event.target.value)
@@ -83,7 +85,7 @@ const LocationForm = (props) => {
       if (res.state === 'denied') {
         alert('Enable location permissions for this website in your browser settings.')
       } else {
-        alert('Unable to access your location. You can continue by typing location manually.')
+        alert('Unable to access your location. You can continue by submitting location manually.')
       }
     })
   }
@@ -127,7 +129,47 @@ const LocationForm = (props) => {
     props.set_radius(radius)
   }
 
+  const processManualLocation = () => {
+    
+    if ( props.userState !== "" && props.userCity !== "" && props.userPostalCode !== "") {
+      let city = props.userCity
+      let state = props.userPostalCode
+  
+      let url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${city},+${state}&key=${process.env.REACT_APP_googleKey}`
+  
+      fetch(url)
+      .then(res => res.json())
+      // .then(console.log)
+      .then(res => {
+        if (res.status === "OK") {
+          getUserCoords(res.results)
+        } else if (res.status === "ZERO_RESULTS") {
+          alert('Unable to process this location. Please revise fields and try submitting again.')
+        }
+      })
+    } else {
+      alert('Please ensure City, State, and Postal Code are provided.')
+    }
+  }
+
+  const getUserCoords = (googleRes) => {
+    let lat = googleRes[0].geometry.location.lat
+    let long = googleRes[0].geometry.location.lng
+
+    props.set_lat(lat)
+    props.set_long(long)
+  }
+
+
+  useEffect(() => {
+    if (props.userPostalCode === "" || props.userPostalCode.toString().length < 5) {
+      props.set_lat(0)
+      props.set_long(0)
+    }
+  }, [props.userPostalCode]);
+
   return (
+    <div className="location-form">
     <form className={classes.root} noValidate autoComplete="on">
       <Button
         variant="contained"
@@ -135,7 +177,7 @@ const LocationForm = (props) => {
         className={classes.button}
         startIcon={<MyLocationIcon />}
         onClick={() => getPosition()}
-      >Location</Button>
+      >{props.userPostalCode.toString().length !== 5? "Share Location" : "Location Shared"} </Button>
         
         <TextField id="outlined-basic" label="City" variant="outlined" onChange={handleTextChange} value={props.userCity} name="userCity"/>
         <TextField id="outlined-basic" label="State Abbreviation" variant="outlined" onChange={handleTextChange} value={props.userState} name="userState" />
@@ -156,7 +198,15 @@ const LocationForm = (props) => {
             </MenuItem>
           ))}
         </TextField>
+        <Button
+        variant="contained"
+        color="secondary"
+        className={classes.button}
+        // startIcon={<MyLocationIcon />}
+        onClick={() => processManualLocation()}
+        >Submit Location</Button>
     </form>
+    </div>
   );
 }
 

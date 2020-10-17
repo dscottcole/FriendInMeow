@@ -40,3 +40,18 @@ tspan {
     display: flex;
     justify-content: center;
 }
+
+.org-section {
+    text-align: left;
+}
+
+.cat-map {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.location-form {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
