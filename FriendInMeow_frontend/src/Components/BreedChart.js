@@ -67,7 +67,6 @@ const BreedChart = (props) => {
             <BarChart data={data} options={options} />
         )
         
-        let container = document.getElementById('chart-area');
         let data2 = {
             series: [
                 {

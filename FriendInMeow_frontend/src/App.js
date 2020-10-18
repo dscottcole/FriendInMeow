@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { connect } from "react-redux";
 import { BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
@@ -14,7 +14,7 @@ import CatShow from './Components/CatShow'
 import BreedChart from './Components/BreedChart'
 import TraitTable from './Components/TraitTable'
 import BreedsBackButton from './Components/BreedsBackButton';
-import CatMap from './Components/CatMap'
+import CatsBackButton from './Components/CatsBackButton';
 
 import Home from './Containers/Home';
 import BreedContainer from './Containers/BreedContainer';
@@ -24,57 +24,149 @@ import FaveContainer from './Containers/FaveContainer';
 import Profile from './Containers/Profile';
 
 
-class App extends React.Component {
+// class App extends React.Component {
 
-  handleLogin = () => {
+//   handleLogin = () => {
+//     if (localStorage.getItem('auth_key')) {
+//         this.props.set_isloggedin(true)
+//     } else {
+//         this.props.set_isloggedin(false)
+//     }
+// }
+
+//   componentDidMount = () => {
+//     this.getAdoptableKeys()
+//     this.handleLogin()
+//   }
+
+//   getAdoptableKeys = () => {
+//     fetch('http://localhost:3000/adoptable')
+//     .then(res => res.json())
+//     .then(obj => this.getAdoptableToken(obj.api_key, obj.secret_key))
+//   }
+
+//   getAdoptableToken = (apiKey, secretKey) => {
+//     fetch("https://api.petfinder.com/v2/oauth2/token", {
+//       method: "POST",
+//       headers: {
+//           'Content-Type': 'application/x-www-form-urlencoded'
+//       },
+//       body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${secretKey}`
+//     })
+//     .then(res => res.json())
+//     .then(token => this.getAdoptableCatbreeds(token.access_token))
+//   }
+
+//   getAdoptableCatbreeds = (accessToken) => {
+
+//     fetch('https://api.petfinder.com/v2/types/cat/breeds', {
+//       method: "GET",
+//       headers: {
+//           'Content-Type': 'application/json',
+//           'Authorization': `Bearer ${accessToken}`
+//       }
+//     })
+//     .then(res => res.json())
+//     .then(res => {
+
+//       let adoptableBreedNames = []
+
+//       res.breeds.forEach(cat => adoptableBreedNames = [...adoptableBreedNames, cat.name])
+
+//       this.props.get_adoptable_breed_names(adoptableBreedNames)
+//     })
+
+//   }
+
+//   render() {
+//     return (
+//       <BrowserRouter>
+//         <Switch>
+          
+//           <div className="world">
+//             <NavBar />
+
+//           <div className="body-area">
+//           <Route exact path="/">
+//             <LocationForm />
+//             <Home />
+//           </Route>
+
+//           <Route path="/breeds">
+//             <LocationForm />
+//             <BreedContainer />
+//             <BreedPagination />
+//           </Route>
+
+//           <Route path="/adoptable">
+//             <LocationForm />
+//             <CatContainer />
+//             <CatPagination />
+//           </Route>
+
+//           <Route path="/organizations">
+//             <OrgContainer />
+//           </Route>
+
+//           <Route path="/favorites">
+//             <FaveContainer />
+//           </Route>
+
+//           <Route path="/profile">
+//             <Profile />
+//           </Route>
+
+//           <Route path="/login">
+//             <Login handleLogin={this.handleLogin}/>
+//           </Route>
+
+//           <Route path="/signup">
+//             <Signup />
+//           </Route>
+
+//           <Route path="/breedinfo">
+//             <BreedShow />
+//             <TraitTable />
+//             <BreedChart />
+//             <BreedsBackButton />
+//           </Route>
+
+//           <Route path="/catinfo">
+//             <CatShow />
+//             <CatsBackButton />
+//           </Route>
+
+
+//           <Route>
+//               <Redirect to="/" />
+//           </Route>
+
+//           </div>
+//           </div>
+
+//         </Switch>
+//       </BrowserRouter>
+//     )
+//   }
+// }
+
+const App = (props) => {
+
+  const handleLogin = () => {
     if (localStorage.getItem('auth_key')) {
-        this.props.set_isloggedin(true)
+        props.set_isloggedin(true)
     } else {
-        this.props.set_isloggedin(false)
+        props.set_isloggedin(false)
     }
-}
-
-  componentDidMount = () => {
-    this.getAdoptableKeys()
-    this.handleLogin()
   }
 
-  // componentDidUpdate = () => {
-  //   this.handleLogin()
-  // }
-
-  // getBreedsKey = () => {
-  //   fetch('http://localhost:3000/breeds')
-  //   .then(res => res.json())
-  //   .then(obj => this.getBreeds(obj.api_key))
-  // }
-
-  // getBreeds = (key) => {
-  //   fetch('https://api.thecatapi.com/v1/breeds', {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'x-api-key': key
-  //     }
-  //   })
-  //   .then(res => res.json())
-  //   .then(breeds => {
-
-  //     let breedNames = []
-  //     breeds.forEach(cat => breedNames = [...breedNames, cat.name])
-
-  //     this.props.get_breeds(breeds)
-  //     this.props.get_breed_names(breedNames)
-  //   })
-  // }
-
-  getAdoptableKeys = () => {
+  const getAdoptableKeys = () => {
     fetch('http://localhost:3000/adoptable')
     .then(res => res.json())
-    .then(obj => this.getAdoptableToken(obj.api_key, obj.secret_key))
+    .then(obj => getAdoptableToken(obj.api_key, obj.secret_key))
   }
 
-  getAdoptableToken = (apiKey, secretKey) => {
+  const getAdoptableToken = (apiKey, secretKey) => {
     fetch("https://api.petfinder.com/v2/oauth2/token", {
       method: "POST",
       headers: {
@@ -83,162 +175,99 @@ class App extends React.Component {
       body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${secretKey}`
     })
     .then(res => res.json())
-    .then(token => this.getAdoptableCatbreeds(token.access_token))
-    // .then(token => this.getAdoptableCats(token.access_token))
+    .then(token => getAdoptableCatbreeds(token.access_token))
   }
 
-  // getAdoptableCats = (accessToken) => {
-  //   fetch('https://api.petfinder.com/v2/animals?type=cat', {
-  //     method: "GET",
-  //     headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': `Bearer ${accessToken}`
-  //     }
-  //   })
-  //   .then(res => res.json())
-  //   .then(console.log)
-  // }
-
-  getAdoptableCatbreeds = (accessToken) => {
+  const getAdoptableCatbreeds = (accessToken) => {
     fetch('https://api.petfinder.com/v2/types/cat/breeds', {
       method: "GET",
       headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
       }
     })
     .then(res => res.json())
     .then(res => {
-
       let adoptableBreedNames = []
-
       res.breeds.forEach(cat => adoptableBreedNames = [...adoptableBreedNames, cat.name])
-
-      this.props.get_adoptable_breed_names(adoptableBreedNames)
-    })
-
-  }
-
-  getPosition = () => {
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.showPosition, this.posError);
-    } else {
-      alert("Sorry, Geolocation is not supported by this browser.");
-    }
-  }
-
-  posError = () => {
-
-    navigator.permissions.query({name: 'geolocation'}).then( res => {
-      if (res.state === 'denied') {
-        alert('Enable location permissions for this website in your browser settings.')
-      } else {
-        alert('Unable to access your location. You can continue by submitting location manually.')
-      }
+      props.get_adoptable_breed_names(adoptableBreedNames)
     })
   }
 
-  showPosition = (position) => {
-
-    let lat = position.coords.latitude
-    let long = position.coords.longitude
-
-    this.convertToZip(lat,long)
+  useEffect(() => {
+    getAdoptableKeys()
+    handleLogin()
   }
+  , []);
 
-  convertToZip = (lat, long) => {
-    fetch('http://localhost:3000/googlemaps')
-    .then(res => res.json())
-    .then(obj => this.getZip(lat, long, obj.api_key))
-  }
+  return (
+    <BrowserRouter>
+      <Switch>
+        
+        <div className="world">
+          <NavBar />
 
-  getZip = (lat, long, googleKey) => {
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${googleKey}`)
-    .then(res => res.json())
-    .then(address => this.setZip(address))
-  }
+        <div className="body-area">
+        <Route exact path="/">
+          <LocationForm />
+          <Home />
+        </Route>
 
-  setZip = (address) => {
-    let state = address.results[5].address_components[4].short_name
-    let city = address.results[5].address_components[2].short_name
-    let postal = address.results[5].address_components[0].short_name
+        <Route path="/breeds">
+          <LocationForm />
+          <BreedContainer />
+          <BreedPagination />
+        </Route>
 
-    localStorage.setItem('userState', state)
-    localStorage.setItem('userCity', city)
-    localStorage.setItem('userPostalCode', postal)
-  }
+        <Route path="/adoptable">
+          <LocationForm />
+          <CatContainer />
+          <CatPagination />
+        </Route>
 
-  render() {
-    return (
-      <BrowserRouter>
-        <Switch>
-          
-          <div className="world">
-            <NavBar />
+        <Route path="/organizations">
+          <OrgContainer />
+        </Route>
 
-          <div className="body-area">
-          <Route exact path="/">
-            <LocationForm />
-            <Home />
-          </Route>
+        <Route path="/favorites">
+          <FaveContainer />
+        </Route>
 
-          <Route path="/breeds">
-            <LocationForm />
-            <BreedContainer />
-            <BreedPagination />
-          </Route>
+        <Route path="/profile">
+          <Profile />
+        </Route>
 
-          <Route path="/adoptable">
-            <LocationForm />
-            <CatContainer />
-            <CatPagination />
-          </Route>
+        <Route path="/login">
+          <Login handleLogin={handleLogin}/>
+        </Route>
 
-          <Route path="/organizations">
-            <OrgContainer />
-          </Route>
+        <Route path="/signup">
+          <Signup />
+        </Route>
 
-          <Route path="/favorites">
-            <FaveContainer />
-          </Route>
+        <Route path="/breedinfo">
+          <BreedShow />
+          <TraitTable />
+          <BreedChart />
+          <BreedsBackButton />
+        </Route>
 
-          <Route path="/profile">
-            <Profile />
-          </Route>
-
-          <Route path="/login">
-            <Login handleLogin={this.handleLogin}/>
-          </Route>
-
-          <Route path="/signup">
-            <Signup />
-          </Route>
-
-          <Route path="/breedinfo">
-            <BreedShow />
-            <TraitTable />
-            <BreedChart />
-            <BreedsBackButton />
-          </Route>
-
-          <Route path="/catinfo">
-            <CatShow />
-            {/* <CatMap /> */}
-          </Route>
+        <Route path="/catinfo">
+          <CatShow />
+          <CatsBackButton />
+        </Route>
 
 
-          <Route>
-              <Redirect to="/" />
-          </Route>
+        <Route>
+            <Redirect to="/" />
+        </Route>
 
-          </div>
-          </div>
+        </div>
+        </div>
 
-        </Switch>
-      </BrowserRouter>
-    )
-  }
+      </Switch>
+    </BrowserRouter>
+  )
 }
 
 const mapDispatchToProps = (dispatch) => {

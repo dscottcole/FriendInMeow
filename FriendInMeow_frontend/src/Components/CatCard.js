@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from "react-redux";
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -193,9 +193,6 @@ const CatCard = (props) => {
         <IconButton color="primary" aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        {/* <IconButton aria-label="navigate-to-cat">
-          <NavigateNextOutlinedIcon onClick={() => {getAdoptableKeys(cat, cat._links.organization.href)}} />
-        </IconButton> */}
         <Button
         variant="contained"
         color="primary"
