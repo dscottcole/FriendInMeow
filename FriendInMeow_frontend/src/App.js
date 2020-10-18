@@ -15,7 +15,6 @@ import BreedChart from './Components/BreedChart'
 import TraitTable from './Components/TraitTable'
 import BreedsBackButton from './Components/BreedsBackButton';
 import CatsBackButton from './Components/CatsBackButton';
-import CatMap from './Components/CatMap'
 
 import Home from './Containers/Home';
 import BreedContainer from './Containers/BreedContainer';

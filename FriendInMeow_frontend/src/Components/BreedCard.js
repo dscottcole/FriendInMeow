@@ -17,8 +17,8 @@ import SearchIcon from '@material-ui/icons/Search';
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
-    // minHeight: 600,
-    maxHeight: 600
+    minHeight: 600,
+    // maxHeight: 600
   },
   media: {
     height: 225,
@@ -74,7 +74,6 @@ const BreedCard = (props) => {
   }
 
   const getAdoptableKeys = (breedName) => {
-    console.log('fetched adoptables')
       if (props.adoptableBreedNames.includes(breedName)) {
         fetch('http://localhost:3000/adoptable')
         .then(res => res.json())
@@ -121,7 +120,7 @@ const BreedCard = (props) => {
 
   useEffect(() => {
     getBreedsKey()
-    getAdoptableKeys(props.breed.name)
+    // getAdoptableKeys(props.breed.name)
   }, [props.breed, props.userPostalCode, props.userRadius])
 
   let breed = props.breed

@@ -1,13 +1,10 @@
 
 import React from 'react';
 import { connect } from "react-redux";
-import Typography from '@material-ui/core/Typography';
 
 import GoogleMapReact from 'google-map-react';
   
 const CatMap = (props) => {
-
-    let cat = props.clickedCat
 
     // Thanks to Jeff Jason II (http://jeffjason.com/2011/12/google-maps-radius-to-zoom/)
     const radiusToZoom = (radius) => {

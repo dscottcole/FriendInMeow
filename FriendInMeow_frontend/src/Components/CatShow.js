@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { connect } from "react-redux";
  
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { blue } from '@material-ui/core/colors';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import Link from '@material-ui/core/Link';
 
 import OrganizationSection from './OrganizationSection';
 import CatMap from './CatMap'
@@ -38,25 +34,6 @@ const CatShow = (props) => {
   const classes = useStyles();
 
   let cat = props.clickedCat
-
-  let catWithLocation = (
-      <div>
-        <Grid className="cat-map" item xs={6}>
-            <CatMap />
-        </Grid>   
-        <Grid item xs={6}>
-            <OrganizationSection />
-        </Grid>
-      </div>
-  )
-
-  let catWithoutLocation = (
-    <div>
-      <Grid item xs={12}>
-          <OrganizationSection />
-      </Grid>
-    </div>
-)
 
   return (
     <div className={classes.root}>
@@ -108,7 +85,6 @@ const CatShow = (props) => {
             </div>
         </div>
         </div>
-        {/* {props.clickedCatLocated === true? catWithLocation : catWithoutLocation} */}
       </Grid>
     </div>
   );
