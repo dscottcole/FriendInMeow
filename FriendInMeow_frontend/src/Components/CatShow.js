@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     textAlign: 'left',
     justify: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: theme.spacing[2]
   },
   paper: {
     padding: theme.spacing(2),
@@ -38,6 +39,25 @@ const CatShow = (props) => {
 
   let cat = props.clickedCat
 
+  let catWithLocation = (
+      <div>
+        <Grid className="cat-map" item xs={6}>
+            <CatMap />
+        </Grid>   
+        <Grid item xs={6}>
+            <OrganizationSection />
+        </Grid>
+      </div>
+  )
+
+  let catWithoutLocation = (
+    <div>
+      <Grid item xs={12}>
+          <OrganizationSection />
+      </Grid>
+    </div>
+)
+
   return (
     <div className={classes.root}>
       <Grid className={classes.container} container spacing={3}>
@@ -47,28 +67,48 @@ const CatShow = (props) => {
         </Typography>
         </Grid>
         <Grid item container justify="center" xs={9} >
-          {cat.primary_photo_cropped !== null? <img src={cat.primary_photo_cropped.large} height='30%' width='30%'></img> : <img src={require('../Images/catfallback3.jpg')} height='30%' width='30%'></img>}
+          {cat.primary_photo_cropped !== null && cat.name !== undefined? <img src={cat.primary_photo_cropped.large} height='30%' width='30%'></img> : <img src={require('../Images/catfallback3.jpg')} height='30%' width='30%'></img>}
         </Grid>
-        {/* <Grid item xs={9}>
-        <Typography variant="h6" color="textPrimary" component="h6">
-            {breed.temperament}
-        </Typography>
-        <Divider className={classes.dividerFullWidth} variant="fullWidth" />
-        <Typography variant="body1" color="textPrimary" component="p">
-            {breed.description}
-        </Typography>
-        <Divider className={classes.dividerFullWidth} variant="fullWidth" />
-            {breed.alt_names !== "" ? altNames : null}
-            {breed.cfa_url !== undefined? cfaUrl : null}
-            {breed.wikipedia_url !== undefined? wikipediaUrl : null}
-            {breed.vcahospitals_url !== undefined? vcaUrl : null}
-        </Grid> */}
-        <Grid className="cat-map" item xs={6}>
-            <CatMap />
-        </Grid>   
-        <Grid item xs={6}>
-            <OrganizationSection />
+        <div className="full-cat">
+        <div className="cat-facts">
+        <Grid item xs={4}>
+            {cat.breeds !== null? <Typography variant="h6" component="h6">Breed Info:</Typography> : null}
+            {cat.breeds.primary !== null? <ul>{"Primary Breed: " + cat.breeds.primary}</ul> : null}
+            {cat.breeds.secondary !== null? <ul>{"Secondary Breed: " + cat.breeds.secondary}</ul> : null}
+            {cat.breeds.mixed !== null? <ul>{"Mixed Breed: " + cat.breeds.mixed.toString()}</ul> : null}
+            {cat.breeds.unknown !== null? <ul>{"Unknown Breed: " + cat.breeds.unknown.toString()}</ul> : null}
         </Grid>
+
+        <Grid item xs={4}>
+            {cat.colors.primary !== null? <Typography variant="h6" component="h6">Colors:</Typography> : null}
+            {cat.colors.primary !== null? <ul>{"Primary Color: " + cat.colors.primary}</ul> : null}
+            {cat.colors.secondary !== null? <ul>{"Secondary Color: " + cat.colors.secondary}</ul> : null}
+        </Grid>
+
+        <Grid item xs={4}>
+            {cat.attributes !== null? <Typography variant="h6" component="h6">Attributes:</Typography> : null}
+            {cat.attributes.spayed_neutered !== null? <ul>{"Spayed/Neutered: " + cat.attributes.spayed_neutered.toString()}</ul> : null}
+            {cat.attributes.house_trained !== null? <ul>{"House Trained: " + cat.attributes.house_trained.toString()}</ul> : null}
+            {cat.attributes.declawed !== null? <ul>{"Declawed: " + cat.attributes.declawed.toString()}</ul> : null}
+            {cat.attributes.special_needs !== null? <ul>{"Special Needs: " + cat.attributes.special_needs.toString()}</ul> : null}
+            {cat.attributes.shots_current !== null? <ul>{"Shots Current: " + cat.attributes.shots_current.toString()}</ul> : null}
+        </Grid>
+        </div>
+
+        <div className="map-org">
+            <div>
+            <Grid item xs={12}>
+                <CatMap />
+            </Grid> 
+            </div>
+            <div>
+            <Grid item xs={12}>
+                <OrganizationSection />
+            </Grid>
+            </div>
+        </div>
+        </div>
+        {/* {props.clickedCatLocated === true? catWithLocation : catWithoutLocation} */}
       </Grid>
     </div>
   );

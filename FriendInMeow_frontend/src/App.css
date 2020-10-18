@@ -41,17 +41,55 @@ tspan {
     justify-content: center;
 }
 
+.cats-back-button {
+    display: flex;
+    justify-content: center;
+}
+
 .org-section {
-    text-align: left;
+    margin: 25px;
 }
 
 .cat-map {
+    margin: 25px;
+}
+
+.full-cat {
+    margin: 25px;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
 }
 
 .location-form {
     text-align: center;
     display: flex;
     justify-content: center;
+    padding-bottom: 25px;
+}
+
+.cat-facts {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+.map-org {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.breedcard-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.breed-info {
+    margin: 10px;
+}
+
+.breed-filter {
+    margin: 10px;
 }

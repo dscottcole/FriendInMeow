@@ -11,7 +11,7 @@ const OrganizationSection = (props) => {
 
     return (
         <div className="org-section">
-            {props.clickedCatOrg.photos.length > 0 && props.clickedCatOrg.photos[0].small !== undefined? <img src={props.clickedCatOrg.photos[0].small} ></img> : null}
+            {/* {props.clickedCatOrg.photos.length > 0 && props.clickedCatOrg.photos[0].small !== undefined? <img src={props.clickedCatOrg.photos[0].small} ></img> : null} */}
             <br></br>
             {org.name !== null? <Typography variant="h5" component="h5">{org.name}</Typography> : null}
             <br></br>

@@ -89,19 +89,17 @@ const BreedContainer = (props) => {
         })
     }
 
+    const clearClickedBreed = () => {
+      if (props.clickedBreed !== undefined) {
+        props.set_clicked_breed({}, "")
+      }
+    }
+  
     useEffect(() => {
         getBreedsKey()
-        props.set_clicked_breed({},'')
+        clearClickedBreed()
         props.change_route('/breeds')
     }, [ , props.breedsPage])
-
-    // useEffect(() => {
-    //     getBreedsKey()
-    // }, [])
-
-    // useEffect(() => {
-    //     getBreedsKey2()
-    // }, [props.breedsPage])
 
     return (
         <Grid container className={classes.root} spacing={10}>

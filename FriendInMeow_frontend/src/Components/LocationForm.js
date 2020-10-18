@@ -8,9 +8,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { FormHelperText } from '@material-ui/core';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
@@ -25,27 +22,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const radii = [
-    {
-      value: '100',
-      label: '100mi',
-    },
-    {
-      value: '200',
-      label: '200mi',
-    },
-    {
-      value: '300',
-      label: '300mi',
-    },
-    {
-      value: '400',
-      label: '400mi',
-    },
-    {
-      value: '500',
-      label: '500mi',
-    },
-  ];
+  {
+    value: '100',
+    label: '100mi',
+  },
+  {
+    value: '200',
+    label: '200mi',
+  },
+  {
+    value: '300',
+    label: '300mi',
+  },
+  {
+    value: '400',
+    label: '400mi',
+  },
+  {
+    value: '500',
+    label: '500mi',
+  },
+];
 
 const LocationForm = (props) => {
   const classes = useStyles();
@@ -55,19 +52,19 @@ const LocationForm = (props) => {
   };
 
   const handleTextChange = (event) => {
-      switch (event.target.name) {
-        case 'userCity':
-            props.set_city(event.target.value)
-            break;
-        case 'userState':
-            props.set_state(event.target.value)
-            break;
-        case 'userPostalCode':
-            props.set_postal_code(event.target.value)
-            break;
-        default:
-            break;
-      }
+    switch (event.target.name) {
+      case 'userCity':
+        props.set_city(event.target.value)
+        break;
+      case 'userState':
+        props.set_state(event.target.value)
+        break;
+      case 'userPostalCode':
+        props.set_postal_code(event.target.value)
+        break;
+      default:
+        break;
+    }
   }
 
   const getPosition = () => {
@@ -81,7 +78,7 @@ const LocationForm = (props) => {
 
   const posError = () => {
 
-    navigator.permissions.query({name: 'geolocation'}).then( res => {
+    navigator.permissions.query({ name: 'geolocation' }).then(res => {
       if (res.state === 'denied') {
         alert('Enable location permissions for this website in your browser settings.')
       } else {
@@ -98,19 +95,19 @@ const LocationForm = (props) => {
     props.set_lat(lat)
     props.set_long(long)
 
-    convertToZip(lat,long)
+    convertToZip(lat, long)
   }
 
   const convertToZip = (lat, long) => {
     fetch('http://localhost:3000/googlemaps')
-    .then(res => res.json())
-    .then(obj => getZip(lat, long, obj.api_key))
+      .then(res => res.json())
+      .then(obj => getZip(lat, long, obj.api_key))
   }
 
   const getZip = (lat, long, googleKey) => {
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${googleKey}`)
-    .then(res => res.json())
-    .then(address => setZip(address))
+      .then(res => res.json())
+      .then(address => setZip(address))
   }
 
   const setZip = (address) => {
@@ -130,23 +127,23 @@ const LocationForm = (props) => {
   }
 
   const processManualLocation = () => {
-    
-    if ( props.userState !== "" && props.userCity !== "" && props.userPostalCode !== "") {
+
+    if (props.userState !== "" && props.userCity !== "" && props.userPostalCode !== "") {
       let city = props.userCity
       let state = props.userPostalCode
-  
+
       let url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${city},+${state}&key=${process.env.REACT_APP_googleKey}`
-  
+
       fetch(url)
-      .then(res => res.json())
-      // .then(console.log)
-      .then(res => {
-        if (res.status === "OK") {
-          getUserCoords(res.results)
-        } else if (res.status === "ZERO_RESULTS") {
-          alert('Unable to process this location. Please revise fields and try submitting again.')
-        }
-      })
+        .then(res => res.json())
+        // .then(console.log)
+        .then(res => {
+          if (res.status === "OK") {
+            getUserCoords(res.results)
+          } else if (res.status === "ZERO_RESULTS") {
+            alert('Unable to process this location. Please revise fields and try submitting again.')
+          }
+        })
     } else {
       alert('Please ensure City, State, and Postal Code are provided.')
     }
@@ -170,19 +167,19 @@ const LocationForm = (props) => {
 
   return (
     <div className="location-form">
-    <form className={classes.root} noValidate autoComplete="on">
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.button}
-        startIcon={<MyLocationIcon />}
-        onClick={() => getPosition()}
-      >{props.userPostalCode.toString().length !== 5? "Share Location" : "Location Shared"} </Button>
-        
-        <TextField id="outlined-basic" label="City" variant="outlined" onChange={handleTextChange} value={props.userCity} name="userCity"/>
+      <form className={classes.root} noValidate autoComplete="on">
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          startIcon={<MyLocationIcon />}
+          onClick={() => getPosition()}
+        >Current Location</Button>
+
+        <TextField id="outlined-basic" label="City" variant="outlined" onChange={handleTextChange} value={props.userCity} name="userCity" />
         <TextField id="outlined-basic" label="State Abbreviation" variant="outlined" onChange={handleTextChange} value={props.userState} name="userState" />
-        <TextField id="outlined-basic" label="Postal Code" variant="outlined" onChange={handleTextChange} value={props.userPostalCode} name="userPostalCode"/>
-        
+        <TextField id="outlined-basic" label="Postal Code" variant="outlined" onChange={handleTextChange} value={props.userPostalCode} name="userPostalCode" />
+
         <TextField
           id="outlined-select-radius"
           select
@@ -199,32 +196,32 @@ const LocationForm = (props) => {
           ))}
         </TextField>
         <Button
-        variant="contained"
-        color="secondary"
-        className={classes.button}
-        // startIcon={<MyLocationIcon />}
-        onClick={() => processManualLocation()}
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          // startIcon={<MyLocationIcon />}
+          onClick={() => processManualLocation()}
         >Submit Location</Button>
-    </form>
+      </form>
     </div>
   );
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-      set_lat: (lat) => dispatch({ type: 'SET_USER_LAT', userLat: lat }),
-      set_long: (long) => dispatch({ type: 'SET_USER_LONG', userLong: long }),
-      set_city: (city) => dispatch({ type: 'SET_USER_CITY', userCity: city }),
-      set_state: (state) => dispatch({ type: 'SET_USER_STATE', userState: state }),
-      set_postal_code: (postalCode) => dispatch({ type: 'SET_USER_CODE', userPostalCode: postalCode }),
-      set_radius: (radius) => dispatch({ type: 'SET_USER_RADIUS', userRadius: radius })
-    }
+  return {
+    set_lat: (lat) => dispatch({ type: 'SET_USER_LAT', userLat: lat }),
+    set_long: (long) => dispatch({ type: 'SET_USER_LONG', userLong: long }),
+    set_city: (city) => dispatch({ type: 'SET_USER_CITY', userCity: city }),
+    set_state: (state) => dispatch({ type: 'SET_USER_STATE', userState: state }),
+    set_postal_code: (postalCode) => dispatch({ type: 'SET_USER_CODE', userPostalCode: postalCode }),
+    set_radius: (radius) => dispatch({ type: 'SET_USER_RADIUS', userRadius: radius })
+  }
 }
-  
+
 const mapStateToProps = (state) => {
-    return {
-      ...state.userState
-    }
+  return {
+    ...state.userState
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LocationForm)

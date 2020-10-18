@@ -10,11 +10,14 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import NavigateNextOutlinedIcon from '@material-ui/icons/NavigateNextOutlined';
+import SearchIcon from '@material-ui/icons/Search';
+
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
-    minHeight: 600,
+    // minHeight: 600,
     maxHeight: 600
   },
   media: {
@@ -71,6 +74,7 @@ const BreedCard = (props) => {
   }
 
   const getAdoptableKeys = (breedName) => {
+    console.log('fetched adoptables')
       if (props.adoptableBreedNames.includes(breedName)) {
         fetch('http://localhost:3000/adoptable')
         .then(res => res.json())
@@ -96,7 +100,7 @@ const BreedCard = (props) => {
         let slug = ''
 
         if (props.userPostalCode.toString().length === 5) {
-            slug = `&location=${props.userPostalCode}&breed=${breedName}`
+            slug = `&location=${props.userPostalCode}&breed=${breedName}&distance=${props.userRadius}`
         } else if (props.userPostalCode.toString().length < 5) {
             slug = `&breed=${breedName}`
         }
@@ -117,19 +121,29 @@ const BreedCard = (props) => {
 
   useEffect(() => {
     getBreedsKey()
-    // getAdoptableKeys(props.breed.name)
+    getAdoptableKeys(props.breed.name)
   }, [props.breed, props.userPostalCode, props.userRadius])
 
   let breed = props.breed
 
+  let breedFilterButton = (
+    <Button
+      variant="contained"
+      color="primary"
+      size="small"
+      className={classes.button}
+      endIcon={<SearchIcon />}
+      onClick={() => {props.change_route('/adoptable')}}
+    > {"Adoptable: " + totalAdoptable} </Button>
+  )
+
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea onClick={() => getBreedsKey2()}>
         <CardMedia
           className={classes.media}
           image={breedImg}
           title={breed.id}
-          onClick={() => getBreedsKey2()}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
@@ -144,13 +158,23 @@ const BreedCard = (props) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          {props.userPostalCode.toString().length === 5? (`Locally Adoptable: ${totalAdoptable}`) : (`Total Adoptable: ${totalAdoptable}`)}
-        </Button>
-        <Button onClick={() => {props.set_clicked_breed(breed, breedImg); props.change_route('/breedinfo')}} size="small" color="primary">
-          Learn More
-        </Button>
+      <CardActions >
+        <div className="breedcard-buttons">
+          <div className="breed-info">
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            className={classes.button}
+            endIcon={<NavigateNextOutlinedIcon />}
+            onClick={() => {props.set_clicked_breed(breed, breedImg); props.change_route('/breedinfo')}}
+          > Learn More </Button>
+          </div>
+          <div className="breed-filter">
+          {props.adoptableBreedNames.includes(breed.name) && totalAdoptable > 0? 
+            (breedFilterButton) : null}
+          </div>
+        </div>
       </CardActions>
     </Card>
   );

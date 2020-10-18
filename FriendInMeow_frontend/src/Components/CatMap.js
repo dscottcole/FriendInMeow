@@ -60,15 +60,9 @@ const CatMap = (props) => {
             </GoogleMapReact>
       </div>
     )
-
-    let catNotLocated = (
-        <p>
-            This homie's location is being kept secret.
-        </p>
-    )
  
     return (
-        props.clickedCatLocated === true? catMap : catNotLocated
+        props.clickedCatLocated === true? catMap : null
     );
 }
 
