@@ -52,7 +52,8 @@ const CatCard = (props) => {
   const classes = useStyles();
 
   const [expanded, setExpanded] = useState(false);
-  const [favorite, setFavorite] = useState(false)
+  const [favorite, setFavorite] = useState(false);
+  const [dbId, setId] = useState(0)
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -115,7 +116,6 @@ const CatCard = (props) => {
   }
 
   const getGoogleAddress = (catObj, catOrg, googleKey) => {
-
 
     if (catObj.contact.address.address1 !== null && catObj.contact.address.city !== null && catObj.contact.address.state !== null) {
       let address = catObj.contact.address.address1.split(' ').join('+')
@@ -186,18 +186,49 @@ const CatCard = (props) => {
     .then(res => res.json())
     .then(res => {
       if (res.id) {
-        let newFaves = [...props.favoriteCats, catObj]
-        setFavorite(true)
+        let modifiedCat = {...catObj, dbId: res.id}
+        let newFaves = [...props.favoriteCats, modifiedCat]
         props.set_favorite_cats(newFaves)
+        setFavorite(true)
       } else {
-        debugger
+        alert(res.message)
       }
     })
   }
 
+  const unfavoriteCat = (catObj) => {
+
+    let unfavedCatId = props.favoriteCats.filter(faveCat => {
+      if (faveCat.id === catObj.id) {
+        return faveCat
+      }
+    })[0].dbId
+
+    fetch(`http://localhost:3000/cats/${unfavedCatId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Auth-Key': localStorage.getItem('auth_key')
+      }
+    })
+    .then(res => res.json())
+    .then(res => {
+      if (res.message) {
+        setFavorite(false)
+
+        let newFaves = props.favoriteCats.filter(faveCat => {
+          if (faveCat.id !== catObj.id) {
+            return faveCat
+          }
+        })
+        props.set_favorite_cats(newFaves)
+      }
+    })
+
+  }
+
   useEffect(() => {
-    if (props.favoriteCats.map(cat => cat.id).includes(cat.id)) {
-      debugger
+    if (props.favoriteCats.map(faveCat => faveCat.id).includes(cat.id)) {
       setFavorite(true)
     }
   }, []);
@@ -209,7 +240,7 @@ const CatCard = (props) => {
   )
 
   const yesFave = (
-    <IconButton onClick={null} color="secondary" aria-label="add to favorites">
+    <IconButton onClick={() => unfavoriteCat(cat)} color="secondary" aria-label="add to favorites">
       <FavoriteIcon />
     </IconButton>
   )

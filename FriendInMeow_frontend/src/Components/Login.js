@@ -69,6 +69,7 @@ const Login = (props) => {
         .then(token => {
             if (token['auth_key']) {
                 localStorage.setItem('auth_key', token['auth_key'])
+                props.set_user_name(token.name)
                 props.handleLogin()
                 props.change_route("/")
             } else {
@@ -145,6 +146,7 @@ const Login = (props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
       set_isloggedin: (status) => dispatch({ type: 'SET_STATUS', isLoggedIn: status }),
+      set_user_name: (name) => dispatch({ type: 'SET_USER_NAME', userName: name }),
       change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName })
     }
 }

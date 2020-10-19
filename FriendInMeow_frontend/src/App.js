@@ -23,133 +23,6 @@ import OrgContainer from './Containers/OrgContainer';
 import FaveContainer from './Containers/FaveContainer';
 import Profile from './Containers/Profile';
 
-
-// class App extends React.Component {
-
-//   handleLogin = () => {
-//     if (localStorage.getItem('auth_key')) {
-//         this.props.set_isloggedin(true)
-//     } else {
-//         this.props.set_isloggedin(false)
-//     }
-// }
-
-//   componentDidMount = () => {
-//     this.getAdoptableKeys()
-//     this.handleLogin()
-//   }
-
-//   getAdoptableKeys = () => {
-//     fetch('http://localhost:3000/adoptable')
-//     .then(res => res.json())
-//     .then(obj => this.getAdoptableToken(obj.api_key, obj.secret_key))
-//   }
-
-//   getAdoptableToken = (apiKey, secretKey) => {
-//     fetch("https://api.petfinder.com/v2/oauth2/token", {
-//       method: "POST",
-//       headers: {
-//           'Content-Type': 'application/x-www-form-urlencoded'
-//       },
-//       body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${secretKey}`
-//     })
-//     .then(res => res.json())
-//     .then(token => this.getAdoptableCatbreeds(token.access_token))
-//   }
-
-//   getAdoptableCatbreeds = (accessToken) => {
-
-//     fetch('https://api.petfinder.com/v2/types/cat/breeds', {
-//       method: "GET",
-//       headers: {
-//           'Content-Type': 'application/json',
-//           'Authorization': `Bearer ${accessToken}`
-//       }
-//     })
-//     .then(res => res.json())
-//     .then(res => {
-
-//       let adoptableBreedNames = []
-
-//       res.breeds.forEach(cat => adoptableBreedNames = [...adoptableBreedNames, cat.name])
-
-//       this.props.get_adoptable_breed_names(adoptableBreedNames)
-//     })
-
-//   }
-
-//   render() {
-//     return (
-//       <BrowserRouter>
-//         <Switch>
-          
-//           <div className="world">
-//             <NavBar />
-
-//           <div className="body-area">
-//           <Route exact path="/">
-//             <LocationForm />
-//             <Home />
-//           </Route>
-
-//           <Route path="/breeds">
-//             <LocationForm />
-//             <BreedContainer />
-//             <BreedPagination />
-//           </Route>
-
-//           <Route path="/adoptable">
-//             <LocationForm />
-//             <CatContainer />
-//             <CatPagination />
-//           </Route>
-
-//           <Route path="/organizations">
-//             <OrgContainer />
-//           </Route>
-
-//           <Route path="/favorites">
-//             <FaveContainer />
-//           </Route>
-
-//           <Route path="/profile">
-//             <Profile />
-//           </Route>
-
-//           <Route path="/login">
-//             <Login handleLogin={this.handleLogin}/>
-//           </Route>
-
-//           <Route path="/signup">
-//             <Signup />
-//           </Route>
-
-//           <Route path="/breedinfo">
-//             <BreedShow />
-//             <TraitTable />
-//             <BreedChart />
-//             <BreedsBackButton />
-//           </Route>
-
-//           <Route path="/catinfo">
-//             <CatShow />
-//             <CatsBackButton />
-//           </Route>
-
-
-//           <Route>
-//               <Redirect to="/" />
-//           </Route>
-
-//           </div>
-//           </div>
-
-//         </Switch>
-//       </BrowserRouter>
-//     )
-//   }
-// }
-
 const App = (props) => {
 
   const handleLogin = () => {
@@ -206,10 +79,10 @@ const App = (props) => {
     })
     .then(res => res.json())
     .then(res => {
-      if (res.message === undefined) {
+      if (res.message === undefined && res.length > 0) {
         getAdoptableKeys2(res)
       } else {
-        debugger
+        alert(res.message)
       }
     })
   }
@@ -246,8 +119,23 @@ const App = (props) => {
       })
       .then(res => res.json())
       .then(res => {
-        faves = [...faves, res.animal]
-        props.set_favorite_cats(faves)
+        if (res.animal.status !== "adopted") {
+          let modifiedCat = {...res.animal, dbId: cat.id}
+          faves = [...faves, modifiedCat]
+          props.set_favorite_cats(faves)
+        } else if (res.animal.status === "adopted") {
+          alert(`${cat.id}, ${cat.name}, ${cat.petfinder_id} has been adopted`)
+
+          fetch(`http://localhost:3000/cats/${cat.id}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Auth-Key': localStorage.getItem('auth_key')
+            }
+          })
+          .then(res => res.json())
+          .then(console.log)
+        }
       })
     })
   }

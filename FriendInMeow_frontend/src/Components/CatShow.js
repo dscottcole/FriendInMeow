@@ -54,21 +54,18 @@ const CatShow = (props) => {
         </Grid>
         <div className="full-cat">
         <div className="cat-facts">
-        <Grid item xs={4}>
-            {cat.breeds !== undefined && cat.breeds !== null? <Typography variant="h6" component="h6">Breed Info:</Typography> : null}
+        <Grid item xs={6}>
+            {cat.breeds !== undefined && cat.breeds !== null? <Typography variant="h6" component="h6">Breed & Appearance:</Typography> : null}
             {cat.breeds !== undefined && cat.breeds.primary !== null? <ul>{"Primary Breed: " + cat.breeds.primary}</ul> : null}
             {cat.breeds !== undefined && cat.breeds.secondary !== null? <ul>{"Secondary Breed: " + cat.breeds.secondary}</ul> : null}
             {cat.breeds !== undefined && cat.breeds.mixed !== null? <ul>{"Mixed Breed: " + cat.breeds.mixed.toString()}</ul> : null}
             {cat.breeds !== undefined && cat.breeds.unknown !== null? <ul>{"Unknown Breed: " + cat.breeds.unknown.toString()}</ul> : null}
-        </Grid>
-
-        <Grid item xs={4}>
-            {cat.colors !== undefined && cat.colors.primary !== null? <Typography variant="h6" component="h6">Colors:</Typography> : null}
             {cat.colors !== undefined && cat.colors.primary !== null? <ul>{"Primary Color: " + cat.colors.primary}</ul> : null}
             {cat.colors !== undefined && cat.colors.secondary !== null? <ul>{"Secondary Color: " + cat.colors.secondary}</ul> : null}
+            {cat.coat}
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid item xs={6}>
             {cat.attributes !== undefined && cat.attributes !== null? <Typography variant="h6" component="h6">Attributes:</Typography> : null}
             {cat.attributes !== undefined && cat.attributes.spayed_neutered !== null? <ul>{"Spayed/Neutered: " + cat.attributes.spayed_neutered.toString()}</ul> : null}
             {cat.attributes !== undefined && cat.attributes.house_trained !== null? <ul>{"House Trained: " + cat.attributes.house_trained.toString()}</ul> : null}

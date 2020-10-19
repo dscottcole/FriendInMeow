@@ -13,6 +13,11 @@ const UserReducer = (state = initialState, action) => {
 
     switch (action.type) {
 
+        case 'SET_USER_NAME':
+            return {
+                ...state,
+                userName: action.userName
+            }
         case 'SET_USER_LAT':
             return {
                 ...state,
