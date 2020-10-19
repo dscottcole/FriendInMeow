@@ -131,7 +131,6 @@ const Signup = (props) => {
             
 
           } else {
-            debugger
             props.change_route("/login")
         }
         })

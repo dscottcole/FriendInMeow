@@ -68,7 +68,6 @@ const LocationForm = (props) => {
   }
 
   const getPosition = () => {
-
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition, posError);
     } else {
@@ -77,18 +76,18 @@ const LocationForm = (props) => {
   }
 
   const posError = () => {
-
-    navigator.permissions.query({ name: 'geolocation' }).then(res => {
-      if (res.state === 'denied') {
-        alert('Enable location permissions for this website in your browser settings.')
-      } else {
-        alert('Unable to access your location. You can continue by submitting location manually.')
-      }
-    })
+    if (navigator.permissions) {
+      navigator.permissions.query({ name: 'geolocation' }).then(res => {
+        if (res.state === 'denied') {
+          alert('Enable location permissions for this website in your browser settings.')
+        }
+      })
+    } else {
+      alert('Unable to access your location. You can continue by submitting location manually.')
+    }
   }
 
   const showPosition = (position) => {
-
     let lat = position.coords.latitude
     let long = position.coords.longitude
 
@@ -136,7 +135,6 @@ const LocationForm = (props) => {
 
       fetch(url)
         .then(res => res.json())
-        // .then(console.log)
         .then(res => {
           if (res.status === "OK") {
             getUserCoords(res.results)

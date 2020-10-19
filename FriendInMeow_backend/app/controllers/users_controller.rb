@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-    before_action :get_user, only: [:show]
+    before_action :authenticate!, only: [:show]
 
 
     def create
@@ -19,16 +19,14 @@ class UsersController < ApplicationController
     end
 
     def show
-        render json: @user.to_json(
-            except: [:id, :password_digest, :password_cofirmation, :created_at, :updated_at]
-        )
+        if @user
+            render json: @user.to_json(
+                except: [:id, :password_digest, :password_confirmation, :created_at, :updated_at]
+            )
+        end
     end       
 
     private
-
-    def get_user
-        @user = User.all.find_by(id: params[:id])
-    end
 
     def user_params
         params.require(:user).permit(:username, :name, :email, :password, :password_confirmation)

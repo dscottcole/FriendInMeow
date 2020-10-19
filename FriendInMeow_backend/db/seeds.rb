@@ -7,3 +7,5 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 dan = User.create(username: "dan", name: "Daniel Cole", email:"danielscole1@gmail.com", password: "daniel", password_confirmation: "daniel")
+
+cat1 = Cat.create(name: "Crick", petfinder_id: "49514195", user_id: dan.id)

@@ -5,13 +5,19 @@ const initialState = {
     userState: '',
     userPostalCode: "",
     userRadius: 100,
-    isLoggedIn: false
+    isLoggedIn: false,
+    favoriteCats: []
 }
 
 const UserReducer = (state = initialState, action) => {
 
     switch (action.type) {
 
+        case 'SET_USER_NAME':
+            return {
+                ...state,
+                userName: action.userName
+            }
         case 'SET_USER_LAT':
             return {
                 ...state,
@@ -47,6 +53,12 @@ const UserReducer = (state = initialState, action) => {
                 ...state,
                 isLoggedIn: action.isLoggedIn
             }
+        case 'SET_FAVORITES':
+            return {
+                ...state,
+                favoriteCats: action.favoriteCats
+            }
+        
 
         default:
             return state

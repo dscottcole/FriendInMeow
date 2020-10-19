@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -51,7 +51,9 @@ const useStyles = makeStyles((theme) => ({
 const CatCard = (props) => {
   const classes = useStyles();
 
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [favorite, setFavorite] = useState(false);
+  const [dbId, setId] = useState(0)
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -115,7 +117,6 @@ const CatCard = (props) => {
 
   const getGoogleAddress = (catObj, catOrg, googleKey) => {
 
-
     if (catObj.contact.address.address1 !== null && catObj.contact.address.city !== null && catObj.contact.address.state !== null) {
       let address = catObj.contact.address.address1.split(' ').join('+')
       let city = catObj.contact.address.city.split(' ').join('+')
@@ -165,6 +166,85 @@ const CatCard = (props) => {
     props.change_route('/catinfo')
   }
 
+  const favoriteCat = (catObj) => {
+
+    let faveCat = {
+      "cat": {
+        "name": catObj.name,
+        "petfinder_id": catObj.id
+      }
+    }
+
+    fetch('http://localhost:3000/cats', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Auth-Key': localStorage.getItem('auth_key')
+      },
+      body: JSON.stringify(faveCat)
+    })
+    .then(res => res.json())
+    .then(res => {
+      if (res.id) {
+        let modifiedCat = {...catObj, dbId: res.id}
+        let newFaves = [...props.favoriteCats, modifiedCat]
+        props.set_favorite_cats(newFaves)
+        setFavorite(true)
+      } else {
+        alert(res.message)
+      }
+    })
+  }
+
+  const unfavoriteCat = (catObj) => {
+
+    let unfavedCatId = props.favoriteCats.filter(faveCat => {
+      if (faveCat.id === catObj.id) {
+        return faveCat
+      }
+    })[0].dbId
+
+    fetch(`http://localhost:3000/cats/${unfavedCatId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Auth-Key': localStorage.getItem('auth_key')
+      }
+    })
+    .then(res => res.json())
+    .then(res => {
+      if (res.message) {
+        setFavorite(false)
+
+        let newFaves = props.favoriteCats.filter(faveCat => {
+          if (faveCat.id !== catObj.id) {
+            return faveCat
+          }
+        })
+        props.set_favorite_cats(newFaves)
+      }
+    })
+
+  }
+
+  useEffect(() => {
+    if (props.favoriteCats.map(faveCat => faveCat.id).includes(cat.id)) {
+      setFavorite(true)
+    }
+  }, []);
+
+  const notFave = (
+    <IconButton onClick={() => favoriteCat(cat)} color="primary" aria-label="add to favorites">
+      <FavoriteIcon />
+    </IconButton>
+  )
+
+  const yesFave = (
+    <IconButton onClick={() => unfavoriteCat(cat)} color="secondary" aria-label="add to favorites">
+      <FavoriteIcon />
+    </IconButton>
+  )
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -193,9 +273,10 @@ const CatCard = (props) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton color="primary" aria-label="add to favorites">
+        {/* <IconButton color="primary" aria-label="add to favorites">
           <FavoriteIcon />
-        </IconButton>
+        </IconButton> */}
+        {favorite === false ? notFave : yesFave}
         <Button
           variant="contained"
           color="primary"
@@ -253,13 +334,15 @@ const mapDispatchToProps = (dispatch) => {
     set_clicked_cat_place_id: (placeId) => dispatch({ type: 'SET_CLICKED_CAT_PLACE_ID', clickedCatPlaceId: placeId }),
     set_clicked_cat_org: (org) => dispatch({ type: 'SET_CLICKED_CAT_ORG', clickedCatOrg: org }),
     set_clicked_cat_located: (status) => dispatch({ type: 'SET_CLICKED_CAT_LOCATED', clickedCatLocated: status }),
+    set_favorite_cats: (cats) => dispatch({ type: 'SET_FAVORITES', favoriteCats: cats })
 
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    ...state.catState
+    ...state.catState,
+    favoriteCats: state.userState.favoriteCats
   }
 }
 
