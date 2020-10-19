@@ -93,3 +93,23 @@ tspan {
 .breed-filter {
     margin: 10px;
 }
+
+.filter-adoptable {
+    display: flex;
+    flex-direction: row;
+}
+
+.cat-filter {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 25px;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+}
+
+.no-cats {
+    padding-right: 250px;
+    padding-top: 125px;
+}

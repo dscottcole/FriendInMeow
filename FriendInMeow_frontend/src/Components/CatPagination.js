@@ -23,7 +23,7 @@ const CatPagination = (props) => {
   return (
     <div className="pagination">
         <div className={classes.root}>
-        <Typography>Page: {props.adoptableCatsPage}</Typography>
+        {/* <Typography>Page: {props.adoptableCatsPage}</Typography> */}
         <Pagination count={props.adoptableCatsPages} page={props.adoptableCatsPage} onChange={handleChange} />
         </div>
     </div>

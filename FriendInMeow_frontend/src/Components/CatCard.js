@@ -61,77 +61,77 @@ const CatCard = (props) => {
 
   let femaleAvatar = (
     <Avatar aria-label="gender" className={classes.avatarF}>
-    {cat.gender[0]}
+      {cat.gender[0]}
     </Avatar>
   )
 
   let maleAvatar = (
-      <Avatar aria-label="gender" className={classes.avatarM}>
+    <Avatar aria-label="gender" className={classes.avatarM}>
       {cat.gender[0]}
-      </Avatar>
+    </Avatar>
   )
 
   const getAdoptableKeys = (catObj, orgUrl) => {
     props.set_clicked_cat(catObj)
 
     fetch('http://localhost:3000/adoptable')
-    .then(res => res.json())
-    .then(obj => getAdoptableToken(obj.api_key, obj.secret_key, catObj, orgUrl))
+      .then(res => res.json())
+      .then(obj => getAdoptableToken(obj.api_key, obj.secret_key, catObj, orgUrl))
   }
 
   const getAdoptableToken = (apiKey, secretKey, catObj, orgUrl) => {
     fetch("https://api.petfinder.com/v2/oauth2/token", {
       method: "POST",
       headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
       body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${secretKey}`
     })
-    .then(res => res.json())
-    .then(token => getOrgInfo(token.access_token, catObj, orgUrl))
+      .then(res => res.json())
+      .then(token => getOrgInfo(token.access_token, catObj, orgUrl))
   }
 
   const getOrgInfo = (accessToken, catObj, orgUrl) => {
     fetch(`https://api.petfinder.com${orgUrl}`, {
       method: "GET",
       headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
       }
     })
-    .then(res => res.json())
-    .then(res => {
-      
-      getGoogleKey(catObj, res.organization)
-      props.set_clicked_cat_org(res.organization)
-    })
+      .then(res => res.json())
+      .then(res => {
+
+        getGoogleKey(catObj, res.organization)
+        props.set_clicked_cat_org(res.organization)
+      })
   }
 
   const getGoogleKey = (catObj, catOrg) => {
     fetch('http://localhost:3000/googlemaps')
-    .then(res => res.json())
-    .then(obj => getGoogleAddress(catObj, catOrg, obj.api_key))
+      .then(res => res.json())
+      .then(obj => getGoogleAddress(catObj, catOrg, obj.api_key))
   }
 
   const getGoogleAddress = (catObj, catOrg, googleKey) => {
-    
 
-    if ( catObj.contact.address.address1 !== null && catObj.contact.address.city !== null && catObj.contact.address.state !== null ) {
+
+    if (catObj.contact.address.address1 !== null && catObj.contact.address.city !== null && catObj.contact.address.state !== null) {
       let address = catObj.contact.address.address1.split(' ').join('+')
       let city = catObj.contact.address.city.split(' ').join('+')
       let state = catObj.contact.address.state
-  
+
       let url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${address},+${city},+${state}&key=${googleKey}`
-  
+
       fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        if (res.status !== "ZERO_RESULTS") {
-          getCatCoords(res.results)
-        } else {
-          props.change_route('/catinfo')
-        }
-      })
+        .then(res => res.json())
+        .then(res => {
+          if (res.status !== "ZERO_RESULTS") {
+            getCatCoords(res.results)
+          } else {
+            props.change_route('/catinfo')
+          }
+        })
     } else if (catOrg.address.address1 !== null && catOrg.address.city !== null && catOrg.address.state !== null) {
       let address = catOrg.address.address1.split(' ').join('+')
       let city = catOrg.address.city.split(' ').join('+')
@@ -140,14 +140,14 @@ const CatCard = (props) => {
       let url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${address},+${city},+${state}&key=${googleKey}`
 
       fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        if (res.status !== "ZERO_RESULTS") {
-          getCatCoords(res.results)
-        } else {
-          props.change_route('/catinfo')
-        }
-      })
+        .then(res => res.json())
+        .then(res => {
+          if (res.status !== "ZERO_RESULTS") {
+            getCatCoords(res.results)
+          } else {
+            props.change_route('/catinfo')
+          }
+        })
     } else {
       props.change_route('/catinfo')
     }
@@ -169,7 +169,7 @@ const CatCard = (props) => {
     <Card className={classes.root}>
       <CardHeader
         avatar={
-            cat.gender === 'Female' ? femaleAvatar : maleAvatar
+          cat.gender === 'Female' ? femaleAvatar : maleAvatar
         }
         action={
           <IconButton aria-label="settings">
@@ -181,12 +181,15 @@ const CatCard = (props) => {
       />
       <CardMedia
         className={classes.media}
-        image={cat.primary_photo_cropped !== null? cat.primary_photo_cropped['small'] : require('../Images/catfallback3.jpg')}
+        image={cat.primary_photo_cropped !== null ? cat.primary_photo_cropped['small'] : require('../Images/catfallback3.jpg')}
         title={cat.id}
       />
       <CardContent>
         <Typography variant="body2" color="textPrimary" component="p">
-            {cat.distance !== null? `Distance: ${Math.floor(cat.distance)} miles` : null}
+          {cat.size !== null ? `Size: ${cat.size}` : null}
+        </Typography>
+        <Typography variant="body2" color="textPrimary" component="p">
+          {cat.distance !== null ? `Distance: ${Math.floor(cat.distance)} miles` : null}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -194,14 +197,14 @@ const CatCard = (props) => {
           <FavoriteIcon />
         </IconButton>
         <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        className={classes.button}
-        endIcon={<NavigateNextOutlinedIcon />}
-        onClick={() => {getAdoptableKeys(cat, cat._links.organization.href)}}
+          variant="contained"
+          color="primary"
+          size="small"
+          className={classes.button}
+          endIcon={<NavigateNextOutlinedIcon />}
+          onClick={() => { getAdoptableKeys(cat, cat._links.organization.href) }}
         >
-        More Info
+          More Info
         </Button>
         <IconButton
           className={clsx(classes.expand, {
@@ -218,22 +221,22 @@ const CatCard = (props) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
 
-          {cat.breeds !== null? <Typography variant="h6" component="h6">Breed Info:</Typography> : null}
-          {cat.breeds.primary !== null? <ul>{"Primary Breed: " + cat.breeds.primary}</ul> : null}
-          {cat.breeds.secondary !== null? <ul>{"Secondary Breed: " + cat.breeds.secondary}</ul> : null}
-          {cat.breeds.mixed !== null? <ul>{"Mixed Breed: " + cat.breeds.mixed.toString()}</ul> : null}
-          {cat.breeds.unknown !== null? <ul>{"Unknown Breed: " + cat.breeds.unknown.toString()}</ul> : null}
+          {cat.breeds !== null ? <Typography variant="h6" component="h6">Breed Info:</Typography> : null}
+          {cat.breeds.primary !== null ? <ul>{"Primary Breed: " + cat.breeds.primary}</ul> : null}
+          {cat.breeds.secondary !== null ? <ul>{"Secondary Breed: " + cat.breeds.secondary}</ul> : null}
+          {cat.breeds.mixed !== null ? <ul>{"Mixed Breed: " + cat.breeds.mixed.toString()}</ul> : null}
+          {cat.breeds.unknown !== null ? <ul>{"Unknown Breed: " + cat.breeds.unknown.toString()}</ul> : null}
 
-          {cat.colors.primary !== null? <Typography variant="h6" component="h6">Colors:</Typography> : null}
-          {cat.colors.primary !== null? <ul>{"Primary Color: " + cat.colors.primary}</ul> : null}
-          {cat.colors.secondary !== null? <ul>{"Secondary Color: " + cat.colors.secondary}</ul> : null}
+          {cat.colors.primary !== null ? <Typography variant="h6" component="h6">Colors:</Typography> : null}
+          {cat.colors.primary !== null ? <ul>{"Primary Color: " + cat.colors.primary}</ul> : null}
+          {cat.colors.secondary !== null ? <ul>{"Secondary Color: " + cat.colors.secondary}</ul> : null}
 
-          {cat.attributes !== null? <Typography variant="h6" component="h6">Attributes:</Typography> : null}
-          {cat.attributes.spayed_neutered !== null? <ul>{"Spayed/Neutered: " + cat.attributes.spayed_neutered.toString()}</ul> : null}
-          {cat.attributes.house_trained !== null? <ul>{"House Trained: " + cat.attributes.house_trained.toString()}</ul> : null}
-          {cat.attributes.declawed !== null? <ul>{"Declawed: " + cat.attributes.declawed.toString()}</ul> : null}
-          {cat.attributes.special_needs !== null? <ul>{"Special Needs: " + cat.attributes.special_needs.toString()}</ul> : null}
-          {cat.attributes.shots_current !== null? <ul>{"Shots Current: " + cat.attributes.shots_current.toString()}</ul> : null}
+          {cat.attributes !== null ? <Typography variant="h6" component="h6">Attributes:</Typography> : null}
+          {cat.attributes.spayed_neutered !== null ? <ul>{"Spayed/Neutered: " + cat.attributes.spayed_neutered.toString()}</ul> : null}
+          {cat.attributes.house_trained !== null ? <ul>{"House Trained: " + cat.attributes.house_trained.toString()}</ul> : null}
+          {cat.attributes.declawed !== null ? <ul>{"Declawed: " + cat.attributes.declawed.toString()}</ul> : null}
+          {cat.attributes.special_needs !== null ? <ul>{"Special Needs: " + cat.attributes.special_needs.toString()}</ul> : null}
+          {cat.attributes.shots_current !== null ? <ul>{"Shots Current: " + cat.attributes.shots_current.toString()}</ul> : null}
 
 
         </CardContent>
@@ -246,7 +249,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName }),
     set_clicked_cat: (cat) => dispatch({ type: 'SET_CLICKED_CAT', clickedCat: cat }),
-    set_clicked_cat_loc: (loc) => dispatch({ type: 'SET_CLICKED_CAT_LOC', clickedCatLoc: loc}),
+    set_clicked_cat_loc: (loc) => dispatch({ type: 'SET_CLICKED_CAT_LOC', clickedCatLoc: loc }),
     set_clicked_cat_place_id: (placeId) => dispatch({ type: 'SET_CLICKED_CAT_PLACE_ID', clickedCatPlaceId: placeId }),
     set_clicked_cat_org: (org) => dispatch({ type: 'SET_CLICKED_CAT_ORG', clickedCatOrg: org }),
     set_clicked_cat_located: (status) => dispatch({ type: 'SET_CLICKED_CAT_LOCATED', clickedCatLocated: status }),

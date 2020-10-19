@@ -183,10 +183,9 @@ const LocationForm = (props) => {
         <TextField
           id="outlined-select-radius"
           select
-          label="Select"
+          label="Search Radius"
           value={props.userRadius}
           onChange={handleSelectChange}
-          helperText="Please select your search radius"
           variant="outlined"
         >
           {radii.map((option) => (

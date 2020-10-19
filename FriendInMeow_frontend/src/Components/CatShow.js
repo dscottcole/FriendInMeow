@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from "react-redux";
  
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,6 +35,12 @@ const CatShow = (props) => {
 
   let cat = props.clickedCat
 
+  useEffect(() => {
+    if (cat === undefined) {
+      props.change_route("/adoptable")
+    }
+  }, [])
+
   return (
     <div className={classes.root}>
       <Grid className={classes.container} container spacing={3}>
@@ -49,26 +55,26 @@ const CatShow = (props) => {
         <div className="full-cat">
         <div className="cat-facts">
         <Grid item xs={4}>
-            {cat.breeds !== null? <Typography variant="h6" component="h6">Breed Info:</Typography> : null}
-            {cat.breeds.primary !== null? <ul>{"Primary Breed: " + cat.breeds.primary}</ul> : null}
-            {cat.breeds.secondary !== null? <ul>{"Secondary Breed: " + cat.breeds.secondary}</ul> : null}
-            {cat.breeds.mixed !== null? <ul>{"Mixed Breed: " + cat.breeds.mixed.toString()}</ul> : null}
-            {cat.breeds.unknown !== null? <ul>{"Unknown Breed: " + cat.breeds.unknown.toString()}</ul> : null}
+            {cat.breeds !== undefined && cat.breeds !== null? <Typography variant="h6" component="h6">Breed Info:</Typography> : null}
+            {cat.breeds !== undefined && cat.breeds.primary !== null? <ul>{"Primary Breed: " + cat.breeds.primary}</ul> : null}
+            {cat.breeds !== undefined && cat.breeds.secondary !== null? <ul>{"Secondary Breed: " + cat.breeds.secondary}</ul> : null}
+            {cat.breeds !== undefined && cat.breeds.mixed !== null? <ul>{"Mixed Breed: " + cat.breeds.mixed.toString()}</ul> : null}
+            {cat.breeds !== undefined && cat.breeds.unknown !== null? <ul>{"Unknown Breed: " + cat.breeds.unknown.toString()}</ul> : null}
         </Grid>
 
         <Grid item xs={4}>
-            {cat.colors.primary !== null? <Typography variant="h6" component="h6">Colors:</Typography> : null}
-            {cat.colors.primary !== null? <ul>{"Primary Color: " + cat.colors.primary}</ul> : null}
-            {cat.colors.secondary !== null? <ul>{"Secondary Color: " + cat.colors.secondary}</ul> : null}
+            {cat.colors !== undefined && cat.colors.primary !== null? <Typography variant="h6" component="h6">Colors:</Typography> : null}
+            {cat.colors !== undefined && cat.colors.primary !== null? <ul>{"Primary Color: " + cat.colors.primary}</ul> : null}
+            {cat.colors !== undefined && cat.colors.secondary !== null? <ul>{"Secondary Color: " + cat.colors.secondary}</ul> : null}
         </Grid>
 
         <Grid item xs={4}>
-            {cat.attributes !== null? <Typography variant="h6" component="h6">Attributes:</Typography> : null}
-            {cat.attributes.spayed_neutered !== null? <ul>{"Spayed/Neutered: " + cat.attributes.spayed_neutered.toString()}</ul> : null}
-            {cat.attributes.house_trained !== null? <ul>{"House Trained: " + cat.attributes.house_trained.toString()}</ul> : null}
-            {cat.attributes.declawed !== null? <ul>{"Declawed: " + cat.attributes.declawed.toString()}</ul> : null}
-            {cat.attributes.special_needs !== null? <ul>{"Special Needs: " + cat.attributes.special_needs.toString()}</ul> : null}
-            {cat.attributes.shots_current !== null? <ul>{"Shots Current: " + cat.attributes.shots_current.toString()}</ul> : null}
+            {cat.attributes !== undefined && cat.attributes !== null? <Typography variant="h6" component="h6">Attributes:</Typography> : null}
+            {cat.attributes !== undefined && cat.attributes.spayed_neutered !== null? <ul>{"Spayed/Neutered: " + cat.attributes.spayed_neutered.toString()}</ul> : null}
+            {cat.attributes !== undefined && cat.attributes.house_trained !== null? <ul>{"House Trained: " + cat.attributes.house_trained.toString()}</ul> : null}
+            {cat.attributes !== undefined && cat.attributes.declawed !== null? <ul>{"Declawed: " + cat.attributes.declawed.toString()}</ul> : null}
+            {cat.attributes !== undefined && cat.attributes.special_needs !== null? <ul>{"Special Needs: " + cat.attributes.special_needs.toString()}</ul> : null}
+            {cat.attributes !== undefined && cat.attributes.shots_current !== null? <ul>{"Shots Current: " + cat.attributes.shots_current.toString()}</ul> : null}
         </Grid>
         </div>
 
