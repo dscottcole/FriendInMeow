@@ -5,6 +5,7 @@ const initialState = {
     adoptableCats: [],
     adoptableCatsPage: 1,
     adoptableCatsPages: 0,
+    filteredAdoptableCats: [],
     breedsPage: 0,
     breedsPages: 0,
     clickedBreed: {},
@@ -13,7 +14,11 @@ const initialState = {
     clickedCatLoc: {},
     clickedCatLocated: false,
     clickedCatPlaceId: '',
-    clickedCatOrg: {}
+    clickedCatOrg: {},
+    isFiltered: false,
+    filterBreed: "",
+    filterGender: "",
+    filterAge: ""
 }
 
 const CatReducer = (state = initialState, action) => {
@@ -22,16 +27,16 @@ const CatReducer = (state = initialState, action) => {
 
         case 'GET_BREEDS':
             return {
-                ...state, 
+                ...state,
                 breeds: action.breeds
             }
 
         case 'GET_BREED_NAMES':
             return {
-                ...state, 
+                ...state,
                 breedNames: action.breedNames
             }
-        
+
         case 'GET_ADOPTABLE_BREED_NAMES':
             return {
                 ...state,
@@ -41,6 +46,31 @@ const CatReducer = (state = initialState, action) => {
             return {
                 ...state,
                 adoptableCats: action.adoptableCats
+            }
+        case 'SET_FILTERED_STATUS':
+            return {
+                ...state,
+                isFiltered: action.isFiltered
+            }
+        case 'SET_FILTERED_CATS':
+            return {
+                ...state,
+                filteredAdoptableCats: action.filteredAdoptableCats
+            }
+        case 'SET_FILTER_BREED':
+            return {
+                ...state,
+                filterBreed: action.filterBreed
+            }
+        case 'SET_FILTER_GENDER':
+            return {
+                ...state,
+                filterGender: action.filterGender
+            }
+        case 'SET_FILTER_AGE':
+            return {
+                ...state,
+                filterAge: action.filterAge
             }
         case 'SET_CATS_TOTAL':
             return {
@@ -73,7 +103,6 @@ const CatReducer = (state = initialState, action) => {
                 clickedBreed: action.clickedBreed,
                 clickedBreedImg: action.clickedBreedImg
             }
-        
         case 'SET_CLICKED_CAT':
             return {
                 ...state,
@@ -99,7 +128,7 @@ const CatReducer = (state = initialState, action) => {
                 ...state,
                 clickedCatOrg: action.clickedCatOrg
             }
-    
+
 
         default:
             return state

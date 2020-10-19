@@ -24,8 +24,6 @@ const BreedContainer = (props) => {
     const classes = useStyles();
     const breedLimit = 20
 
-    // const [initialMount, setInitialMount] = useState(true)
-
     const getBreedsKey = () => {
         fetch('http://localhost:3000/breeds')
         .then(res => res.json())
@@ -34,17 +32,6 @@ const BreedContainer = (props) => {
             getBreedsPaginated(obj.api_key)
         })
     }
-
-    // const getBreedsKey2 = () => {
-    //     if (initialMount !== true) {
-    //         fetch('http://localhost:3000/breeds')
-    //         .then(res => res.json())
-    //         .then(obj => {
-    //             getBreeds(obj.api_key)
-    //             getBreedsPaginated(obj.api_key)
-    //         })
-    //     }
-    // }
     
     const getBreeds = (key) => {
         fetch('https://api.thecatapi.com/v1/breeds', {
@@ -64,7 +51,6 @@ const BreedContainer = (props) => {
             breeds.forEach(cat => breedNames = [...breedNames, cat.name])
             
             props.get_breed_names(breedNames)
-            // setInitialMount(false)
         })
     }
     

@@ -23,7 +23,7 @@ const BreedPagination = (props) => {
   return (
     <div className="pagination">
         <div className={classes.root}>
-        <Typography>Page: {props.breedsPage + 1}</Typography>
+        {/* <Typography>Page: {props.breedsPage + 1}</Typography> */}
         <Pagination count={props.breedsPages} page={props.breedsPage + 1} onChange={handleChange} />
         </div>
     </div>
