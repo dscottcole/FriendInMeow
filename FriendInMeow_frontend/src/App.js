@@ -194,11 +194,75 @@ const App = (props) => {
     })
   }
 
+  const getFavoriteCats = () => {
+    console.log('I have fetch your faves, dawg.')
+
+    fetch('http://localhost:3000/cats', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Auth-Key': localStorage.getItem('auth_key')
+      }
+    })
+    .then(res => res.json())
+    .then(res => {
+      if (res.message === undefined) {
+        getAdoptableKeys2(res)
+      } else {
+        debugger
+      }
+    })
+  }
+
+  const getAdoptableKeys2 = (faveCatArray) => {
+    fetch('http://localhost:3000/adoptable')
+    .then(res => res.json())
+    .then(obj => getAdoptableToken2(obj.api_key, obj.secret_key, faveCatArray))
+  }
+
+  const getAdoptableToken2 = (apiKey, secretKey, faveCatArray) => {
+    fetch("https://api.petfinder.com/v2/oauth2/token", {
+      method: "POST",
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${secretKey}`
+    })
+    .then(res => res.json())
+    .then(token => setFavoriteCats(token.access_token, faveCatArray))
+  }
+
+  const setFavoriteCats = (accessToken, faveCatArray) => {
+
+    let faves = []
+
+    faveCatArray.map(cat => {
+      fetch(`https://api.petfinder.com/v2/animals/${cat.petfinder_id}`, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+      .then(res => res.json())
+      .then(res => {
+        faves = [...faves, res.animal]
+        props.set_favorite_cats(faves)
+      })
+    })
+  }
+
   useEffect(() => {
     getAdoptableKeys()
     handleLogin()
   }
   , []);
+
+  useEffect(() => {
+    if (props.isLoggedIn === true) {
+      getFavoriteCats()
+    }
+  }, [props.isLoggedIn]);
 
   return (
     <BrowserRouter>
@@ -273,14 +337,16 @@ const App = (props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     set_isloggedin: (status) => dispatch({ type: 'SET_STATUS', isLoggedIn: status }),
-    get_adoptable_breed_names: (adoptableBreedNames) => dispatch({ type: 'GET_ADOPTABLE_BREED_NAMES', adoptableBreedNames: adoptableBreedNames })
+    get_adoptable_breed_names: (adoptableBreedNames) => dispatch({ type: 'GET_ADOPTABLE_BREED_NAMES', adoptableBreedNames: adoptableBreedNames }),
+    set_favorite_cats: (cats) => dispatch({ type: 'SET_FAVORITES', favoriteCats: cats })
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     ...state.catState,
-    ...state.userState
+    ...state.userState,
+    isLoggedIn: state.userState.isLoggedIn
   }
 }
 
