@@ -15,6 +15,7 @@ import BreedChart from './Components/BreedChart'
 import TraitTable from './Components/TraitTable'
 import BreedsBackButton from './Components/BreedsBackButton';
 import CatsBackButton from './Components/CatsBackButton';
+import FaveCatsBackButton from './Components/FaveCatsBackButton';
 
 import Home from './Containers/Home';
 import BreedContainer from './Containers/BreedContainer';
@@ -81,8 +82,6 @@ const App = (props) => {
     .then(res => {
       if (res.message === undefined && res.length > 0) {
         getAdoptableKeys2(res)
-      } else {
-        alert(res.message)
       }
     })
   }
@@ -209,6 +208,10 @@ const App = (props) => {
           <CatsBackButton />
         </Route>
 
+        <Route path="/faveinfo">
+          <CatShow />
+          <FaveCatsBackButton />
+        </Route>
 
         <Route>
             <Redirect to="/" />

@@ -22,9 +22,9 @@ const OrganizationSection = (props) => {
             {org.website !== undefined? <Typography variant="h6" component="h6"> Website: </Typography> :null}
             {org.website !== undefined? <Link href={org.website} variant="body2">{org.website}</Link> : null}
             <Typography variant="h6" component="h6"> Address: </Typography>
-            {org.addres !== undefined && org.address.address1 !== null? <ul>{org.address.address1}</ul> : null}
-            {org.addres !== undefined && org.address.address2 !== null? <ul>{org.address.address2}</ul> : null}
-            {org.addres !== undefined && org.address.city !== null && org.address.state !== null && org.address.postcode !== null? <ul>{org.address.city + ", " + org.address.state + " " + org.address.postcode}</ul> : null}
+            {org.address !== undefined && org.address.address1 !== null? <ul>{org.address.address1}</ul> : null}
+            {org.address !== undefined && org.address.address2 !== null? <ul>{org.address.address2}</ul> : null}
+            {org.address !== undefined && org.address.city !== null && org.address.state !== null && org.address.postcode !== null? <ul>{org.address.city + ", " + org.address.state + " " + org.address.postcode}</ul> : null}
             {props.userPostalCode !== ""? <Typography variant="h6" component="h6"> Distance: </Typography> : null}
             {props.clickedCat.distance !== null? <Typography variant="body1" component="body1">{Math.floor(props.clickedCat.distance) + " miles"}</Typography> : null}
 

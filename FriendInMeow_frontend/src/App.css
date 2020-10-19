@@ -70,7 +70,8 @@ tspan {
 .cat-facts {
     display: flex;
     flex-direction: row;
-    text-align: center;
+    justify-content: space-evenly;
+    margin: auto;
 }
 
 .map-org {
