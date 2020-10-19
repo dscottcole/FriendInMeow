@@ -107,7 +107,7 @@ const CatContainer = (props) => {
       <Grid container className={classes.root} spacing={12}>
         <Grid item xs={12}>
           <Grid container justify="center" spacing={spacing}>
-            {props.adoptableCats.length > 0? catCards : noCats}
+            {props.adoptableCats.length > 0 ? catCards : noCats}
           </Grid>
         </Grid>
       </Grid>
