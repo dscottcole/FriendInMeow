@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
 import { connect } from "react-redux";
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,20 +20,76 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Signup = (props) => {
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const Profile = (props) => {
     const classes = useStyles();
 
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+    let [user_id, setUserId] = useState(0)
     let [username, setUsername] = useState('');
     let [name, setName] = useState('');
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('');
     let [password_confirmation, setPasswordConfirmation] = useState('');
 
+    let [isChangingPassword, setIsChangingPassword] = useState(false)
+
     let [usernameE, setUsernameE] = useState('');
     let [nameE, setNameE] = useState('');
     let [emailE, setEmailE] = useState('');
     let [passwordE, setPasswordE] = useState('');
     let [password_confirmationE, setPasswordConfirmationE] = useState('');
+
+    const getUserId = () => {
+        fetch('http://localhost:3000/getid', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Auth-Key': localStorage.getItem('auth_key')
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                setUserId(res.user_id)
+                getUserInfo(res.user_id)
+            })
+    }
+
+    const getUserInfo = (id) => {
+        fetch(`http://localhost:3000/users/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Auth-Key': localStorage.getItem('auth_key')
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                setUsername(res.username)
+                setName(res.name)
+                setEmail(res.email)
+            })
+    }
+
+    useEffect(() => {
+        getUserId()
+    }, []);
 
     const handleFormChange = (e) => {
 
@@ -55,38 +115,51 @@ const Signup = (props) => {
         }
     }
 
-    const clearState = () => {
-        setUsername('')
-        setName('');
-        setEmail('');
-        setPassword('');
-        setPasswordConfirmation('');
-
+    const clearEState = () => {
+        setUsernameE('')
+        setNameE('');
+        setEmailE('');
+        setPasswordE('');
+        setPasswordConfirmationE('');
+        setIsChangingPassword(false)
     }
 
     const handleSubmit = () => {
 
-        let newUser = {
-            "user": {
-                "username": username,
-                "name": name,
-                "email": email,
-                "password": password,
-                "password_confirmation": password_confirmation
+        let updatedUser = {}
+
+        if (password === "" && password_confirmation === "") {
+            updatedUser = {
+                "user": {
+                    "username": username,
+                    "name": name,
+                    "email": email
+                }
+            }
+        } else {
+            updatedUser = {
+                "user": {
+                    "username": username,
+                    "name": name,
+                    "email": email,
+                    "password": password,
+                    "password_confirmation": password_confirmation
+                }
             }
         }
 
         // clearState()
-        signUp(newUser)
+        editUser(updatedUser)
     }
 
-    const signUp = (newUser) => {
-        fetch('http://localhost:3000/users', {
-            method: 'POST',
+    const editUser = (updatedUser) => {
+        fetch(`http://localhost:3000/users/${user_id}`, {
+            method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Auth-Key': localStorage.getItem('auth_key')
             },
-            body: JSON.stringify(newUser)
+            body: JSON.stringify(updatedUser)
         })
             .then(res => res.json())
             .then(res => {
@@ -129,10 +202,9 @@ const Signup = (props) => {
                     setPasswordE(password_e);
                     setPasswordConfirmationE(password_confirmation_e);
 
-
                 } else {
-                    props.change_value(3)
-                    props.change_route("/login")
+                    setOpen(true);
+                    clearEState()
                 }
             })
     }
@@ -141,7 +213,7 @@ const Signup = (props) => {
         <TextField
             // id="outlined-error-helper-text"
             label="Username"
-            defaultValue={username}
+            value={username}
 
             variant="outlined"
             name="username"
@@ -153,7 +225,7 @@ const Signup = (props) => {
             error
             // id="outlined-error-helper-text"
             label="Username"
-            defaultValue={username}
+            value={username}
             helperText={usernameE}
             variant="outlined"
             name="username"
@@ -164,7 +236,7 @@ const Signup = (props) => {
         <TextField
             // id="outlined-error-helper-text"
             label="Full Name"
-            defaultValue={name}
+            value={name}
             variant="outlined"
             name="name"
         />
@@ -175,7 +247,7 @@ const Signup = (props) => {
             error
             // id="outlined-error-helper-text"
             label="Full Name"
-            defaultValue={name}
+            value={name}
             helperText={nameE}
             variant="outlined"
             name="name"
@@ -186,7 +258,7 @@ const Signup = (props) => {
         <TextField
             // id="outlined-error-helper-text"
             label="Email"
-            defaultValue={email}
+            value={email}
             variant="outlined"
             name="email"
         />
@@ -197,7 +269,7 @@ const Signup = (props) => {
             error
             // id="outlined-error-helper-text"
             label="Email"
-            defaultValue={email}
+            value={email}
             helperText={emailE}
             variant="outlined"
             name="email"
@@ -208,7 +280,7 @@ const Signup = (props) => {
         <TextField
             // id="outlined-error-helper-text"
             label="Password"
-            defaultValue={password}
+            value={password}
             variant="outlined"
             name="password"
             type="password"
@@ -220,7 +292,7 @@ const Signup = (props) => {
             error
             // id="outlined-error-helper-text"
             label="Password"
-            defaultValue={password}
+            value={password}
             helperText={passwordE}
             variant="outlined"
             name="password"
@@ -232,7 +304,7 @@ const Signup = (props) => {
         <TextField
             // id="outlined-error-helper-text"
             label="Password Confirmation"
-            defaultValue={password_confirmation}
+            value={password_confirmation}
             variant="outlined"
             name="password_confirmation"
             type="password"
@@ -244,7 +316,7 @@ const Signup = (props) => {
             error
             // id="outlined-error-helper-text"
             label="Password Confirmation"
-            defaultValue={password_confirmation}
+            value={password_confirmation}
             helperText={password_confirmationE}
             variant="outlined"
             name="password_confirmation"
@@ -252,6 +324,27 @@ const Signup = (props) => {
         />
     )
 
+    const passwordSection = (
+        <div>
+            {passwordE === '' ? passwordField : passwordFieldE}
+            {password_confirmationE === '' ? password_confirmationField : password_confirmationFieldE}
+        </div>
+    )
+
+    const changePasswordButton = (
+        <div className="pw-change-button">
+            <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                className={classes.button}
+                endIcon={<LockOpenIcon />}
+                onClick={() => setIsChangingPassword(true)}
+            >
+                Change Password?
+        </Button>
+        </div>
+    )
 
     return (
         <div className="signup-form">
@@ -263,15 +356,17 @@ const Signup = (props) => {
                     {nameE === '' ? nameField : nameFieldE}
                     {emailE === '' ? emailField : emailFieldE}
                 </div>
-                <div>
-                    {passwordE === '' ? passwordField : passwordFieldE}
-                    {password_confirmationE === '' ? password_confirmationField : password_confirmationFieldE}
-                </div>
+                {isChangingPassword === false ? changePasswordButton : passwordSection}
                 <div className={classes.button}>
                     <Button onClick={handleSubmit} variant="contained" color="primary">
-                        Sign Up
-            </Button>
+                        Update Info
+                    </Button>
                 </div>
+                <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success">
+                        Successfully updated profile!
+                    </Alert>
+                </Snackbar>
             </form>
         </div>
     );
@@ -292,4 +387,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signup)
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

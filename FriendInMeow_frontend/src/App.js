@@ -16,15 +16,14 @@ import TraitTable from './Components/TraitTable'
 import BreedsBackButton from './Components/BreedsBackButton';
 import CatsBackButton from './Components/CatsBackButton';
 import FaveCatsBackButton from './Components/FaveCatsBackButton';
+import CatsFaveButton from './Components/CatsFaveButton';
 
 import Home from './Containers/Home';
 import BreedContainer from './Containers/BreedContainer';
 import CatContainer from './Containers/CatContainer';
-import OrgContainer from './Containers/OrgContainer';
 import FaveContainer from './Containers/FaveContainer';
-import Profile from './Containers/Profile';
+import Profile2 from './Containers/Profile2';
 import BreedsQueryButton from './Components/BreedsQueryButton';
-import CatsFaveButton from './Components/CatsFaveButton';
 
 const App = (props) => {
 
@@ -71,7 +70,6 @@ const App = (props) => {
   }
 
   const getFavoriteCats = () => {
-    console.log('I have fetch your faves, dawg.')
 
     fetch('http://localhost:3000/cats', {
       method: 'GET',
@@ -178,16 +176,12 @@ const App = (props) => {
           <CatPagination />
         </Route>
 
-        <Route path="/organizations">
-          <OrgContainer />
-        </Route>
-
         <Route path="/favorites">
           <FaveContainer />
         </Route>
 
         <Route path="/profile">
-          <Profile />
+          <Profile2 />
         </Route>
 
         <Route path="/login">

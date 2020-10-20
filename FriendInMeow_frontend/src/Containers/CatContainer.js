@@ -60,7 +60,6 @@ const CatContainer = (props) => {
     } else if (props.userPostalCode.toString().length === 5) {
       catUrl = `https://api.petfinder.com/v2/animals?type=cat&sort=distance&location=${props.userPostalCode}&distance=${props.userRadius}&breed=${props.filterBreed}&gender=${props.filterGender}&age=${props.filterAge}&page=${props.adoptableCatsPage}`
     }
-    console.log(catUrl)
     fetch(catUrl, {
       method: "GET",
       headers: {

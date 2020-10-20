@@ -8,6 +8,7 @@
 
 .pagination {
     padding-top: 25px;
+    padding-bottom: 25px;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -46,20 +47,6 @@ tspan {
     justify-content: center;
 }
 
-.org-section {
-    margin: 25px;
-}
-
-.cat-map {
-    margin: 25px;
-}
-
-.full-cat {
-    margin: 25px;
-    display: flex;
-    flex-direction: column;
-}
-
 .location-form {
     text-align: center;
     display: flex;
@@ -67,18 +54,71 @@ tspan {
     padding-bottom: 25px;
 }
 
-.cat-facts {
+.cat-show-pic {
+    margin: auto;
+    display: block;
+    max-width: 600px;
+    max-height: 600px;
+    width: auto;
+    height: auto;
+}
+
+.full-cat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.pic-facts {
+    font-size: large;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     margin: auto;
 }
 
+.pic-area {
+    margin: 25px;
+
+    min-width: 600px;
+    max-width: 600px;
+}
+
+.cat-facts {
+    margin: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-width: 600px;
+    max-width: 600px;
+}
+
 .map-org {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
+}
+
+.org-section {
+    font-size: large;
+    margin: 25px;
+    min-width: 600px;
+    max-width: 600px;
+}
+
+.cat-map {
+    margin: 25px;
+    min-width: 600px;
+    max-width: 600px;
+}
+
+.breed-show-pic {
+    margin: auto;
+    display: block;
+    max-width: 600px;
+    max-height: 600px;
+    width: auto;
+    height: auto;
 }
 
 .breedcard-buttons {

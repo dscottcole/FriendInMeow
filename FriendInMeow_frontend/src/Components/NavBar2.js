@@ -6,6 +6,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
+import Badge from '@material-ui/core/Badge';
+
 const StyledTabs = withStyles({
     indicator: {
         display: 'flex',
@@ -41,13 +43,21 @@ const useStyles = makeStyles((theme) => ({
     },
     demo2: {
         backgroundColor: '#093170',
-    },
+    }
 }));
+
+const StyledBadge = withStyles((theme) => ({
+    badge: {
+      right: 45,
+      top: 15,
+    },
+  }))(Badge);
 
 const NavBar = (props) => {
     const classes = useStyles();
 
     const handleChange = (event, newValue) => {
+        console.log(newValue)
         props.change_value(newValue);
     };
 
@@ -66,6 +76,12 @@ const NavBar = (props) => {
         props.change_route("/")
     }
 
+    let favoriteBadge = (
+        <StyledBadge badgeContent={props.favoriteCats.length} color="secondary">
+            <StyledTab label="Favorites" onClick={() => props.change_route("/favorites")} /> 
+        </StyledBadge>
+    )
+
     return (
         <div className={classes.root}>
             <div className={classes.demo2}>
@@ -73,7 +89,7 @@ const NavBar = (props) => {
                     <StyledTab onClick={() => props.change_route("/")} label="Home" />
                     <StyledTab onClick={() => props.change_route("/breeds")} label="Cat Breeds" />
                     <StyledTab onClick={() => props.change_route("/adoptable")} label="Adoptable Cats" />
-                    {props.isLoggedIn === true ? <StyledTab label="Favorites" onClick={() => props.change_route("/favorites")} /> : null}
+                    {props.isLoggedIn === true ? favoriteBadge : null}
                     {props.isLoggedIn === true ? <StyledTab onClick={() => props.change_route("/profile")} label="Profile" /> : null}
                     {props.isLoggedIn === true ? null : <StyledTab onClick={() => props.change_route("/login")} label="Login" />}
                     {props.isLoggedIn === true ? null : <StyledTab onClick={() => props.change_route("/signup")} label="Signup" />}

@@ -25,10 +25,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 350,
     minWidth: 350,
-    minHeight: 600
+    // minHeight: 600
   },
   media: {
-    height: 200,
+    height: 250,
     paddingTop: '56.25%', // 16:9
   },
   expand: {
