@@ -120,7 +120,7 @@ const BreedCard = (props) => {
 
   useEffect(() => {
     getBreedsKey()
-    getAdoptableKeys(props.breed.name)
+    // getAdoptableKeys(props.breed.name)
   }, [props.breed, props.userPostalCode, props.userRadius])
 
   let breed = props.breed
@@ -132,7 +132,7 @@ const BreedCard = (props) => {
       size="small"
       className={classes.button}
       endIcon={<SearchIcon />}
-      onClick={() => {props.set_filter_breed(breed.name); props.change_route('/adoptable')}}
+      onClick={() => {props.set_filter_breed(breed.name); props.change_value(2); props.change_route('/adoptable')}}
     > {"Adoptable: " + totalAdoptable} </Button>
   )
 
@@ -182,6 +182,7 @@ const BreedCard = (props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
       change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName }),
+      change_value: (value) => dispatch({ type: 'CHANGE_VALUE', navValue: value }),
       set_clicked_breed: (breed, imgUrl) => dispatch({ type: 'SET_CLICKED_BREED', clickedBreed: breed, clickedBreedImg: imgUrl }),
       set_filter_breed: (breed) => dispatch({ type: 'SET_FILTER_BREED', filterBreed: breed })
     }

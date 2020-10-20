@@ -7,8 +7,8 @@ import { connect } from "react-redux";
 const useStyles = makeStyles((theme) => ({
     root: {
         "& .MuiTextField-root": {
-        margin: theme.spacing(1),
-        width: 300
+            margin: theme.spacing(1),
+            width: 300
         }
     },
     button: {
@@ -49,7 +49,7 @@ const Signup = (props) => {
             case 'password_confirmation':
                 setPasswordConfirmation(e.target.value)
                 break;
-        
+
             default:
                 break;
         }
@@ -68,11 +68,11 @@ const Signup = (props) => {
 
         let newUser = {
             "user": {
-              "username": username,
-              "name": name,
-              "email": email,
-              "password": password,
-              "password_confirmation": password_confirmation
+                "username": username,
+                "name": name,
+                "email": email,
+                "password": password,
+                "password_confirmation": password_confirmation
             }
         }
 
@@ -82,58 +82,59 @@ const Signup = (props) => {
 
     const signUp = (newUser) => {
         fetch('http://localhost:3000/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(newUser)
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newUser)
         })
-        .then(res => res.json())
-        .then(res => {
-          if (res['message']) {
-            let username_e = ''
-            let name_e = ''
-            let email_e = ''
-            let password_e = ''
-            let password_confirmation_e = ''
+            .then(res => res.json())
+            .then(res => {
+                if (res['message']) {
+                    let username_e = ''
+                    let name_e = ''
+                    let email_e = ''
+                    let password_e = ''
+                    let password_confirmation_e = ''
 
-            res.message.forEach(error => {
-                switch (error[0]) {
-                    case "username":
-                        username_e = error[0] + " " + error[1]
-                    break;
-                    case "name":
-                        name_e = error[0] + " " + error[1]
-                    break;
-                    case "email":
-                        email_e = error[0] + " " + error[1]
-                    break;
-                    case "password":
-                        if (error[1].length === 2) {
-                            password_e = error[0] + " " + error[1].join(" & ")
-                        } else {
-                            password_e = error[0] + " " + error[1]
+                    res.message.forEach(error => {
+                        switch (error[0]) {
+                            case "username":
+                                username_e = error[0] + " " + error[1]
+                                break;
+                            case "name":
+                                name_e = error[0] + " " + error[1]
+                                break;
+                            case "email":
+                                email_e = error[0] + " " + error[1]
+                                break;
+                            case "password":
+                                if (error[1].length === 2) {
+                                    password_e = error[0] + " " + error[1].join(" & ")
+                                } else {
+                                    password_e = error[0] + " " + error[1]
+                                }
+                                break;
+                            case "password_confirmation":
+                                password_confirmation_e = error[0] + " " + error[1]
+                                break;
+                            default:
+                                break;
                         }
-                        break;
-                    case "password_confirmation":
-                            password_confirmation_e = error[0] + " " + error[1]
-                        break;
-                    default:
-                        break;
+                    })
+
+                    setUsernameE(username_e);
+                    setNameE(name_e);
+                    setEmailE(email_e);
+                    setPasswordE(password_e);
+                    setPasswordConfirmationE(password_confirmation_e);
+
+
+                } else {
+                    props.change_value(3)
+                    props.change_route("/login")
                 }
             })
-
-            setUsernameE(username_e);
-            setNameE(name_e);
-            setEmailE(email_e);
-            setPasswordE(password_e);
-            setPasswordConfirmationE(password_confirmation_e);
-            
-
-          } else {
-            props.change_route("/login")
-        }
-        })
     }
 
     const usernameField = (
@@ -252,37 +253,40 @@ const Signup = (props) => {
     )
 
 
-  return (
-    <form onChange={handleFormChange} className={classes.root} noValidate autoComplete="on">
-        <div>
-                {usernameE === ''? usernameField : usernameFieldE}
-        </div>
-        <div>
-                {nameE === ''? nameField : nameFieldE}
-                {emailE === ''? emailField : emailFieldE}
-        </div>
-        <div>
-                {passwordE === ''? passwordField : passwordFieldE}
-                {password_confirmationE === ''? password_confirmationField : password_confirmationFieldE}
-        </div>
-        <div className={classes.button}>
-            <Button onClick={handleSubmit} variant="contained" color="primary">
-                Sign Up
+    return (
+        <div className="signup-form">
+            <form onChange={handleFormChange} className={classes.root} noValidate autoComplete="on">
+                <div>
+                    {usernameE === '' ? usernameField : usernameFieldE}
+                </div>
+                <div>
+                    {nameE === '' ? nameField : nameFieldE}
+                    {emailE === '' ? emailField : emailFieldE}
+                </div>
+                <div>
+                    {passwordE === '' ? passwordField : passwordFieldE}
+                    {password_confirmationE === '' ? password_confirmationField : password_confirmationFieldE}
+                </div>
+                <div className={classes.button}>
+                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                        Sign Up
             </Button>
+                </div>
+            </form>
         </div>
-    </form>
-  );
+    );
 }
 
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      set_isloggedin: (status) => dispatch({ type: 'SET_STATUS', isLoggedIn: status }),
-      change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName })
+        set_isloggedin: (status) => dispatch({ type: 'SET_STATUS', isLoggedIn: status }),
+        change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName }),
+        change_value: (value) => dispatch({ type: 'CHANGE_VALUE', navValue: value }),
     }
 }
-  
-  const mapStateToProps = (state) => {
+
+const mapStateToProps = (state) => {
     return {
         isLoggedIn: state.userState.isLoggedIn
     }

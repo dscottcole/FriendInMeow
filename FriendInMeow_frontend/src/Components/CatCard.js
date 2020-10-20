@@ -41,10 +41,10 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)',
   },
   avatarF: {
-    backgroundColor: pink[300],
+    backgroundColor: pink[500],
   },
   avatarM: {
-    backgroundColor: blue[300],
+    backgroundColor: blue[500],
   },
 }));
 
@@ -273,9 +273,6 @@ const CatCard = (props) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        {/* <IconButton color="primary" aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton> */}
         {favorite === false ? notFave : yesFave}
         <Button
           variant="contained"

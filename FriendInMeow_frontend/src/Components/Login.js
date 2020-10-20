@@ -8,8 +8,8 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles((theme) => ({
     root: {
         "& .MuiTextField-root": {
-        margin: theme.spacing(1),
-        width: 300
+            margin: theme.spacing(1),
+            width: 300
         }
     },
     button: {
@@ -35,7 +35,7 @@ const Login = (props) => {
             case 'password':
                 setPassword(e.target.value)
                 break;
-        
+
             default:
                 break;
         }
@@ -61,22 +61,23 @@ const Login = (props) => {
         fetch('http://localhost:3000/login', {
             method: 'POST',
             headers: {
-            'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
         })
-        .then(res => res.json())
-        .then(token => {
-            if (token['auth_key']) {
-                localStorage.setItem('auth_key', token['auth_key'])
-                props.set_user_name(token.name)
-                props.handleLogin()
-                props.change_route("/")
-            } else {
-                setUsernameE(token.message)
-                setPasswordE(token.message)
-            }
-        })
+            .then(res => res.json())
+            .then(token => {
+                if (token['auth_key']) {
+                    localStorage.setItem('auth_key', token['auth_key'])
+                    props.set_user_name(token.name)
+                    props.handleLogin()
+                    props.change_value(0)
+                    props.change_route("/")
+                } else {
+                    setUsernameE(token.message)
+                    setPasswordE(token.message)
+                }
+            })
     }
 
     const usernameField = (
@@ -126,32 +127,36 @@ const Login = (props) => {
         />
     )
 
-  return (
-    <form onChange={handleFormChange} className={classes.root} noValidate autoComplete="on">
-        <div>
-                {usernameE === ''? usernameField : usernameFieldE}
-        </div>
-        <div>
-                {passwordE === ''? passwordField : passwordFieldE}
-        </div>
-        <div className={classes.button}>
-            <Button onClick={handleSubmit} variant="contained" color="primary">
-                Login
+    return (
+        <div className="login-form">
+            <form onChange={handleFormChange} className={classes.root} noValidate autoComplete="on">
+                <div>
+                    {usernameE === '' ? usernameField : usernameFieldE}
+                </div>
+                <div>
+                    {passwordE === '' ? passwordField : passwordFieldE}
+                </div>
+                <div className={classes.button}>
+                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                        Login
             </Button>
+                </div>
+            </form>
         </div>
-    </form>
-  );
+
+    );
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      set_isloggedin: (status) => dispatch({ type: 'SET_STATUS', isLoggedIn: status }),
-      set_user_name: (name) => dispatch({ type: 'SET_USER_NAME', userName: name }),
-      change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName })
+        set_isloggedin: (status) => dispatch({ type: 'SET_STATUS', isLoggedIn: status }),
+        set_user_name: (name) => dispatch({ type: 'SET_USER_NAME', userName: name }),
+        change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName }),
+        change_value: (value) => dispatch({ type: 'CHANGE_VALUE', navValue: value }),
     }
 }
-  
-  const mapStateToProps = (state) => {
+
+const mapStateToProps = (state) => {
     return {
         isLoggedIn: state.userState.isLoggedIn
     }
