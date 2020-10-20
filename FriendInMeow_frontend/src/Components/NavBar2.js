@@ -5,7 +5,6 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import { blue } from '@material-ui/core/colors'
 
 const StyledTabs = withStyles({
     indicator: {
@@ -47,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = (props) => {
     const classes = useStyles();
-    // const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
         props.change_value(newValue);

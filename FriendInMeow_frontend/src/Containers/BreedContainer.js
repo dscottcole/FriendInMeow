@@ -77,7 +77,7 @@ const BreedContainer = (props) => {
 
     const clearClickedBreed = () => {
       if (props.clickedBreed !== undefined) {
-        props.set_clicked_breed({}, "")
+        props.set_clicked_breed({}, "", 0)
       }
     }
   
@@ -109,7 +109,7 @@ const mapDispatchToProps = (dispatch) => {
         set_breeds: (breeds) => dispatch({ type: 'GET_BREEDS', breeds: breeds }),
         get_breed_names: (breedNames) => dispatch({ type: 'GET_BREED_NAMES', breedNames: breedNames }),
         set_breeds_pages: (number) => dispatch({ type: 'SET_BREEDS_PAGES', breedsPages: number }),
-        set_clicked_breed: (breed, imgUrl) => dispatch({ type: 'SET_CLICKED_BREED', clickedBreed: breed, clickedBreedImg: imgUrl }),
+        set_clicked_breed: (breed, imgUrl, total) => dispatch({ type: 'SET_CLICKED_BREED', clickedBreed: breed, clickedBreedImg: imgUrl , clickedBreedTotalAdoptable: total}),
         change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName }),
     }
 }

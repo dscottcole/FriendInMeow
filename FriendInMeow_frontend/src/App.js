@@ -23,6 +23,8 @@ import CatContainer from './Containers/CatContainer';
 import OrgContainer from './Containers/OrgContainer';
 import FaveContainer from './Containers/FaveContainer';
 import Profile from './Containers/Profile';
+import BreedsQueryButton from './Components/BreedsQueryButton';
+import CatsFaveButton from './Components/CatsFaveButton';
 
 const App = (props) => {
 
@@ -201,16 +203,20 @@ const App = (props) => {
           <TraitTable />
           <BreedChart />
           <BreedsBackButton />
+          {props.adoptableBreedNames.includes(props.clickedBreed.name) && props.clickedBreedTotalAdoptable > 0? 
+            <BreedsQueryButton /> : null}
         </Route>
 
         <Route path="/catinfo">
           <CatShow />
           <CatsBackButton />
+          <CatsFaveButton />
         </Route>
 
         <Route path="/faveinfo">
           <CatShow />
           <FaveCatsBackButton />
+          <CatsFaveButton />
         </Route>
 
         <Route>

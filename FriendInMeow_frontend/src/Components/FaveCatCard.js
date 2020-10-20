@@ -13,11 +13,12 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { blue, pink, red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import NavigateNextOutlinedIcon from '@material-ui/icons/NavigateNextOutlined';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Button from "@material-ui/core/Button";
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -235,13 +236,13 @@ const CatCard = (props) => {
 
   const notFave = (
     <IconButton onClick={() => favoriteCat(cat)} color="primary" aria-label="add to favorites">
-      <FavoriteIcon />
+      <FavoriteBorderOutlinedIcon />
     </IconButton>
   )
 
   const yesFave = (
     <IconButton onClick={() => unfavoriteCat(cat)} color="secondary" aria-label="add to favorites">
-      <FavoriteIcon />
+      <FavoriteOutlinedIcon />
     </IconButton>
   )
 

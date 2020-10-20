@@ -10,7 +10,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import NavigateNextOutlinedIcon from '@material-ui/icons/NavigateNextOutlined';
+import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 
 
@@ -120,7 +120,7 @@ const BreedCard = (props) => {
 
   useEffect(() => {
     getBreedsKey()
-    // getAdoptableKeys(props.breed.name)
+    getAdoptableKeys(props.breed.name)
   }, [props.breed, props.userPostalCode, props.userRadius])
 
   let breed = props.breed
@@ -165,8 +165,8 @@ const BreedCard = (props) => {
             color="primary"
             size="small"
             className={classes.button}
-            endIcon={<NavigateNextOutlinedIcon />}
-            onClick={() => {props.set_clicked_breed(breed, breedImg); props.change_route('/breedinfo')}}
+            endIcon={<ArrowForwardIosOutlinedIcon />}
+            onClick={() => {props.set_clicked_breed(breed, breedImg, totalAdoptable); props.change_route('/breedinfo')}}
           > Learn More </Button>
           </div>
           <div className="breed-filter">
@@ -183,7 +183,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
       change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName }),
       change_value: (value) => dispatch({ type: 'CHANGE_VALUE', navValue: value }),
-      set_clicked_breed: (breed, imgUrl) => dispatch({ type: 'SET_CLICKED_BREED', clickedBreed: breed, clickedBreedImg: imgUrl }),
+      set_clicked_breed: (breed, imgUrl, total) => dispatch({ type: 'SET_CLICKED_BREED', clickedBreed: breed, clickedBreedImg: imgUrl , clickedBreedTotalAdoptable: total}),
       set_filter_breed: (breed) => dispatch({ type: 'SET_FILTER_BREED', filterBreed: breed })
     }
 }

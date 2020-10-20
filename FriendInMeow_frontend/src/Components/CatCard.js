@@ -12,12 +12,13 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { blue, pink, red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import NavigateNextOutlinedIcon from '@material-ui/icons/NavigateNextOutlined';
+import { blue, pink } from '@material-ui/core/colors';
+import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Button from "@material-ui/core/Button";
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +54,6 @@ const CatCard = (props) => {
 
   const [expanded, setExpanded] = useState(false);
   const [favorite, setFavorite] = useState(false);
-  const [dbId, setId] = useState(0)
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -224,7 +224,6 @@ const CatCard = (props) => {
         props.set_favorite_cats(newFaves)
       }
     })
-
   }
 
   useEffect(() => {
@@ -235,13 +234,13 @@ const CatCard = (props) => {
 
   const notFave = (
     <IconButton onClick={() => favoriteCat(cat)} color="primary" aria-label="add to favorites">
-      <FavoriteIcon />
+      <FavoriteBorderOutlinedIcon fontSize="large" />
     </IconButton>
   )
 
   const yesFave = (
     <IconButton onClick={() => unfavoriteCat(cat)} color="secondary" aria-label="add to favorites">
-      <FavoriteIcon />
+      <FavoriteOutlinedIcon fontSize="large" />
     </IconButton>
   )
 
@@ -279,7 +278,7 @@ const CatCard = (props) => {
           color="primary"
           size="small"
           className={classes.button}
-          endIcon={<NavigateNextOutlinedIcon />}
+          endIcon={<ArrowForwardIosOutlinedIcon />}
           onClick={() => { getAdoptableKeys(cat, cat._links.organization.href) }}
         >
           More Info
