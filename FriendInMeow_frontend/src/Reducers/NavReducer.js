@@ -1,5 +1,6 @@
 const initialState = {
-    currentRoute: '/'
+    currentRoute: '/',
+    navValue: 0
 }
 
 const UserReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const UserReducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentRoute: action.newRoute
+            }
+        case 'CHANGE_VALUE':
+            return {
+                ...state,
+                navValue: action.navValue
             }
 
         default:

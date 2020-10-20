@@ -2,7 +2,7 @@ body {
   margin: 0px
 }
 
-.nav-bar {
+/* .nav-bar {
   padding: 10px;
   background-color: darkorange;
   display: flex;
@@ -15,4 +15,4 @@ body {
 
 .nav-item:active {
   color: slategrey;
-}
+} */

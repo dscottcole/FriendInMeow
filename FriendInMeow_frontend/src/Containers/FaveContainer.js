@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
+      
     },
     paper: {
       height: 140,
@@ -58,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
         <div className="filter-adoptable">
             <Grid container className={classes.root} spacing={12}>
                 <Grid item xs={12}>
-                    <Grid container justify="center" spacing={spacing}>
+                    <Grid spacing={spacing}>
                         {props.favoriteCats.length > 0 ? catCards : noCats}
                     </Grid>
                 </Grid>

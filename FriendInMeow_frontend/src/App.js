@@ -3,7 +3,7 @@ import './App.css';
 import { connect } from "react-redux";
 import { BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 
-import NavBar from './Components/NavBar';
+import NavBar2 from './Components/NavBar2';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
 import CatPagination from './Components/CatPagination';
@@ -123,7 +123,7 @@ const App = (props) => {
           faves = [...faves, modifiedCat]
           props.set_favorite_cats(faves)
         } else if (res.animal.status === "adopted") {
-          alert(`${cat.id}, ${cat.name}, ${cat.petfinder_id} has been adopted`)
+          alert(`${cat.name}, ${cat.petfinder_id} has been adopted`)
 
           fetch(`http://localhost:3000/cats/${cat.id}`, {
             method: 'DELETE',
@@ -156,7 +156,7 @@ const App = (props) => {
       <Switch>
         
         <div className="world">
-          <NavBar />
+          <NavBar2 />
 
         <div className="body-area">
         <Route exact path="/">

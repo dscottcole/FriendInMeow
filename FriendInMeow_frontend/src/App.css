@@ -114,3 +114,18 @@ tspan {
     padding-right: 250px;
     padding-top: 125px;
 }
+
+.login-form {
+    padding-top: 50px;
+    text-align: center;
+}
+
+.signup-form {
+    padding-top: 50px;
+    text-align: center;
+}
+
+.no-cats {
+    text-align: center;
+    width: 100%;
+}
