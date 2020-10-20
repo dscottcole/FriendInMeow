@@ -10,6 +10,7 @@ const initialState = {
     breedsPages: 0,
     clickedBreed: {},
     clickedBreedImg: '',
+    clickedBreedTotalAdoptable: 0,
     clickedCat: {},
     clickedCatLoc: {},
     clickedCatLocated: false,
@@ -101,7 +102,8 @@ const CatReducer = (state = initialState, action) => {
             return {
                 ...state,
                 clickedBreed: action.clickedBreed,
-                clickedBreedImg: action.clickedBreedImg
+                clickedBreedImg: action.clickedBreedImg,
+                clickedBreedTotalAdoptable: action.clickedBreedTotalAdoptable
             }
         case 'SET_CLICKED_CAT':
             return {
