@@ -32,6 +32,10 @@ tspan {
     justify-content: center;
 }
 
+.MuiTableRow-root {
+    background-color: whitesmoke;
+}
+
 .breed-show {
     display: flex;
     justify-content: center;
@@ -61,12 +65,18 @@ tspan {
     max-height: 600px;
     width: auto;
     height: auto;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px lightgray;
 }
 
 .full-cat {
+    padding-top: 25px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px lightgray;
 }
 
 .pic-facts {
@@ -75,13 +85,14 @@ tspan {
     flex-direction: row;
     justify-content: space-evenly;
     margin: auto;
+
 }
 
 .pic-area {
     margin: 25px;
-
     min-width: 600px;
     max-width: 600px;
+    
 }
 
 .cat-facts {
@@ -119,6 +130,8 @@ tspan {
     max-height: 600px;
     width: auto;
     height: auto;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px lightgray;
 }
 
 .breedcard-buttons {
@@ -150,11 +163,6 @@ tspan {
     text-align: center;
 }
 
-.no-cats {
-    padding-right: 250px;
-    padding-top: 125px;
-}
-
 .login-form {
     padding-top: 50px;
     text-align: center;
@@ -165,42 +173,102 @@ tspan {
     text-align: center;
 }
 
-.no-cats {
-    text-align: center;
-    width: 100%;
-}
-
 .cat-grid {
     padding-top: 25px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-evenly;
-    width: 1230px;
+    width: 1340px;
     margin: auto;
+    align-items: center;
 }
 
 .grid-cat {
+    display: flex;
     margin: 5px;
     min-height: 400px;
     max-height: 400px;
     min-width: 400px;
     max-width: 400px;
+    align-items: center;
+    justify-content: center;
+    
+    border: 1px solid darkgrey;
+    background-color: whitesmoke;
+    box-shadow: 0px 7.5px 7.5px darkgrey;
+    padding: 15px 15px 60px 15px;
 }
 
 .grid-cat-pic {
     margin: auto;
     display: block;
-    min-height: 400px;
-    max-height: 400px;
-    min-width: 400px;
-    max-width: 400px;
-    width: auto;
-    height: auto;
+    min-height: 380px;
+    max-height: 380px;
+    /* min-width: 380px; */
+    max-width: 380px;
+    /* width: auto; */
+    /* height: auto; */
+
+    width: calc(100% - 20px);
 }
 
 .scroll-button {
     position: fixed;
     bottom: 25px;
-    right: 25px;
-  }
+    right: 50px;
+}
+
+.input-field {
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+
+.makeStyles-demo2-3 {
+    box-shadow: 5px 5px 5px lightgray;
+}
+
+.no-cats {
+    padding-top: 250px;
+}
+
+.no-cats2 {
+    padding-top: 150px;
+    padding-right: 250px;
+}
+
+.cat-show-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.breed-show-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.full-breed {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px lightgray;
+    max-width: 1500px;
+    margin: auto;
+}
+
+.breed-name-pic {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.FriendInMeow {
+    width: 600px;
+}
+
+.logo-header {
+    text-align: center;
+}

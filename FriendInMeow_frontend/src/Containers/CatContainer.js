@@ -95,7 +95,7 @@ const CatContainer = (props) => {
   )
 
   const noCats = (
-    <Typography className="no-cats" variant="body2" color="textPrimary" component="p">
+    <Typography className="no-cats2" variant="body2" color="textPrimary" component="p">
       Please widen your search criteria.
     </Typography>
   )

@@ -50,7 +50,7 @@ const FaveContainer = (props) => {
     )
 
     const noCats = (
-        <Typography className="no-cats" variant="body2" color="textPrimary" width="100%"component="p">
+        <Typography className="no-cats" variant="body2" color="textPrimary" width="100%" component="p">
             You have no favorite cats or all your favorites have been adopted.
         </Typography>
     )

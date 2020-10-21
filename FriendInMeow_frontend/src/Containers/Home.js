@@ -19,7 +19,7 @@ const Home = () => {
 
 	const initialFetch = () => {
 		let i = 0
-		while (i < 2) {
+		while (i < 3) {
 			catFetch();
 			i++;
 		}
@@ -71,6 +71,7 @@ const Home = () => {
 			{cats.map((cat, index) => (
 				<div className="grid-cat">
 					<img className="grid-cat-pic" src={cat.url} />
+					<p>{cat.breeds.name}</p>
 				</div>
 			))}
 		</div>

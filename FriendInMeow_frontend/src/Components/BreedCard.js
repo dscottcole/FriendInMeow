@@ -17,8 +17,9 @@ import SearchIcon from '@material-ui/icons/Search';
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
-    minHeight: 600,
-    // maxHeight: 600
+    minHeight: 700,
+    // maxHeight: 600,
+    backgroundColor: "#F5F5F5"
   },
   media: {
     height: 300,
@@ -128,7 +129,7 @@ const BreedCard = (props) => {
   let breedFilterButton = (
     <Button
       variant="contained"
-      color="primary"
+      color="secondary"
       size="small"
       className={classes.button}
       endIcon={<SearchIcon />}
@@ -171,7 +172,7 @@ const BreedCard = (props) => {
           </div>
           <div className="breed-filter">
           {props.adoptableBreedNames.includes(breed.name) && totalAdoptable > 0? 
-            (breedFilterButton) : null}
+            breedFilterButton : null}
           </div>
         </div>
       </CardActions>

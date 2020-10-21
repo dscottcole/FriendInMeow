@@ -30,9 +30,9 @@ class UsersController < ApplicationController
     def update
         if @user
 
-            if !params[:user][:password].blank? && !params[:user][:password_confirmation].blank?
+            if !params[:user][:password].blank? || !params[:user][:password_confirmation].blank?
                 @user.attributes = {:username => params[:user][:username], :name => params[:user][:name], :email => params[:user][:email], :password => params[:user][:password], :password_confirmation => params[:user][:password_confirmation]}
-            else 
+            elsif params[:user][:password].blank? && params[:user][:password_confirmation].blank?
                 @user.attributes = {:username => params[:user][:username], :name => params[:user][:name], :email => params[:user][:email]}
             end
 

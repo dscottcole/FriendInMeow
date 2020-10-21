@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { connect } from "react-redux";
 
 import 'tui-chart/dist/tui-chart.css'
-import {BarChart} from '@toast-ui/react-chart'
+import { BarChart } from '@toast-ui/react-chart'
 
 import 'tui-chart/dist/maps/world';
-import {MapChart} from '@toast-ui/react-chart';
- 
+import { MapChart } from '@toast-ui/react-chart';
+
 
 const BreedChart = (props) => {
 
@@ -33,92 +33,94 @@ const BreedChart = (props) => {
             }
         ]
     };
-      
+
     const options = {
         chart: {
-                width: 700,
-                height: 600,
-                title: {
-                    text: `${breed.name} Traits`,
-                    align: 'center'
-                },
-                format: '1',
+            width: 700,
+            height: 600,
+            title: {
+                text: `${breed.name} Traits`,
+                align: 'center'
             },
-            yAxis: {
-                title: 'Trait',
-                labelMargin: 5
-            },
-            xAxis: {
-                title: 'Trait Scale',
-                labelInterval: 1,
-                tickInterval: 'auto',
-                min: 0,
-                max: 5
-            },
-            series: {
-                showLabel: true
-            },
-            legend: {
-                visible: false
+            format: '1',
+        },
+        yAxis: {
+            title: 'Trait',
+            labelMargin: 5
+        },
+        xAxis: {
+            title: 'Trait Scale',
+            labelInterval: 1,
+            tickInterval: 'auto',
+            min: 0,
+            max: 5
+        },
+        series: {
+            showLabel: true
+        },
+        legend: {
+            visible: false
+        }
+    };
+
+    const breedChart = (
+        <BarChart data={data} options={options} />
+    )
+
+    let data2 = {
+        series: [
+            {
+                code: breed.country_code,
+                data: 1
             }
-        };
-
-        const breedChart = (
-            <BarChart data={data} options={options} />
-        )
-        
-        let data2 = {
-            series: [
-                {
-                    code: breed.country_code,
-                    data: 1
-                }
-            ]
-        };
-        var options2 = {
-            chart: {
-                width: 700,
-                height: 600,
-                title: {
-                    text: `${breed.name}'s Country of Origin: ${breed.origin}`,
-                    align: 'center'
-                },
-                format: '0'
+        ]
+    };
+    var options2 = {
+        chart: {
+            width: 700,
+            height: 600,
+            title: {
+                text: `${breed.name}'s Country of Origin: ${breed.origin}`,
+                align: 'center'
             },
-            map: 'world',
-            legend: {
-                align: 'bottom',
-                visible: false
-            }
-        };
-        // var theme = {
-        //     series: {
-        //         startColor: '#ffefef',
-        //         endColor: '#ac4142',
-        //         overColor: '#75b5aa'
-        //     }
-        // };
+            format: '0'
+        },
+        map: 'world',
+        legend: {
+            align: 'bottom',
+            visible: false
+        }
+    };
+    // var theme = {
+    //     series: {
+    //         startColor: '#ffefef',
+    //         endColor: '#ac4142',
+    //         overColor: '#75b5aa'
+    //     }
+    // };
 
-        // For apply theme
+    // For apply theme
 
-        // tui.chart.registerTheme('myTheme', theme);
-        // options.theme = 'myTheme';
+    // tui.chart.registerTheme('myTheme', theme);
+    // options.theme = 'myTheme';
 
 
     return (
-        <div className="breed-chart">
-            <MapChart data={data2} options={options2} />
-            {fiverArray.length > 0? breedChart : null}
+        <div className="charts-buttons">
+            <div className="breed-chart">
+                <MapChart data={data2} options={options2} />
+                {fiverArray.length > 0 ? breedChart : null}
+            </div>
         </div>
     )
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName })
+        change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName })
     }
 }
-  
+
 const mapStateToProps = (state) => {
     return {
         ...state.catState
