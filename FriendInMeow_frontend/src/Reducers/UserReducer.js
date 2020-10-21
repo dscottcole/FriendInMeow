@@ -1,4 +1,5 @@
 const initialState = {
+    userName: "",
     userLat: 0,
     userLong: 0,
     userCity: '',

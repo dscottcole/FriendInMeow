@@ -102,7 +102,6 @@ const CatsFaveButton = (props) => {
         {"Unfavorite " + props.clickedCat.name}
       </Button>
     </div>
-
   )
 
   return (

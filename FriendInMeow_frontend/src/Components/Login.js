@@ -53,7 +53,7 @@ const Login = (props) => {
             "password": password
         }
 
-        clearState()
+        // clearState()
         logIn(user)
     }
 

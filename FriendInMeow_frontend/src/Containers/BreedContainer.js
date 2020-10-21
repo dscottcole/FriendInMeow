@@ -56,8 +56,6 @@ const BreedContainer = (props) => {
     
     const getBreedsPaginated = (key) => {
 
-        console.log('damn')
-
         fetch(`https://api.thecatapi.com/v1/breeds?limit=${breedLimit}&page=${props.breedsPage}`, {
           method: 'GET',
           headers: {
