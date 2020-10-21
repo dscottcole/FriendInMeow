@@ -17,6 +17,7 @@ import BreedsBackButton from './Components/BreedsBackButton';
 import CatsBackButton from './Components/CatsBackButton';
 import FaveCatsBackButton from './Components/FaveCatsBackButton';
 import CatsFaveButton from './Components/CatsFaveButton';
+import ScrollToTop from './Components/ScrollToTop'
 
 import Home from './Containers/Home';
 import BreedContainer from './Containers/BreedContainer';
@@ -160,8 +161,8 @@ const App = (props) => {
 
         <div className="body-area">
         <Route exact path="/">
-          <LocationForm />
           <Home />
+          <ScrollToTop />
         </Route>
 
         <Route path="/breeds">

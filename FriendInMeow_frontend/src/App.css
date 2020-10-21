@@ -169,3 +169,38 @@ tspan {
     text-align: center;
     width: 100%;
 }
+
+.cat-grid {
+    padding-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 1230px;
+    margin: auto;
+}
+
+.grid-cat {
+    margin: 5px;
+    min-height: 400px;
+    max-height: 400px;
+    min-width: 400px;
+    max-width: 400px;
+}
+
+.grid-cat-pic {
+    margin: auto;
+    display: block;
+    min-height: 400px;
+    max-height: 400px;
+    min-width: 400px;
+    max-width: 400px;
+    width: auto;
+    height: auto;
+}
+
+.scroll-button {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+  }

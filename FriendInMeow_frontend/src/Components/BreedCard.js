@@ -70,7 +70,7 @@ const BreedCard = (props) => {
         }
       })
       .then(res => res.json())
-      .then(breed => setImg(breed[0].url))
+      .then(res => setImg(res[0].url))
   }
 
   const getAdoptableKeys = (breedName) => {
