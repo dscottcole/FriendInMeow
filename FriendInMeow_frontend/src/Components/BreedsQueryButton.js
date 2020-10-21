@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 
-import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -19,10 +19,10 @@ const BreedsQueryButton = (props) => {
     <div className="breeds-back-button">
       <Button
         variant="contained"
-        color="primary"
+        color="secondary"
         size="large"
         className={classes.button}
-        endIcon={<ArrowForwardIosOutlinedIcon />}
+        endIcon={<SearchIcon />}
         onClick={() => {props.set_filter_breed(props.clickedBreed.name); props.change_value(2); props.change_route('/adoptable')}}
       >
         {"Adoptable " + props.clickedBreed.name + "S"} 

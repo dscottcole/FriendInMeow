@@ -210,9 +210,9 @@ const Profile = (props) => {
         <TextField
             label="Username"
             value={username}
-
             variant="outlined"
             name="username"
+            className="input-field"
         />
     )
 
@@ -224,6 +224,7 @@ const Profile = (props) => {
             helperText={usernameE}
             variant="outlined"
             name="username"
+            className="input-field"
         />
     )
 
@@ -233,6 +234,7 @@ const Profile = (props) => {
             value={name}
             variant="outlined"
             name="name"
+            className="input-field"
         />
     )
 
@@ -244,6 +246,7 @@ const Profile = (props) => {
             helperText={nameE}
             variant="outlined"
             name="name"
+            className="input-field"
         />
     )
 
@@ -253,6 +256,7 @@ const Profile = (props) => {
             value={email}
             variant="outlined"
             name="email"
+            className="input-field"
         />
     )
 
@@ -264,6 +268,7 @@ const Profile = (props) => {
             helperText={emailE}
             variant="outlined"
             name="email"
+            className="input-field"
         />
     )
 
@@ -274,6 +279,7 @@ const Profile = (props) => {
             variant="outlined"
             name="password"
             type="password"
+            className="input-field"
         />
     )
 
@@ -286,6 +292,7 @@ const Profile = (props) => {
             variant="outlined"
             name="password"
             type="password"
+            className="input-field"
         />
     )
 
@@ -296,6 +303,7 @@ const Profile = (props) => {
             variant="outlined"
             name="password_confirmation"
             type="password"
+            className="input-field"
         />
     )
 
@@ -308,6 +316,7 @@ const Profile = (props) => {
             variant="outlined"
             name="password_confirmation"
             type="password"
+            className="input-field"
         />
     )
 

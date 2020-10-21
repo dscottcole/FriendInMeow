@@ -166,9 +166,9 @@ const Signup = (props) => {
         <TextField
             label="Username"
             defaultValue={username}
-
             variant="outlined"
             name="username"
+            className="input-field"
         />
     )
 
@@ -180,6 +180,7 @@ const Signup = (props) => {
             helperText={usernameE}
             variant="outlined"
             name="username"
+            className="input-field"
         />
     )
 
@@ -189,6 +190,7 @@ const Signup = (props) => {
             defaultValue={name}
             variant="outlined"
             name="name"
+            className="input-field"
         />
     )
 
@@ -200,6 +202,7 @@ const Signup = (props) => {
             helperText={nameE}
             variant="outlined"
             name="name"
+            className="input-field"
         />
     )
 
@@ -209,6 +212,7 @@ const Signup = (props) => {
             defaultValue={email}
             variant="outlined"
             name="email"
+            className="input-field"
         />
     )
 
@@ -220,6 +224,7 @@ const Signup = (props) => {
             helperText={emailE}
             variant="outlined"
             name="email"
+            className="input-field"
         />
     )
 
@@ -230,6 +235,7 @@ const Signup = (props) => {
             variant="outlined"
             name="password"
             type="password"
+            className="input-field"
         />
     )
 
@@ -242,6 +248,7 @@ const Signup = (props) => {
             variant="outlined"
             name="password"
             type="password"
+            className="input-field"
         />
     )
 
@@ -252,6 +259,7 @@ const Signup = (props) => {
             variant="outlined"
             name="password_confirmation"
             type="password"
+            className="input-field"
         />
     )
 
@@ -264,6 +272,7 @@ const Signup = (props) => {
             variant="outlined"
             name="password_confirmation"
             type="password"
+            className="input-field"
         />
     )
 

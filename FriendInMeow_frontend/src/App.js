@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import { connect } from "react-redux";
 import { BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
+import FriendInMeow from './Images/FriendInMeow3.png'
 
 import NavBar2 from './Components/NavBar2';
 import Login from './Components/Login';
@@ -11,19 +12,14 @@ import BreedPagination from './Components/BreedPagination';
 import LocationForm from './Components/LocationForm';
 import BreedShow from './Components/BreedShow'
 import CatShow from './Components/CatShow'
-import BreedChart from './Components/BreedChart'
-import TraitTable from './Components/TraitTable'
-import BreedsBackButton from './Components/BreedsBackButton';
-import CatsBackButton from './Components/CatsBackButton';
-import FaveCatsBackButton from './Components/FaveCatsBackButton';
-import CatsFaveButton from './Components/CatsFaveButton';
+import FaveCatShow from './Components/FaveCatShow'
+import ScrollToTop from './Components/ScrollToTop'
 
 import Home from './Containers/Home';
 import BreedContainer from './Containers/BreedContainer';
 import CatContainer from './Containers/CatContainer';
 import FaveContainer from './Containers/FaveContainer';
 import Profile2 from './Containers/Profile2';
-import BreedsQueryButton from './Components/BreedsQueryButton';
 
 const App = (props) => {
 
@@ -156,12 +152,15 @@ const App = (props) => {
       <Switch>
         
         <div className="world">
+          <div className="logo-header">
+            <img className="FriendInMeow" src={FriendInMeow} />
+          </div>
           <NavBar2 />
 
         <div className="body-area">
         <Route exact path="/">
-          <LocationForm />
           <Home />
+          <ScrollToTop />
         </Route>
 
         <Route path="/breeds">
@@ -194,23 +193,23 @@ const App = (props) => {
 
         <Route path="/breedinfo">
           <BreedShow />
-          <TraitTable />
-          <BreedChart />
-          <BreedsBackButton />
+          {/* <TraitTable />
+          <BreedChart /> */}
+          {/* <BreedsBackButton />
           {props.adoptableBreedNames.includes(props.clickedBreed.name) && props.clickedBreedTotalAdoptable > 0? 
-            <BreedsQueryButton /> : null}
+            <BreedsQueryButton /> : null} */}
         </Route>
 
         <Route path="/catinfo">
           <CatShow />
-          <CatsBackButton />
-          <CatsFaveButton />
+          {/* <CatsBackButton />
+          <CatsFaveButton /> */}
         </Route>
 
         <Route path="/faveinfo">
-          <CatShow />
-          <FaveCatsBackButton />
-          <CatsFaveButton />
+          <FaveCatShow />
+          {/* <FaveCatsBackButton />
+          <CatsFaveButton /> */}
         </Route>
 
         <Route>

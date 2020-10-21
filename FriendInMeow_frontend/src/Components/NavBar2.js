@@ -20,7 +20,7 @@ const StyledTabs = withStyles({
         justifyContent: 'center',
         backgroundColor: 'transparent',
         '& > span': {
-            maxWidth: 40,
+            maxWidth: 50,
             width: '100%',
             backgroundColor: '#b71c1c',
         },
@@ -32,8 +32,8 @@ const StyledTab = withStyles((theme) => ({
         textTransform: 'none',
         color: '#fff',
         fontWeight: theme.typography.fontWeightRegular,
-        fontSize: theme.typography.pxToRem(15),
-        marginRight: theme.spacing(1),
+        fontSize: theme.typography.pxToRem(18),
+        marginRight: theme.spacing(2),
         '&:focus': {
             opacity: 1,
         },
@@ -73,7 +73,6 @@ const NavBar = (props) => {
     };
 
     const handleChange = (event, newValue) => {
-        console.log(newValue)
         props.change_value(newValue);
     };
 
@@ -87,9 +86,11 @@ const NavBar = (props) => {
     const logOut = () => {
         setOpen(true)
         localStorage.removeItem('auth_key')
+        localStorage.removeItem('username')
         props.set_isloggedin(false)
         props.set_favorite_cats([])
         props.set_user_name('')
+        props.change_value(0)
         props.change_route("/")
     }
 
@@ -104,13 +105,14 @@ const NavBar = (props) => {
             <div className={classes.demo2}>
                 <StyledTabs centered value={props.navValue} onChange={handleChange} aria-label="styled tabs example">
                     <StyledTab onClick={() => props.change_route("/")} label="Home" />
-                    <StyledTab onClick={() => props.change_route("/breeds")} label="Cat Breeds" />
+                    <StyledTab onClick={() => props.change_route("/breeds")} label="Breeds" />
                     <StyledTab onClick={() => props.change_route("/adoptable")} label="Adoptable Cats" />
                     {props.isLoggedIn === true ? favoriteBadge : null}
-                    {props.isLoggedIn === true ? <StyledTab onClick={() => props.change_route("/profile")} label="Profile" /> : null}
                     {props.isLoggedIn === true ? null : <StyledTab onClick={() => props.change_route("/login")} label="Login" />}
                     {props.isLoggedIn === true ? null : <StyledTab onClick={() => props.change_route("/signup")} label="Signup" />}
                     {props.isLoggedIn === true ? <StyledTab onClick={() => logOut()} label="Logout" /> : null}
+                    {<br></br>}
+                    {props.isLoggedIn === true ? <StyledTab onClick={() => props.change_route("/profile")} label={localStorage.username} /> : null}
                 </StyledTabs>
                 <Typography className={classes.padding} />
             </div>
@@ -138,7 +140,8 @@ const mapStateToProps = (state) => {
         currentRoute: state.navState.currentRoute,
         navValue: state.navState.navValue,
         isLoggedIn: state.userState.isLoggedIn,
-        favoriteCats: state.userState.favoriteCats
+        favoriteCats: state.userState.favoriteCats,
+        userName: state.userState.userName
     }
 }
 

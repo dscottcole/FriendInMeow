@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import OrganizationSection from './OrganizationSection';
 import CatMap from './CatMap'
 
-import CatsBackButton from '../Components/CatsBackButton';
+import FaveCatsBackButton from '../Components/FaveCatsBackButton';
 import CatsFaveButton from '../Components/CatsFaveButton';
 
 const useStyles = makeStyles((theme) => ({
@@ -88,7 +88,7 @@ const CatShow = (props) => {
             </div>
           </div>
           <div className="cat-show-buttons">
-          <CatsBackButton />
+          <FaveCatsBackButton />
           <CatsFaveButton />
           </div>
         </div>

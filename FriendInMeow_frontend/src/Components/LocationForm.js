@@ -174,9 +174,9 @@ const LocationForm = (props) => {
           onClick={() => getPosition()}
         >Current Location</Button>
 
-        <TextField id="outlined-basic" label="City" variant="outlined" onChange={handleTextChange} value={props.userCity} name="userCity" />
-        <TextField id="outlined-basic" label="State Abbreviation" variant="outlined" onChange={handleTextChange} value={props.userState} name="userState" />
-        <TextField id="outlined-basic" label="Postal Code" variant="outlined" onChange={handleTextChange} value={props.userPostalCode} name="userPostalCode" />
+        <TextField id="outlined-basic" className="input-field" label="City" variant="outlined" onChange={handleTextChange} value={props.userCity} name="userCity" />
+        <TextField id="outlined-basic" className="input-field" label="State Abbreviation" variant="outlined" onChange={handleTextChange} value={props.userState} name="userState" />
+        <TextField id="outlined-basic" className="input-field" label="Postal Code" variant="outlined" onChange={handleTextChange} value={props.userPostalCode} name="userPostalCode" />
 
         <TextField
           id="outlined-select-radius"
@@ -185,6 +185,7 @@ const LocationForm = (props) => {
           value={props.userRadius}
           onChange={handleSelectChange}
           variant="outlined"
+          className="input-field" 
         >
           {radii.map((option) => (
             <MenuItem key={option.value} value={option.value}>

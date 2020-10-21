@@ -86,6 +86,7 @@ const CatFilter = (props) => {
                 value={props.filterBreed}
                 onChange={handleSelectChange}
                 variant="outlined"
+                className="input-field" 
             >
                 {breedOptions.length > 0 ? (
                     breedOptions.map((option) => (
@@ -103,6 +104,7 @@ const CatFilter = (props) => {
                 value={props.filterGender}
                 onChange={handleSelectChange}
                 variant="outlined"
+                className="input-field" 
             >   {genderOptions.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                     {option.label}
@@ -117,6 +119,7 @@ const CatFilter = (props) => {
                 value={props.filterAge}
                 onChange={handleSelectChange}
                 variant="outlined"
+                className="input-field" 
             >   {ageOptions.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                     {option.label}

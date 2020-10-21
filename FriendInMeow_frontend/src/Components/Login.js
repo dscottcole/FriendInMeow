@@ -87,6 +87,7 @@ const Login = (props) => {
                 if (token['auth_key']) {
                     clearState()
                     localStorage.setItem('auth_key', token['auth_key'])
+                    localStorage.setItem('username', token['name'])
                     setOpen(true)
                     props.set_user_name(token.name)
                     props.handleLogin()
@@ -107,6 +108,7 @@ const Login = (props) => {
             defaultValue={username}
             variant="outlined"
             name="username"
+            className="input-field"
         />
     )
 
@@ -117,6 +119,7 @@ const Login = (props) => {
             defaultValue={username}
             variant="outlined"
             name="username"
+            className="input-field"
         />
     )
 
@@ -127,6 +130,7 @@ const Login = (props) => {
             variant="outlined"
             name="password"
             type="password"
+            className="input-field"
         />
     )
 
@@ -139,6 +143,7 @@ const Login = (props) => {
             variant="outlined"
             name="password"
             type="password"
+            className="input-field"
         />
     )
 
