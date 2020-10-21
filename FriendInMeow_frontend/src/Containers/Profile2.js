@@ -29,10 +29,6 @@ const Profile = (props) => {
 
     const [open, setOpen] = React.useState(false);
 
-    const handleClick = () => {
-        setOpen(true);
-    };
-
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -124,7 +120,8 @@ const Profile = (props) => {
         setIsChangingPassword(false)
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
 
         let updatedUser = {}
 
@@ -211,7 +208,6 @@ const Profile = (props) => {
 
     const usernameField = (
         <TextField
-            // id="outlined-error-helper-text"
             label="Username"
             value={username}
 
@@ -223,7 +219,6 @@ const Profile = (props) => {
     const usernameFieldE = (
         <TextField
             error
-            // id="outlined-error-helper-text"
             label="Username"
             value={username}
             helperText={usernameE}
@@ -234,7 +229,6 @@ const Profile = (props) => {
 
     const nameField = (
         <TextField
-            // id="outlined-error-helper-text"
             label="Full Name"
             value={name}
             variant="outlined"
@@ -245,7 +239,6 @@ const Profile = (props) => {
     const nameFieldE = (
         <TextField
             error
-            // id="outlined-error-helper-text"
             label="Full Name"
             value={name}
             helperText={nameE}
@@ -256,7 +249,6 @@ const Profile = (props) => {
 
     const emailField = (
         <TextField
-            // id="outlined-error-helper-text"
             label="Email"
             value={email}
             variant="outlined"
@@ -267,7 +259,6 @@ const Profile = (props) => {
     const emailFieldE = (
         <TextField
             error
-            // id="outlined-error-helper-text"
             label="Email"
             value={email}
             helperText={emailE}
@@ -278,7 +269,6 @@ const Profile = (props) => {
 
     const passwordField = (
         <TextField
-            // id="outlined-error-helper-text"
             label="Password"
             value={password}
             variant="outlined"
@@ -290,7 +280,6 @@ const Profile = (props) => {
     const passwordFieldE = (
         <TextField
             error
-            // id="outlined-error-helper-text"
             label="Password"
             value={password}
             helperText={passwordE}
@@ -302,7 +291,6 @@ const Profile = (props) => {
 
     const password_confirmationField = (
         <TextField
-            // id="outlined-error-helper-text"
             label="Password Confirmation"
             value={password_confirmation}
             variant="outlined"
@@ -314,7 +302,6 @@ const Profile = (props) => {
     const password_confirmationFieldE = (
         <TextField
             error
-            // id="outlined-error-helper-text"
             label="Password Confirmation"
             value={password_confirmation}
             helperText={password_confirmationE}
@@ -348,7 +335,7 @@ const Profile = (props) => {
 
     return (
         <div className="signup-form">
-            <form onChange={handleFormChange} className={classes.root} noValidate autoComplete="on">
+            <form onChange={handleFormChange} onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="on">
                 <div>
                     {usernameE === '' ? usernameField : usernameFieldE}
                 </div>
@@ -358,16 +345,16 @@ const Profile = (props) => {
                 </div>
                 {isChangingPassword === false ? changePasswordButton : passwordSection}
                 <div className={classes.button}>
-                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                    <Button type="submit" variant="contained" color="primary">
                         Update Info
                     </Button>
                 </div>
-                <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="success">
-                        Successfully updated profile!
-                    </Alert>
-                </Snackbar>
             </form>
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    Successfully updated profile!
+                    </Alert>
+            </Snackbar>
         </div>
     );
 }

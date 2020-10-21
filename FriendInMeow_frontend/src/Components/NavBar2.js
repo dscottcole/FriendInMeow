@@ -5,8 +5,14 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-
 import Badge from '@material-ui/core/Badge';
+
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const StyledTabs = withStyles({
     indicator: {
@@ -56,6 +62,16 @@ const StyledBadge = withStyles((theme) => ({
 const NavBar = (props) => {
     const classes = useStyles();
 
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
     const handleChange = (event, newValue) => {
         console.log(newValue)
         props.change_value(newValue);
@@ -69,6 +85,7 @@ const NavBar = (props) => {
     useEffect(redirect, [props.currentRoute])
 
     const logOut = () => {
+        setOpen(true)
         localStorage.removeItem('auth_key')
         props.set_isloggedin(false)
         props.set_favorite_cats([])
@@ -97,6 +114,11 @@ const NavBar = (props) => {
                 </StyledTabs>
                 <Typography className={classes.padding} />
             </div>
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    Successfully logged out!
+                    </Alert>
+            </Snackbar>
         </div>
     );
 }

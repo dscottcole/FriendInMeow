@@ -5,6 +5,9 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
 
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         "& .MuiTextField-root": {
@@ -17,8 +20,22 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const Login = (props) => {
     const classes = useStyles();
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     let [username, setUsername] = useState('');
     let [password, setPassword] = useState('');
@@ -46,14 +63,14 @@ const Login = (props) => {
         setPassword('')
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
 
         let user = {
             "username": username,
             "password": password
         }
 
-        // clearState()
         logIn(user)
     }
 
@@ -68,11 +85,15 @@ const Login = (props) => {
             .then(res => res.json())
             .then(token => {
                 if (token['auth_key']) {
+                    clearState()
                     localStorage.setItem('auth_key', token['auth_key'])
+                    setOpen(true)
                     props.set_user_name(token.name)
                     props.handleLogin()
-                    props.change_value(0)
-                    props.change_route("/")
+                    setTimeout(() => {
+                        props.change_value(0)
+                        props.change_route("/")
+                    }, 1000);
                 } else {
                     setUsernameE(token.message)
                     setPasswordE(token.message)
@@ -82,10 +103,8 @@ const Login = (props) => {
 
     const usernameField = (
         <TextField
-            // id="outlined-error-helper-text"
             label="Username"
             defaultValue={username}
-
             variant="outlined"
             name="username"
         />
@@ -94,10 +113,8 @@ const Login = (props) => {
     const usernameFieldE = (
         <TextField
             error
-            // id="outlined-error-helper-text"
             label="Username"
             defaultValue={username}
-            // helperText={usernameE}
             variant="outlined"
             name="username"
         />
@@ -105,7 +122,6 @@ const Login = (props) => {
 
     const passwordField = (
         <TextField
-            // id="outlined-error-helper-text"
             label="Password"
             defaultValue={password}
             variant="outlined"
@@ -117,7 +133,6 @@ const Login = (props) => {
     const passwordFieldE = (
         <TextField
             error
-            // id="outlined-error-helper-text"
             label="Password"
             defaultValue={password}
             helperText={passwordE}
@@ -129,7 +144,7 @@ const Login = (props) => {
 
     return (
         <div className="login-form">
-            <form onChange={handleFormChange} className={classes.root} noValidate autoComplete="on">
+            <form onChange={handleFormChange} onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="on">
                 <div>
                     {usernameE === '' ? usernameField : usernameFieldE}
                 </div>
@@ -137,11 +152,16 @@ const Login = (props) => {
                     {passwordE === '' ? passwordField : passwordFieldE}
                 </div>
                 <div className={classes.button}>
-                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                    <Button type="submit" variant="contained" color="primary">
                         Login
-            </Button>
+                    </Button>
                 </div>
             </form>
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    Welcome to FriendInMeow!
+                    </Alert>
+            </Snackbar>
         </div>
 
     );

@@ -4,6 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
 import { connect } from "react-redux";
 
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         "& .MuiTextField-root": {
@@ -16,8 +19,22 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const Signup = (props) => {
     const classes = useStyles();
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     let [username, setUsername] = useState('');
     let [name, setName] = useState('');
@@ -61,10 +78,15 @@ const Signup = (props) => {
         setEmail('');
         setPassword('');
         setPasswordConfirmation('');
-
+        setUsernameE('')
+        setNameE('');
+        setEmailE('');
+        setPasswordE('');
+        setPasswordConfirmationE('');
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
 
         let newUser = {
             "user": {
@@ -76,7 +98,6 @@ const Signup = (props) => {
             }
         }
 
-        // clearState()
         signUp(newUser)
     }
 
@@ -131,15 +152,18 @@ const Signup = (props) => {
 
 
                 } else {
-                    props.change_value(3)
-                    props.change_route("/login")
+                    clearState()
+                    setOpen(true)
+                    setTimeout(() => {
+                        props.change_value(3)
+                        props.change_route("/login")
+                    }, 1000);
                 }
             })
     }
 
     const usernameField = (
         <TextField
-            // id="outlined-error-helper-text"
             label="Username"
             defaultValue={username}
 
@@ -151,7 +175,6 @@ const Signup = (props) => {
     const usernameFieldE = (
         <TextField
             error
-            // id="outlined-error-helper-text"
             label="Username"
             defaultValue={username}
             helperText={usernameE}
@@ -162,7 +185,6 @@ const Signup = (props) => {
 
     const nameField = (
         <TextField
-            // id="outlined-error-helper-text"
             label="Full Name"
             defaultValue={name}
             variant="outlined"
@@ -173,7 +195,6 @@ const Signup = (props) => {
     const nameFieldE = (
         <TextField
             error
-            // id="outlined-error-helper-text"
             label="Full Name"
             defaultValue={name}
             helperText={nameE}
@@ -184,7 +205,6 @@ const Signup = (props) => {
 
     const emailField = (
         <TextField
-            // id="outlined-error-helper-text"
             label="Email"
             defaultValue={email}
             variant="outlined"
@@ -195,7 +215,6 @@ const Signup = (props) => {
     const emailFieldE = (
         <TextField
             error
-            // id="outlined-error-helper-text"
             label="Email"
             defaultValue={email}
             helperText={emailE}
@@ -206,7 +225,6 @@ const Signup = (props) => {
 
     const passwordField = (
         <TextField
-            // id="outlined-error-helper-text"
             label="Password"
             defaultValue={password}
             variant="outlined"
@@ -218,7 +236,6 @@ const Signup = (props) => {
     const passwordFieldE = (
         <TextField
             error
-            // id="outlined-error-helper-text"
             label="Password"
             defaultValue={password}
             helperText={passwordE}
@@ -230,7 +247,6 @@ const Signup = (props) => {
 
     const password_confirmationField = (
         <TextField
-            // id="outlined-error-helper-text"
             label="Password Confirmation"
             defaultValue={password_confirmation}
             variant="outlined"
@@ -242,7 +258,6 @@ const Signup = (props) => {
     const password_confirmationFieldE = (
         <TextField
             error
-            // id="outlined-error-helper-text"
             label="Password Confirmation"
             defaultValue={password_confirmation}
             helperText={password_confirmationE}
@@ -255,7 +270,7 @@ const Signup = (props) => {
 
     return (
         <div className="signup-form">
-            <form onChange={handleFormChange} className={classes.root} noValidate autoComplete="on">
+            <form onChange={handleFormChange} onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="on">
                 <div>
                     {usernameE === '' ? usernameField : usernameFieldE}
                 </div>
@@ -268,11 +283,16 @@ const Signup = (props) => {
                     {password_confirmationE === '' ? password_confirmationField : password_confirmationFieldE}
                 </div>
                 <div className={classes.button}>
-                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                    <Button type="submit" variant="contained" color="primary">
                         Sign Up
-            </Button>
+                    </Button>
                 </div>
             </form>
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    Account successfully created!
+                    </Alert>
+            </Snackbar>
         </div>
     );
 }
