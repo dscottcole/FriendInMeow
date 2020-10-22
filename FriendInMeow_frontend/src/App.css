@@ -54,9 +54,18 @@ tspan {
 .location-form {
     text-align: center;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-evenly;
     padding-bottom: 25px;
+    padding-left: 150px;
 }
+/* 
+.rest-of-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+} */
 
 .cat-show-pic {
     margin: auto;

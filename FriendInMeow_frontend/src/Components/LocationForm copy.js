@@ -8,10 +8,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { blue } from '@material-ui/core/colors';
-import clsx from 'clsx';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
@@ -22,26 +18,6 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(2),
     verticalAlign: 'middle',
-  },
-  wrapper: {
-    margin: theme.spacing(1),
-    position: 'relative',
-    right: '225px',
-    top: '60px'
-  },
-  buttonSuccess: {
-    backgroundColor: blue[900],
-    '&:hover': {
-      backgroundColor: blue[700],
-    },
-  },
-  buttonProgress: {
-    color: blue[500],
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12,
   },
 }));
 
@@ -70,18 +46,7 @@ const radii = [
 
 const LocationForm = (props) => {
   const classes = useStyles();
-  //
-  const [loading, setLoading] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
-  const [blocked, setBlocked] = React.useState(false);
 
-  const timer = React.useRef();
-
-  // const buttonClassname = clsx({
-  //   [classes.buttonSuccess]: success,
-  // });
-
-  //
   const handleSelectChange = (event) => {
     props.set_radius(event.target.value);
   };
@@ -103,19 +68,10 @@ const LocationForm = (props) => {
   }
 
   const getPosition = () => {
-
-    if (!loading) {
-      setSuccess(false);
-      setLoading(true);
-      setBlocked(false);
-    }
-
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition, posError);
     } else {
       alert("Sorry, Geolocation is not supported by this browser.");
-      setLoading(false);
-      setBlocked(true);
     }
   }
 
@@ -124,14 +80,10 @@ const LocationForm = (props) => {
       navigator.permissions.query({ name: 'geolocation' }).then(res => {
         if (res.state === 'denied') {
           alert('Enable location permissions for this website in your browser settings.')
-          setLoading(false);
-          setBlocked(true)
         }
       })
     } else {
       alert('Unable to access your location. You can continue by submitting location manually.')
-      setLoading(false);
-      setBlocked(true)
     }
   }
 
@@ -165,8 +117,6 @@ const LocationForm = (props) => {
     props.set_state(state)
     props.set_postal_code(postal)
     props.set_radius(radius)
-    setSuccess(true);
-    setLoading(false);
   }
 
   const processManualLocation = () => {
@@ -210,27 +160,14 @@ const LocationForm = (props) => {
   return (
     <div className="location-form">
       <form className={classes.root} noValidate autoComplete="on">
-        {/* <Button
+        <Button
           variant="contained"
           color="primary"
           className={classes.button}
           startIcon={<MyLocationIcon />}
           onClick={() => getPosition()}
-        >Current Location</Button> */}
+        >Current Location</Button>
 
-          <div className={classes.wrapper}>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<MyLocationIcon />}
-              // className={buttonClassname}
-              disabled={loading}
-              onClick={getPosition}
-            >
-              {loading === false && success === false && blocked === false? "Share Location" : loading === false && success === false && blocked === true? "Permission Denied" : "Location Shared"}
-            </Button>
-            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
-          </div>
         <TextField id="outlined-basic" className="input-field" label="City" variant="outlined" onChange={handleTextChange} value={props.userCity} name="userCity" />
         <TextField id="outlined-basic" className="input-field" label="State Abbreviation" variant="outlined" onChange={handleTextChange} value={props.userState} name="userState" />
         <TextField id="outlined-basic" className="input-field" label="Postal Code" variant="outlined" onChange={handleTextChange} value={props.userPostalCode} name="userPostalCode" />
@@ -242,7 +179,7 @@ const LocationForm = (props) => {
           value={props.userRadius}
           onChange={handleSelectChange}
           variant="outlined"
-          className="input-field"
+          className="input-field" 
         >
           {radii.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -255,7 +192,7 @@ const LocationForm = (props) => {
           color="secondary"
           className={classes.button}
           onClick={() => processManualLocation()}
-        >Submit Location</Button>            
+        >Submit Location</Button>
       </form>
     </div>
   );
