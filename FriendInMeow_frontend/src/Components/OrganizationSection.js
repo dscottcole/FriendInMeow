@@ -18,8 +18,8 @@ const OrganizationSection = (props) => {
             {org.email !== null? <Typography variant="body1" component="body1">{org.email}</Typography> : null}
             <Typography variant="h6" component="h6"> Phone Number: </Typography>
             {org.phone !== null? <Typography variant="body1" component="body1">{org.phone}</Typography> : null}
-            {org.website !== undefined? <Typography variant="h6" component="h6"> Website: </Typography> :null}
-            {org.website !== undefined? <Link href={org.website} variant="body2">{org.website}</Link> : null}
+            {org.website !== null && org.website !== undefined? <Typography variant="h6" component="h6"> Website: </Typography> :null}
+            {org.website !== null && org.website !== undefined? <Link href={org.website} variant="body2">{org.website}</Link> : null}
             <Typography variant="h6" component="h6"> Address: </Typography>
             {org.address !== undefined && org.address.address1 !== null? <ul>{org.address.address1}</ul> : null}
             {org.address !== undefined && org.address.address2 !== null? <ul>{org.address.address2}</ul> : null}

@@ -14,9 +14,7 @@ const initialState = {
     clickedCat: {},
     clickedCatLoc: {},
     clickedCatLocated: false,
-    clickedCatPlaceId: '',
     clickedCatOrg: {},
-    isFiltered: false,
     filterBreed: "",
     filterGender: "",
     filterAge: ""
@@ -47,11 +45,6 @@ const CatReducer = (state = initialState, action) => {
             return {
                 ...state,
                 adoptableCats: action.adoptableCats
-            }
-        case 'SET_FILTERED_STATUS':
-            return {
-                ...state,
-                isFiltered: action.isFiltered
             }
         case 'SET_FILTERED_CATS':
             return {
@@ -120,17 +113,11 @@ const CatReducer = (state = initialState, action) => {
                 ...state,
                 clickedCatLocated: action.clickedCatLocated
             }
-        case 'SET_CLICKED_CAT_PLACE_ID':
-            return {
-                ...state,
-                clickedCatPlaceId: action.clickedCatPlaceId
-            }
         case 'SET_CLICKED_CAT_ORG':
             return {
                 ...state,
                 clickedCatOrg: action.clickedCatOrg
             }
-
 
         default:
             return state
