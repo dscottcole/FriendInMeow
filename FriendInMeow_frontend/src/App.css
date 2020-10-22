@@ -272,3 +272,16 @@ tspan {
 .logo-header {
     text-align: center;
 }
+
+/* .breedcard-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.breedcard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+} */

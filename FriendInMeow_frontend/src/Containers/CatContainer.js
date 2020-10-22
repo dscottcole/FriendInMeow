@@ -131,7 +131,14 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    ...state.catState,
+    clickedCat: state.catState.clickedCat,
+    clickedCatLoc: state.catState.clickedCatLoc,
+    clickedCatLocated: state.catState.clickedCatLocated,
+    adoptableCats: state.catState.adoptableCats,
+    adoptableCatsPage: state.catState.adoptableCatsPage,
+    filterBreed: state.catState.filterBreed,
+    filterGender: state.catState.filterGender,
+    filterAge: state.catState.filterAge,
     userPostalCode: state.userState.userPostalCode,
     userRadius: state.userState.userRadius
   }

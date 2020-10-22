@@ -55,7 +55,7 @@ const CatShow = (props) => {
           </div>
           <div className="pic-facts">
             <div className="pic-area">
-              {cat.primary_photo_cropped !== null && cat.name !== undefined ? <img className="cat-show-pic" src={cat.primary_photo_cropped.large} ></img> : <img className="cat-show-pic" src={require('../Images/catfallback3.jpg')}></img>}
+              {cat.primary_photo_cropped !== null && cat.name !== undefined ? <img className="cat-show-pic" src={cat.primary_photo_cropped.large} alt="AdoptablecatPic" ></img> : <img className="cat-show-pic" src={require('../Images/catfallback3.jpg')} alt="FallBackImg" ></img>}
             </div>
             <div className="cat-facts">
               <div>
@@ -106,7 +106,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    ...state.catState
+    clickedCat: state.catState.clickedCat
   }
 }
 

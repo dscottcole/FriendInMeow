@@ -87,7 +87,7 @@ const Login = (props) => {
                 if (token['auth_key']) {
                     clearState()
                     localStorage.setItem('auth_key', token['auth_key'])
-                    localStorage.setItem('username', token['name'])
+                    localStorage.setItem('name', token['name'])
                     setOpen(true)
                     props.set_user_name(token.name)
                     props.handleLogin()

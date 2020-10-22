@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import OrganizationSection from './OrganizationSection';
-import CatMap from './CatMap'
+import FaveCatMap from './FaveCatMap'
 
 import FaveCatsBackButton from '../Components/FaveCatsBackButton';
 import CatsFaveButton from '../Components/CatsFaveButton';
@@ -55,7 +55,7 @@ const CatShow = (props) => {
           </div>
           <div className="pic-facts">
             <div className="pic-area">
-              {cat.primary_photo_cropped !== null && cat.name !== undefined ? <img className="cat-show-pic" src={cat.primary_photo_cropped.large} ></img> : <img className="cat-show-pic" src={require('../Images/catfallback3.jpg')}></img>}
+              {cat.primary_photo_cropped !== null && cat.name !== undefined ? <img className="cat-show-pic" src={cat.primary_photo_cropped.large} alt="AdoptableCatPic" ></img> : <img className="cat-show-pic" src={require('../Images/catfallback3.jpg')} alt="CatFallbackImg" ></img>}
             </div>
             <div className="cat-facts">
               <div>
@@ -81,7 +81,7 @@ const CatShow = (props) => {
 
           <div className="map-org">
             <div>
-              <CatMap />
+              <FaveCatMap />
             </div>
             <div>
               <OrganizationSection />
@@ -106,7 +106,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    ...state.catState
+    clickedCat: state.catState.clickedCat
   }
 }
 

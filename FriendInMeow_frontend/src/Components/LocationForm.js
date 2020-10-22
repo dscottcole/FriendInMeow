@@ -94,17 +94,11 @@ const LocationForm = (props) => {
     props.set_lat(lat)
     props.set_long(long)
 
-    convertToZip(lat, long)
+    getZip(lat, long)
   }
 
-  const convertToZip = (lat, long) => {
-    fetch('http://localhost:3000/googlemaps')
-      .then(res => res.json())
-      .then(obj => getZip(lat, long, obj.api_key))
-  }
-
-  const getZip = (lat, long, googleKey) => {
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${googleKey}`)
+  const getZip = (lat, long) => {
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${process.env.REACT_APP_googleKey}`)
       .then(res => res.json())
       .then(address => setZip(address))
   }
@@ -197,7 +191,6 @@ const LocationForm = (props) => {
           variant="contained"
           color="secondary"
           className={classes.button}
-          // startIcon={<MyLocationIcon />}
           onClick={() => processManualLocation()}
         >Submit Location</Button>
       </form>

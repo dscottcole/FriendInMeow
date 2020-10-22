@@ -11,7 +11,6 @@ const OrganizationSection = (props) => {
 
     return (
         <div className="org-section">
-            {/* {props.clickedCatOrg.photos.length > 0 && props.clickedCatOrg.photos[0].small !== undefined? <img src={props.clickedCatOrg.photos[0].small} ></img> : null} */}
             <br></br>
             {org.name !== null? <Typography variant="h5" component="h5">{org.name}</Typography> : null}
             <br></br>
@@ -25,7 +24,7 @@ const OrganizationSection = (props) => {
             {org.address !== undefined && org.address.address1 !== null? <ul>{org.address.address1}</ul> : null}
             {org.address !== undefined && org.address.address2 !== null? <ul>{org.address.address2}</ul> : null}
             {org.address !== undefined && org.address.city !== null && org.address.state !== null && org.address.postcode !== null? <ul>{org.address.city + ", " + org.address.state + " " + org.address.postcode}</ul> : null}
-            {props.userPostalCode !== ""? <Typography variant="h6" component="h6"> Distance: </Typography> : null}
+            {props.userPostalCode !== "" && props.clickedCat.distance !== null? <Typography variant="h6" component="h6"> Distance: </Typography> : null}
             {props.clickedCat.distance !== null? <Typography variant="body1" component="body1">{Math.floor(props.clickedCat.distance) + " miles"}</Typography> : null}
         </div>
 
@@ -40,7 +39,8 @@ const mapDispatchToProps = (dispatch) => {
   
 const mapStateToProps = (state) => {
     return {
-        ...state.catState,
+        clickedCat: state.catState.clickedCat,
+        clickedCatOrg: state.catState.clickedCatOrg,
         userPostalCode: state.userState.userPostalCode
     }
 }

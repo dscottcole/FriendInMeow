@@ -1,10 +1,10 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from "react-redux";
 
 import GoogleMapReact from 'google-map-react';
   
-const CatMap = (props) => {
+const FaveCatMap = (props) => {
 
     // Thanks to Jeff Jason II (http://jeffjason.com/2011/12/google-maps-radius-to-zoom/)
     const radiusToZoom = (radius) => {
@@ -31,6 +31,7 @@ const CatMap = (props) => {
 
         return marker;
     };
+
     const renderMarkers2 = (map, maps) => {
         if ( props.userLat !== 0 && props.userLong !== 0) {
             let marker = new maps.Marker({
@@ -65,13 +66,14 @@ const CatMap = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName })
+      change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName }),
+      set_clicked_cat: (cat) => dispatch({ type: 'SET_CLICKED_CAT', clickedCat: cat })
     }
 }
   
 const mapStateToProps = (state) => {
     return {
-        clickedCat:state.catState.clickedCat,
+        clickedCat: state.catState.clickedCat,
         clickedCatOrg: state.catState.clickedCatOrg,
         clickedCatLoc: state.catState.clickedCatLoc,
         clickedCatLocated: state.catState.clickedCatLocated,
@@ -81,4 +83,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CatMap);
+export default connect(mapStateToProps, mapDispatchToProps)(FaveCatMap);

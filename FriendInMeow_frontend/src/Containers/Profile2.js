@@ -145,7 +145,6 @@ const Profile = (props) => {
             }
         }
 
-        // clearState()
         editUser(updatedUser)
     }
 
@@ -200,6 +199,8 @@ const Profile = (props) => {
                     setPasswordConfirmationE(password_confirmation_e);
 
                 } else {
+                    localStorage.setItem('name', name)
+                    props.set_user_name(name)
                     setOpen(true);
                     clearEState()
                 }
@@ -374,6 +375,7 @@ const mapDispatchToProps = (dispatch) => {
         set_isloggedin: (status) => dispatch({ type: 'SET_STATUS', isLoggedIn: status }),
         change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName }),
         change_value: (value) => dispatch({ type: 'CHANGE_VALUE', navValue: value }),
+        set_user_name: (name) => dispatch({ type: 'SET_USER_NAME', userName: name })
     }
 }
 
