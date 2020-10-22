@@ -104,7 +104,7 @@ const App = (props) => {
 
     let faves = []
 
-    faveCatArray.map(cat => {
+    faveCatArray.forEach(cat => {
       fetch(`https://api.petfinder.com/v2/animals/${cat.petfinder_id}`, {
         method: "GET",
         headers: {
@@ -153,7 +153,7 @@ const App = (props) => {
         
         <div className="world">
           <div className="logo-header">
-            <img className="FriendInMeow" src={FriendInMeow} />
+            <img className="FriendInMeow" src={FriendInMeow} alt="FriendInMeowLogo" />
           </div>
           <NavBar2 />
 
@@ -193,23 +193,14 @@ const App = (props) => {
 
         <Route path="/breedinfo">
           <BreedShow />
-          {/* <TraitTable />
-          <BreedChart /> */}
-          {/* <BreedsBackButton />
-          {props.adoptableBreedNames.includes(props.clickedBreed.name) && props.clickedBreedTotalAdoptable > 0? 
-            <BreedsQueryButton /> : null} */}
         </Route>
 
         <Route path="/catinfo">
           <CatShow />
-          {/* <CatsBackButton />
-          <CatsFaveButton /> */}
         </Route>
 
         <Route path="/faveinfo">
           <FaveCatShow />
-          {/* <FaveCatsBackButton />
-          <CatsFaveButton /> */}
         </Route>
 
         <Route>
@@ -234,8 +225,6 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    ...state.catState,
-    ...state.userState,
     isLoggedIn: state.userState.isLoggedIn
   }
 }

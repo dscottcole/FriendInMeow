@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from "react-redux";
 import BreedCard from '../Components/BreedCard'
 
@@ -114,7 +114,8 @@ const mapDispatchToProps = (dispatch) => {
   
   const mapStateToProps = (state) => {
     return {
-      ...state.catState
+      clickedBreed: state.catState.clickedBreed,
+      breeds: state.catState.breeds
     }
 }
   

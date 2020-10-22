@@ -79,7 +79,7 @@ const BreedShow = (props) => {
             <Typography className={classes.header} gutterBottom variant="h2" component="h2">
               {breed.name}
             </Typography>
-            <img className="breed-show-pic" src={props.clickedBreedImg}></img>
+            <img className="breed-show-pic" src={props.clickedBreedImg} alt="BreedImg" ></img>
           </div>
           <div>
             <Typography variant="h6" color="textPrimary" component="h6">
@@ -117,7 +117,10 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    ...state.catState
+    clickedBreed: state.catState.clickedBreed,
+    clickedBreedImg: state.catState.clickedBreedImg,
+    clickedBreedTotalAdoptable: state.catState.clickedBreedTotalAdoptable,
+    adoptableBreedNames: state.catState.adoptableBreedNames
   }
 }
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
 
 
@@ -23,7 +22,6 @@ const CatPagination = (props) => {
   return (
     <div className="pagination">
         <div className={classes.root}>
-        {/* <Typography>Page: {props.adoptableCatsPage}</Typography> */}
         <Pagination count={props.adoptableCatsPages} page={props.adoptableCatsPage} onChange={handleChange} />
         </div>
     </div>
@@ -38,7 +36,8 @@ const mapDispatchToProps = (dispatch) => {
   
   const mapStateToProps = (state) => {
     return {
-      ...state.catState
+      adoptableCatsPage: state.catState.adoptableCatsPage,
+      adoptableCatsPages: state.catState.adoptableCatsPages,
     }
 }
   

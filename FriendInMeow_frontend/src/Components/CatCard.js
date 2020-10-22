@@ -184,17 +184,17 @@ const CatCard = (props) => {
       },
       body: JSON.stringify(faveCat)
     })
-    .then(res => res.json())
-    .then(res => {
-      if (res.id) {
-        let modifiedCat = {...catObj, dbId: res.id}
-        let newFaves = [...props.favoriteCats, modifiedCat]
-        props.set_favorite_cats(newFaves)
-        setFavorite(true)
-      } else {
-        alert(res.message)
-      }
-    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.id) {
+          let modifiedCat = { ...catObj, dbId: res.id }
+          let newFaves = [...props.favoriteCats, modifiedCat]
+          props.set_favorite_cats(newFaves)
+          setFavorite(true)
+        } else {
+          alert(res.message)
+        }
+      })
   }
 
   const unfavoriteCat = (catObj) => {
@@ -212,19 +212,19 @@ const CatCard = (props) => {
         'Auth-Key': localStorage.getItem('auth_key')
       }
     })
-    .then(res => res.json())
-    .then(res => {
-      if (res.message) {
-        setFavorite(false)
+      .then(res => res.json())
+      .then(res => {
+        if (res.message) {
+          setFavorite(false)
 
-        let newFaves = props.favoriteCats.filter(faveCat => {
-          if (faveCat.id !== catObj.id) {
-            return faveCat
-          }
-        })
-        props.set_favorite_cats(newFaves)
-      }
-    })
+          let newFaves = props.favoriteCats.filter(faveCat => {
+            if (faveCat.id !== catObj.id) {
+              return faveCat
+            }
+          })
+          props.set_favorite_cats(newFaves)
+        }
+      })
   }
 
   useEffect(() => {
@@ -250,11 +250,6 @@ const CatCard = (props) => {
       <CardHeader
         avatar={
           cat.gender === 'Female' ? femaleAvatar : maleAvatar
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
         }
         title={cat.name}
         subheader={"Age: " + cat.age}
@@ -338,7 +333,6 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    ...state.catState,
     favoriteCats: state.userState.favoriteCats
   }
 }

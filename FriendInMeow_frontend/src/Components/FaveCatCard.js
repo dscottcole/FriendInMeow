@@ -12,7 +12,7 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { blue, pink, red } from '@material-ui/core/colors';
+import { blue, pink } from '@material-ui/core/colors';
 import NavigateNextOutlinedIcon from '@material-ui/icons/NavigateNextOutlined';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -55,7 +55,6 @@ const CatCard = (props) => {
 
   const [expanded, setExpanded] = useState(false);
   const [favorite, setFavorite] = useState(false);
-  const [dbId, setId] = useState(0)
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -75,8 +74,23 @@ const CatCard = (props) => {
     </Avatar>
   )
 
+  // https://www.geeksforgeeks.org/program-distance-two-points-earth/
+  // Haversine formula
+  const twoDistance = (catLat, catLng, catObj) => {
+    let clickedKat = catObj
+
+    if (clickedKat !== undefined && clickedKat.distance === null && props.userLat !==0 && props.userLong !== 0) {
+      let calcDistance = Math.floor(3963.0 * Math.acos((Math.sin((catLat/(180/Math.PI))) * Math.sin((props.userLat/(180/Math.PI)))) + Math.cos((catLat/(180/Math.PI))) * Math.cos((props.userLat/(180/Math.PI))) * Math.cos((props.userLong/(180/Math.PI)) - (catLng/(180/Math.PI)))))
+      clickedKat.distance = calcDistance
+
+      props.set_clicked_cat(clickedKat)
+    }
+  }
+
   const getAdoptableKeys = (catObj, orgUrl) => {
+
     props.set_clicked_cat(catObj)
+
 
     fetch('http://localhost:3000/adoptable')
       .then(res => res.json())
@@ -112,6 +126,7 @@ const CatCard = (props) => {
   }
 
   const getGoogleKey = (catObj, catOrg) => {
+
     fetch('http://localhost:3000/googlemaps')
       .then(res => res.json())
       .then(obj => getGoogleAddress(catObj, catOrg, obj.api_key))
@@ -125,12 +140,11 @@ const CatCard = (props) => {
       let state = catObj.contact.address.state
 
       let url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${address},+${city},+${state}&key=${googleKey}`
-
       fetch(url)
         .then(res => res.json())
         .then(res => {
           if (res.status !== "ZERO_RESULTS") {
-            getCatCoords(res.results)
+            getCatCoords(res.results, catObj)
           } else {
             props.change_route('/faveinfo')
           }
@@ -146,7 +160,7 @@ const CatCard = (props) => {
         .then(res => res.json())
         .then(res => {
           if (res.status !== "ZERO_RESULTS") {
-            getCatCoords(res.results)
+            getCatCoords(res.results, catObj)
           } else {
             props.change_route('/faveinfo')
           }
@@ -157,13 +171,18 @@ const CatCard = (props) => {
 
   }
 
-  const getCatCoords = (googleRes) => {
+  const getCatCoords = (googleRes, catObj) => {
+
+
     let location = googleRes[0].geometry.location
     let placeId = googleRes[0].place_id
+
+    twoDistance(location.lat, location.lng, catObj)
 
     props.set_clicked_cat_located(true)
     props.set_clicked_cat_loc(location)
     props.set_clicked_cat_place_id(placeId)
+
 
     props.change_route('/faveinfo')
   }
@@ -185,17 +204,17 @@ const CatCard = (props) => {
       },
       body: JSON.stringify(faveCat)
     })
-    .then(res => res.json())
-    .then(res => {
-      if (res.id) {
-        let modifiedCat = {...catObj, dbId: res.id}
-        let newFaves = [...props.favoriteCats, modifiedCat]
-        props.set_favorite_cats(newFaves)
-        setFavorite(true)
-      } else {
-        alert(res.message)
-      }
-    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.id) {
+          let modifiedCat = { ...catObj, dbId: res.id }
+          let newFaves = [...props.favoriteCats, modifiedCat]
+          props.set_favorite_cats(newFaves)
+          setFavorite(true)
+        } else {
+          alert(res.message)
+        }
+      })
   }
 
   const unfavoriteCat = (catObj) => {
@@ -213,19 +232,19 @@ const CatCard = (props) => {
         'Auth-Key': localStorage.getItem('auth_key')
       }
     })
-    .then(res => res.json())
-    .then(res => {
-      if (res.message) {
-        setFavorite(false)
+      .then(res => res.json())
+      .then(res => {
+        if (res.message) {
+          setFavorite(false)
 
-        let newFaves = props.favoriteCats.filter(faveCat => {
-          if (faveCat.id !== catObj.id) {
-            return faveCat
-          }
-        })
-        props.set_favorite_cats(newFaves)
-      }
-    })
+          let newFaves = props.favoriteCats.filter(faveCat => {
+            if (faveCat.id !== catObj.id) {
+              return faveCat
+            }
+          })
+          props.set_favorite_cats(newFaves)
+        }
+      })
 
   }
 
@@ -253,11 +272,6 @@ const CatCard = (props) => {
         avatar={
           cat.gender === 'Female' ? femaleAvatar : maleAvatar
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
         title={cat.name}
         subheader={"Age: " + cat.age}
       />
@@ -275,9 +289,6 @@ const CatCard = (props) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        {/* <IconButton color="primary" aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton> */}
         {favorite === false ? notFave : yesFave}
         <Button
           variant="contained"
@@ -343,8 +354,10 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    ...state.catState,
-    favoriteCats: state.userState.favoriteCats
+
+    favoriteCats: state.userState.favoriteCats,
+    userLat: state.userState.userLat,
+    userLong: state.userState.userLong
   }
 }
 

@@ -118,8 +118,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    ...state.catState,
-    favoriteCats: state.userState.favoriteCats
+    favoriteCats: state.userState.favoriteCats,
+    clickedCat: state.catState.clickedCat
   }
 }
 

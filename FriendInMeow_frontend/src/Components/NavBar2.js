@@ -86,7 +86,7 @@ const NavBar = (props) => {
     const logOut = () => {
         setOpen(true)
         localStorage.removeItem('auth_key')
-        localStorage.removeItem('username')
+        localStorage.removeItem('name')
         props.set_isloggedin(false)
         props.set_favorite_cats([])
         props.set_user_name('')
@@ -112,7 +112,7 @@ const NavBar = (props) => {
                     {props.isLoggedIn === true ? null : <StyledTab onClick={() => props.change_route("/signup")} label="Signup" />}
                     {props.isLoggedIn === true ? <StyledTab onClick={() => logOut()} label="Logout" /> : null}
                     {<br></br>}
-                    {props.isLoggedIn === true ? <StyledTab onClick={() => props.change_route("/profile")} label={localStorage.username} /> : null}
+                    {props.isLoggedIn === true ? <StyledTab onClick={() => props.change_route("/profile")} label={localStorage.name} /> : null}
                 </StyledTabs>
                 <Typography className={classes.padding} />
             </div>

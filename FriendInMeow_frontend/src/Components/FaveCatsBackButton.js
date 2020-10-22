@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch) => {
   
 const mapStateToProps = (state) => {
     return {
-        ...state.catState
+        // ...state.catState
     }
 }
 

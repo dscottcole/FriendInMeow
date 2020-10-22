@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
+import ImgComponent from '../Components/ImgComponent';
 
 const Home = () => {
 
@@ -60,19 +58,10 @@ const Home = () => {
 			})
 	}
 
-	const gridCat = (
-		<div className="grid-cat">
-			<img className="grid-cat-pic" />
-		</div>
-	)
-
 	return (
 		<div className="cat-grid">
-			{cats.map((cat, index) => (
-				<div className="grid-cat">
-					<img className="grid-cat-pic" src={cat.url} />
-					<p>{cat.breeds.name}</p>
-				</div>
+			{cats.map(cat => (
+				<ImgComponent src={cat.url} key={cat.id} />
 			))}
 		</div>
 	);

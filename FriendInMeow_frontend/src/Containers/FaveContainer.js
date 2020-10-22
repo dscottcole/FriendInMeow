@@ -70,9 +70,6 @@ const FaveContainer = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        set_cats: (cats) => dispatch({ type: 'SET_CATS', adoptableCats: cats }),
-        set_cats_total: (total) => dispatch({ type: 'SET_CATS_TOTAL', adoptableCatsTotal: total }),
-        set_cats_pages: (number) => dispatch({ type: 'SET_CATS_PAGES', adoptableCatsPages: number }),
         set_clicked_cat: (cat) => dispatch({ type: 'SET_CLICKED_CAT', clickedCat: cat }),
         set_clicked_cat_loc: (loc) => dispatch({ type: 'SET_CLICKED_CAT_LOC', clickedCatLoc: loc }),
         set_clicked_cat_place_id: (placeId) => dispatch({ type: 'SET_CLICKED_CAT_PLACE_ID', clickedCatPlaceId: placeId }),
@@ -85,10 +82,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        ...state.catState,
-        favoriteCats: state.userState.favoriteCats,
-        userPostalCode: state.userState.userPostalCode,
-        userRadius: state.userState.userRadius
+        clickedCat: state.catState.clickedCat,
+        favoriteCats: state.userState.favoriteCats
     }
 }
 

@@ -144,7 +144,10 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        ...state.catState,
+        filterBreed: state.catState.filterBreed,
+        filterGender: state.catState.filterGender,
+        filterAge: state.catState.filterAge,
+        adoptableBreedNames: state.catState.adoptableBreedNames
     }
 }
 
