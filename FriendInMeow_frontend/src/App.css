@@ -149,10 +149,6 @@ tspan {
     align-items: flex-end;
 }
 
-.breed-info {
-    margin: 10px;
-}
-
 .breed-filter {
     margin: 10px;
 }
@@ -212,7 +208,7 @@ tspan {
 .grid-cat-pic {
     margin: auto;
     display: block;
-    min-height: 380px;
+    /* min-height: 380px; */
     max-height: 380px;
     /* min-width: 380px; */
     max-width: 380px;
@@ -265,7 +261,7 @@ tspan {
     background-color: whitesmoke;
     border-radius: 5px;
     box-shadow: 5px 5px 5px lightgray;
-    max-width: 1500px;
+    max-width: 1600px;
     margin: auto;
 }
 
@@ -280,6 +276,10 @@ tspan {
 
 .logo-header {
     text-align: center;
+}
+
+.breed-info {
+    max-width: 1300px;
 }
 
 /* .breedcard-buttons {

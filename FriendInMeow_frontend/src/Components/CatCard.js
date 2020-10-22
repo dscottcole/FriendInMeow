@@ -258,6 +258,7 @@ const CatCard = (props) => {
         className={classes.media}
         image={cat.primary_photo_cropped !== null ? cat.primary_photo_cropped['small'] : require('../Images/catfallback3.jpg')}
         title={cat.id}
+        onClick={() => { getAdoptableKeys(cat, cat._links.organization.href) }}
       />
       <CardContent>
         <Typography variant="body2" color="textPrimary" component="p">

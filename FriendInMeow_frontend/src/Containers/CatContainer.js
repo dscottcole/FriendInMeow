@@ -30,7 +30,6 @@ const CatContainer = (props) => {
       props.set_clicked_cat_loc({})
       props.set_clicked_cat_located(false)
       props.set_clicked_cat_org({})
-      props.set_clicked_cat_place_id('')
     }
   }
 
@@ -122,7 +121,6 @@ const mapDispatchToProps = (dispatch) => {
     set_cats_pages: (number) => dispatch({ type: 'SET_CATS_PAGES', adoptableCatsPages: number }),
     set_clicked_cat: (cat) => dispatch({ type: 'SET_CLICKED_CAT', clickedCat: cat }),
     set_clicked_cat_loc: (loc) => dispatch({ type: 'SET_CLICKED_CAT_LOC', clickedCatLoc: loc }),
-    set_clicked_cat_place_id: (placeId) => dispatch({ type: 'SET_CLICKED_CAT_PLACE_ID', clickedCatPlaceId: placeId }),
     set_clicked_cat_org: (org) => dispatch({ type: 'SET_CLICKED_CAT_ORG', clickedCatOrg: org }),
     set_clicked_cat_located: (status) => dispatch({ type: 'SET_CLICKED_CAT_LOCATED', clickedCatLocated: status }),
     change_route: (routeName) => dispatch({ type: 'CHANGE_ROUTE', newRoute: routeName })

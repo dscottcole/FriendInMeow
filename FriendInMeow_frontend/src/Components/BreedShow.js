@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from "react-redux";
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -37,6 +37,12 @@ const BreedShow = (props) => {
   const classes = useStyles();
 
   let breed = props.clickedBreed
+
+  useEffect(() => {
+    if (breed === undefined) {
+      props.change_route("/breeds")
+    }
+  }, [])
 
   let altNames = (
     <div>
@@ -81,7 +87,7 @@ const BreedShow = (props) => {
             </Typography>
             <img className="breed-show-pic" src={props.clickedBreedImg} alt="BreedImg" ></img>
           </div>
-          <div>
+          <div className="breed-info">
             <Typography variant="h6" color="textPrimary" component="h6">
               {breed.temperament}
             </Typography>

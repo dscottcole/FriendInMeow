@@ -60,8 +60,8 @@ const Home = () => {
 
 	return (
 		<div className="cat-grid">
-			{cats.map(cat => (
-				<ImgComponent src={cat.url} key={cat.id} />
+			{cats.map((cat,index) => (
+				<ImgComponent src={cat.url} key={index} />
 			))}
 		</div>
 	);
