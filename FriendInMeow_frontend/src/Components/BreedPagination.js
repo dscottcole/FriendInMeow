@@ -36,8 +36,7 @@ const mapDispatchToProps = (dispatch) => {
   
   const mapStateToProps = (state) => {
     return {
-      breedsPage: state.catState.breedsPage,
-      breedsPages: state.catState.breedsPages
+      ...state.catState
     }
 }
   

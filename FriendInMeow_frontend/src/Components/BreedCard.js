@@ -121,7 +121,7 @@ const BreedCard = (props) => {
 
   useEffect(() => {
     getBreedsKey()
-    // getAdoptableKeys(props.breed.name)
+    getAdoptableKeys(props.breed.name)
   }, [props.breed, props.userPostalCode, props.userRadius])
 
   let breed = props.breed
