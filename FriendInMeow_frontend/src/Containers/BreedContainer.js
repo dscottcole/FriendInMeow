@@ -115,7 +115,8 @@ const mapDispatchToProps = (dispatch) => {
   const mapStateToProps = (state) => {
     return {
       clickedBreed: state.catState.clickedBreed,
-      breeds: state.catState.breeds
+      breeds: state.catState.breeds,
+      breedsPage: state.catState.breedsPage
     }
 }
   
