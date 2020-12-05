@@ -1,5 +1,9 @@
 # FriendInMeow
 
+A cat adoption and cat breed information application created with a ReduxJS frontend and Rails backend.
+
+Full App Video: https://youtu.be/nwljO7tNEL4
+
 API List:
 
 Cat Breeds: https://thecatapi.com/
@@ -11,8 +15,16 @@ Google Maps: https://developers.google.com/maps/documentation/javascript/adding-
 Geocoding API: https://developers.google.com/maps/documentation/geocoding/overview
 Reverse Geocoding API: https://developers.google.com/maps/documentation/geocoding/overview
 
-Back-end:
-Your project must use a non-trivial Rails backend. Consult the following list for examples of things to include. You do not need to include all of these things, and the final decision of what must be included will be up to your project managers.
+Frontend:
+
+[x] Auth
+[ ] Tests
+[x] Interacting with a complex API
+[x] Redux
+[x] Custom CSS
+[x] One significant refactor
+
+Backend:
 
 [x] Auth
 [ ] Tests
@@ -25,16 +37,6 @@ Your project must use a non-trivial Rails backend. Consult the following list fo
 [ ] Sockets or email integration
 [x] One significant refactor
 [x] Validation
-
-Front-end
-Your product must use a React based frontend. Consult the following list for examples of things to include. You do not need to include all of these things, and the final decision of what must be included will be up to your project manager.
-
-[x] Auth
-[ ] Tests
-[x] Interacting with a complex API
-[x] Redux
-[x] Custom CSS
-[x] One significant refactor
 
 DB Tables:
 
@@ -76,6 +78,3 @@ See all adoptable cats from your chosen breed
 See the location/organization of the current cat in your search on a google map
 Add/remove cats to your favorites
 Infinite scrolling cat image feed
-
-
-
