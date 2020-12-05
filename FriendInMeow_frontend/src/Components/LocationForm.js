@@ -152,9 +152,9 @@ const LocationForm = (props) => {
   }
 
   const setZip = (address) => {
-    let city = address.results[5].address_components[2].short_name
-    let state = address.results[5].address_components[4].short_name
-    let postal = address.results[5].address_components[0].short_name
+    let city = address.results[0].address_components[3].short_name
+    let state = address.results[0].address_components[5].short_name
+    let postal = address.results[0].address_components[7].short_name
     let radius = props.userRadius
 
     // localStorage.setItem('userState', state)
