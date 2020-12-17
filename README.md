@@ -1,19 +1,28 @@
 # FriendInMeow
 
 A cat adoption and cat breed information application created with a ReduxJS frontend and Rails backend.
+Material UI and custom CSS were used for styling.
+Toast UI was used for graphs.
 
-Full App Video: https://youtu.be/nwljO7tNEL4
+Hosted Application:
+https://friendinmeow.herokuapp.com/
+
+Full App Video: 
+https://youtu.be/nwljO7tNEL4
 
 API List:
 
 Cat Breeds: https://thecatapi.com/
 Cat Breed Images: https://thecatapi.com/
 Random Cat Images: https://thecatapi.com/
+https://docs.thecatapi.com/
+
 Adoptable Pets: https://www.petfinder.com/
 Adoptable Pet Organizations: https://www.petfinder.com/
+https://www.petfinder.com/developers/v2/docs/
+
 Google Maps: https://developers.google.com/maps/documentation/javascript/adding-a-google-map
-Geocoding API: https://developers.google.com/maps/documentation/geocoding/overview
-Reverse Geocoding API: https://developers.google.com/maps/documentation/geocoding/overview
+Geocoding API & Reverse Geocoding: https://developers.google.com/maps/documentation/geocoding/overview
 
 Frontend:
 
@@ -78,3 +87,6 @@ See all adoptable cats from your chosen breed
 See the location/organization of the current cat in your search on a google map
 Add/remove cats to your favorites
 Infinite scrolling cat image feed
+
+Trello Board:
+https://trello.com/b/z0y13qaf/friendinmeow
